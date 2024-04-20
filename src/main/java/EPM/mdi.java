@@ -9,6 +9,7 @@ import figure.V;
 import figure.S1;
 import figure.b;
 import figure.d;
+import jMDIForm.GridPanel;
 import jMDIForm.jMDIFrame;
 import java.awt.Color;
 import javax.swing.JColorChooser;
@@ -95,6 +96,17 @@ public class mdi extends javax.swing.JFrame {
         jChangeTextColorR = new javax.swing.JButton();
         jChangeTextColorIF = new javax.swing.JButton();
         jChangeColorGrid = new javax.swing.JButton();
+        jSColor = new javax.swing.JPanel();
+        jVColor = new javax.swing.JPanel();
+        jNVColor = new javax.swing.JPanel();
+        jRColor = new javax.swing.JPanel();
+        jIFColor = new javax.swing.JPanel();
+        jNVTextColor = new javax.swing.JPanel();
+        jRTextColor = new javax.swing.JPanel();
+        jIFTextColor = new javax.swing.JPanel();
+        jVTextColor = new javax.swing.JPanel();
+        jSTextColor = new javax.swing.JPanel();
+        jGridColor = new javax.swing.JPanel();
         jButton10 = new javax.swing.JButton();
         jColorChooser1 = new javax.swing.JColorChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -132,6 +144,7 @@ public class mdi extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuOptions = new javax.swing.JMenu();
         jMenuItemSettings = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         Cascade = new javax.swing.JMenuItem();
         Tile = new javax.swing.JMenuItem();
@@ -228,37 +241,204 @@ public class mdi extends javax.swing.JFrame {
             }
         });
 
+        jSColor.setBackground(S1.BackgroundColor);
+        jSColor.setBackground(S1.BackgroundColor);
+
+        javax.swing.GroupLayout jSColorLayout = new javax.swing.GroupLayout(jSColor);
+        jSColor.setLayout(jSColorLayout);
+        jSColorLayout.setHorizontalGroup(
+            jSColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jSColorLayout.setVerticalGroup(
+            jSColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jVColor.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jVColorLayout = new javax.swing.GroupLayout(jVColor);
+        jVColor.setLayout(jVColorLayout);
+        jVColorLayout.setHorizontalGroup(
+            jVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jVColorLayout.setVerticalGroup(
+            jVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jNVColor.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jNVColorLayout = new javax.swing.GroupLayout(jNVColor);
+        jNVColor.setLayout(jNVColorLayout);
+        jNVColorLayout.setHorizontalGroup(
+            jNVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jNVColorLayout.setVerticalGroup(
+            jNVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jRColor.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jRColorLayout = new javax.swing.GroupLayout(jRColor);
+        jRColor.setLayout(jRColorLayout);
+        jRColorLayout.setHorizontalGroup(
+            jRColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jRColorLayout.setVerticalGroup(
+            jRColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jIFColor.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jIFColorLayout = new javax.swing.GroupLayout(jIFColor);
+        jIFColor.setLayout(jIFColorLayout);
+        jIFColorLayout.setHorizontalGroup(
+            jIFColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jIFColorLayout.setVerticalGroup(
+            jIFColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jNVTextColor.setBackground(NV.TextColor);
+
+        javax.swing.GroupLayout jNVTextColorLayout = new javax.swing.GroupLayout(jNVTextColor);
+        jNVTextColor.setLayout(jNVTextColorLayout);
+        jNVTextColorLayout.setHorizontalGroup(
+            jNVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jNVTextColorLayout.setVerticalGroup(
+            jNVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jRTextColor.setBackground(R.TextColor);
+
+        javax.swing.GroupLayout jRTextColorLayout = new javax.swing.GroupLayout(jRTextColor);
+        jRTextColor.setLayout(jRTextColorLayout);
+        jRTextColorLayout.setHorizontalGroup(
+            jRTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jRTextColorLayout.setVerticalGroup(
+            jRTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jIFTextColor.setBackground(d.TextColor);
+
+        javax.swing.GroupLayout jIFTextColorLayout = new javax.swing.GroupLayout(jIFTextColor);
+        jIFTextColor.setLayout(jIFTextColorLayout);
+        jIFTextColorLayout.setHorizontalGroup(
+            jIFTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jIFTextColorLayout.setVerticalGroup(
+            jIFTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jVTextColor.setBackground(V.TextColor);
+
+        javax.swing.GroupLayout jVTextColorLayout = new javax.swing.GroupLayout(jVTextColor);
+        jVTextColor.setLayout(jVTextColorLayout);
+        jVTextColorLayout.setHorizontalGroup(
+            jVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jVTextColorLayout.setVerticalGroup(
+            jVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jSTextColor.setBackground(S1.TextColor);
+
+        javax.swing.GroupLayout jSTextColorLayout = new javax.swing.GroupLayout(jSTextColor);
+        jSTextColor.setLayout(jSTextColorLayout);
+        jSTextColorLayout.setHorizontalGroup(
+            jSTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jSTextColorLayout.setVerticalGroup(
+            jSTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jGridColor.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jGridColorLayout = new javax.swing.GroupLayout(jGridColor);
+        jGridColor.setLayout(jGridColorLayout);
+        jGridColorLayout.setHorizontalGroup(
+            jGridColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 23, Short.MAX_VALUE)
+        );
+        jGridColorLayout.setVerticalGroup(
+            jGridColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                            .addComponent(jChangeColorIF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeColorV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeColorS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeColorNV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeColorR, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                            .addComponent(jChangeTextColorS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeTextColorV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeTextColorNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeTextColorR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jChangeTextColorIF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jSColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jVColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jNVColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jRColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jIFColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jChangeColorIF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                            .addComponent(jChangeColorNV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jChangeColorV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jChangeColorS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jChangeColorR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jIFTextColor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jRTextColor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jSTextColor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jVTextColor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jNVTextColor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jChangeTextColorS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jChangeTextColorV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jChangeTextColorNV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                            .addComponent(jChangeTextColorR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jChangeTextColorIF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jGridColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jChangeColorGrid, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(126, 126, 126)))
                         .addGap(17, 17, 17))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jChangeColorGrid, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 132, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,29 +449,46 @@ public class mdi extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jChangeColorS)
-                    .addComponent(jChangeTextColorS))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jChangeColorS)
+                        .addComponent(jChangeTextColorS))
+                    .addComponent(jSTextColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jChangeColorV)
-                    .addComponent(jChangeTextColorV))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jChangeColorNV)
-                    .addComponent(jChangeTextColorNV))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jChangeColorR)
-                    .addComponent(jChangeTextColorR))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jChangeColorIF)
-                    .addComponent(jChangeTextColorIF))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jChangeColorGrid)
-                .addGap(26, 26, 26))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jVColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jChangeColorV)
+                        .addComponent(jChangeTextColorV))
+                    .addComponent(jVTextColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jNVColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jChangeColorNV)
+                        .addComponent(jChangeTextColorNV))
+                    .addComponent(jNVTextColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jRColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jChangeColorR)
+                        .addComponent(jChangeTextColorR))
+                    .addComponent(jRTextColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jIFColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jChangeColorIF)
+                        .addComponent(jChangeTextColorIF))
+                    .addComponent(jIFTextColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 20, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jChangeColorGrid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jGridColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -615,6 +812,14 @@ public class mdi extends javax.swing.JFrame {
             }
         });
         jMenuOptions.add(jMenuItemSettings);
+
+        jMenuItem1.setText("Show/hide grid");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuOptions.add(jMenuItem1);
 
         jMenuBar1.add(jMenuOptions);
 
@@ -1072,71 +1277,103 @@ public class mdi extends javax.swing.JFrame {
 //Начало работы Иванова А.А. настройка цвета
     //меню настроек
     private void jMenuItemSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSettingsActionPerformed
+        jDesktopPane.repaint();
         jDialog1.setSize(400, 300);
         jDialog1.setLocation((jDesktopPane.getWidth()-jDialog1.getWidth())/2, (jDesktopPane.getHeight()-jDialog1.getHeight())/2);
         jDialog1.setVisible(true);
     }//GEN-LAST:event_jMenuItemSettingsActionPerformed
     //изменение цвета
     private void jChangeColorSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorSActionPerformed
-        S1.BackgroundColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        S1.BackgroundColor = selectedColor;
+        jSColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorSActionPerformed
 
     private void jChangeColorVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorVActionPerformed
-        V.BackgroundColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        V.BackgroundColor = selectedColor;
+        jVColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorVActionPerformed
 
     private void jChangeColorNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorNVActionPerformed
-        NV.BackgroundColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        NV.BackgroundColor = selectedColor;
+        jNVColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorNVActionPerformed
 
     private void jChangeColorRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorRActionPerformed
-        R.BackgroundColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        R.BackgroundColor = selectedColor;
+        jRColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorRActionPerformed
 
     private void jChangeColorIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorIFActionPerformed
-        d.BackgroundColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        d.BackgroundColor = selectedColor;
+        jIFColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorIFActionPerformed
 
     private void jChangeColorGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorGridActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
-        //grid.Color = selectedColor; //в будущем изменение переменной, отвечающей за цвет сетки
+        GridPanel.color = selectedColor;
+        jGridColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorGridActionPerformed
 
     private void jChangeTextColorSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorSActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         S1.TextColor = selectedColor;
+        jSTextColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorSActionPerformed
 
     private void jChangeTextColorVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorVActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         V.TextColor = selectedColor;
+        jVTextColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorVActionPerformed
 
     private void jChangeTextColorNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorNVActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         NV.TextColor = selectedColor;
+        jNVTextColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorNVActionPerformed
 
     private void jChangeTextColorRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorRActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         R.TextColor = selectedColor;
+        jRTextColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorRActionPerformed
 
     private void jChangeTextColorIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorIFActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         d.TextColor = selectedColor;
+        jIFTextColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorIFActionPerformed
+    Color gridColor = GridPanel.color;
+    Boolean gridIsHide = false;
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (gridIsHide) {
+            GridPanel.color = gridColor;
+            gridIsHide = false;
+            jChangeColorGrid.setEnabled(true);
+        } else {
+            gridColor = GridPanel.color;
+            GridPanel.color = jDesktopPane.getSelectedFrame().getBackground();
+            gridIsHide = true;
+            jChangeColorGrid.setEnabled(false);
+        }
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 //Конец работы Иванова А.А.
     public static void main(String args[]) throws Exception{
         java.awt.EventQueue.invokeLater(new RunnableImpl());
@@ -1179,6 +1416,9 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JPanel jGridColor;
+    private javax.swing.JPanel jIFColor;
+    private javax.swing.JPanel jIFTextColor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1188,6 +1428,7 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuEdit;
+    private javax.swing.JMenuItem jMenuItem1;
     public static javax.swing.JMenuItem jMenuItemClear;
     public static javax.swing.JMenuItem jMenuItemIF;
     public static javax.swing.JMenuItem jMenuItemNV;
@@ -1196,13 +1437,21 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemSettings;
     public static javax.swing.JMenuItem jMenuItemV;
     private javax.swing.JMenu jMenuOptions;
+    private javax.swing.JPanel jNVColor;
+    private javax.swing.JPanel jNVTextColor;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jRColor;
+    private javax.swing.JPanel jRTextColor;
+    private javax.swing.JPanel jSColor;
+    private javax.swing.JPanel jSTextColor;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JPanel jVColor;
+    private javax.swing.JPanel jVTextColor;
     private javax.swing.JMenuItem quit;
     // End of variables declaration//GEN-END:variables
     
