@@ -37,6 +37,9 @@ public class jMDIFrame extends JInternalFrame {
     public int s;
     public final int k = 100;
     public ArrayList<figures> all = new ArrayList();//массив хранящий фугуры по порядку расположения !!!!!!!!!!!!!!!!!!!!!!!!!!
+    public ArrayList<points> points = new ArrayList();//массив хранящий точки по порядку расположения
+    
+    public ArrayList<Shape> pointShape = new ArrayList();//массив форм точек на 1 фигуре//обновляется для каждой отдельной фигуры
     public int x;//координаты мыши
     public int y;
     Point2D p;// текущая точка
@@ -48,7 +51,7 @@ public class jMDIFrame extends JInternalFrame {
     static double zoom = 1;// коэффициент масштаба
     Shape ss;
     boolean touch;
-    
+    boolean pointed = false;//есть ли точки
     boolean change_idx=false; //Индикатор который показывает были или нет изменения в схеме
     boolean draw_idx=true; //Показывает можно рисовать или нет
     
