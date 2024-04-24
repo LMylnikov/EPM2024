@@ -870,8 +870,8 @@ public class jMDIFrame extends JInternalFrame {
             newX = oldX - dx;
             newY = oldY - dy;
 
-            dx = (int)(dx*(zoom-0.13)/zoom);
-            dy = (int)(dy*(zoom-0.13)/zoom);
+            dx = (int)(dx*(zoom-0.15)/zoom);
+            dy = (int)(dy*(zoom-0.15)/zoom);
 
             //прибавляем новое смещение
             newX += dx;
