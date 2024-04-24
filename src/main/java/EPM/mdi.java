@@ -372,7 +372,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jGridColor.setBackground(new java.awt.Color(255, 255, 255));
+        jGridColor.setBackground(GridPanel.color);
 
         javax.swing.GroupLayout jGridColorLayout = new javax.swing.GroupLayout(jGridColor);
         jGridColor.setLayout(jGridColorLayout);

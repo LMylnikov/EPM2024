@@ -37,6 +37,9 @@ public class jMDIFrame extends JInternalFrame {
     public int s;
     public final int k = 100;
     public ArrayList<figures> all = new ArrayList();//массив хранящий фугуры по порядку расположения !!!!!!!!!!!!!!!!!!!!!!!!!!
+    public ArrayList<points> points = new ArrayList();//массив хранящий точки по порядку расположения
+    
+    public ArrayList<Shape> pointShape = new ArrayList();//массив форм точек на 1 фигуре//обновляется для каждой отдельной фигуры
     public int x;//координаты мыши
     public int y;
     Point2D p;// текущая точка
@@ -48,7 +51,7 @@ public class jMDIFrame extends JInternalFrame {
     static double zoom = 1;// коэффициент масштаба
     Shape ss;
     boolean touch;
-    
+    boolean pointed = false;//есть ли точки
     boolean change_idx=false; //Индикатор который показывает были или нет изменения в схеме
     boolean draw_idx=true; //Показывает можно рисовать или нет
     
@@ -163,8 +166,18 @@ public class jMDIFrame extends JInternalFrame {
 
         jSize.setEditable(false);
         jSize.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jSize.setText("1");
+        jSize.setText("100%");
         jSize.setToolTipText("");
+        jSize.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jSize.setFocusable(false);
+        jSize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSizeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSizeMouseExited(evt);
+            }
+        });
 
         zplus.setText("+");
         zplus.setEnabled(true);
@@ -235,7 +248,7 @@ public class jMDIFrame extends JInternalFrame {
     int y = centerY;
 
     // Создаем экземпляр фигуры и устанавливаем его координаты
-    S1 Sn = new S1(x, y, s);
+    S1 Sn = new S1(x, y, (int)(s*zoom));
     
     // Добавляем фигуру на панель
     jPanel1.removeAll();
@@ -280,7 +293,7 @@ public class jMDIFrame extends JInternalFrame {
         int x = centerX;
         int y = centerY;
     
-        V Vn = new V(x, y, s);
+        V Vn = new V(x, y, (int)(s*zoom));
         Vn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
         Vn.setVisible(true);
         Vn.setOpaque(false); // Сделаем фигуру прозрачной
@@ -323,7 +336,7 @@ public class jMDIFrame extends JInternalFrame {
         int x = centerX;
         int y = centerY;
         
-        R Rn = new R(x, y, s);
+        R Rn = new R(x, y, (int)(s*zoom));
         Rn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
         Rn.setVisible(true);
         
@@ -365,7 +378,7 @@ public class jMDIFrame extends JInternalFrame {
         int x = centerX;
         int y = centerY;
         
-        NV NVn = new NV(x, y, s);
+        NV NVn = new NV(x, y, (int)(s*zoom));
         NVn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
         NVn.setVisible(true);
         
@@ -857,8 +870,8 @@ public class jMDIFrame extends JInternalFrame {
             newX = oldX - dx;
             newY = oldY - dy;
 
-            dx = (int)(dx*(zoom-0.13)/zoom);
-            dy = (int)(dy*(zoom-0.13)/zoom);
+            dx = (int)(dx*(zoom-0.15)/zoom);
+            dy = (int)(dy*(zoom-0.15)/zoom);
 
             //прибавляем новое смещение
             newX += dx;
@@ -868,7 +881,7 @@ public class jMDIFrame extends JInternalFrame {
             b.setYY(newY);
         }
 
-        jSize.setText(String.format("%.2f", zoom));
+        jSize.setText(String.format("%.0f", zoom*100)+'%');
         //Конец работы Иванова А.А.
         jPanel1.repaint();
     }//GEN-LAST:event_zminusActionPerformed
@@ -922,10 +935,21 @@ public class jMDIFrame extends JInternalFrame {
             b.setYY(newY);
         }
 
-        jSize.setText(String.format("%.2f", zoom));
+        jSize.setText(String.format("%.0f", zoom*100)+'%');
         //Конец работы Иванова А.А.
         jPanel1.repaint();
     }//GEN-LAST:event_zplusActionPerformed
+static BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+    // Create a new blank cursor.
+    Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+    cursorImg, new Point(0, 0), "blank cursor");
+    private void jSizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSizeMouseEntered
+        setCursor(blankCursor);
+    }//GEN-LAST:event_jSizeMouseEntered
+
+    private void jSizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSizeMouseExited
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_jSizeMouseExited
 
     
   // Активация / деактивация кнопки Save 

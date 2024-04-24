@@ -1,6 +1,7 @@
 package figure;
 
 import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JComponent;
@@ -9,6 +10,7 @@ public class figures extends JComponent{
     int x, y;//x,y - координаты центра фигуры 
     Shape shape;
     int s;//s - size
+    Rectangle2D rec;
 //    String str;
 //     private static int counter = 0;
 //    public final int id = 0;
@@ -99,5 +101,11 @@ public class figures extends JComponent{
     public String getCodeF() {
         return codeF;
     }
+    public Rectangle2D getRec(){  
+        return rec;
+    }
+    public void setRec(Rectangle2D rec){
+        this.rec=rec;
+    } 
        
 }
