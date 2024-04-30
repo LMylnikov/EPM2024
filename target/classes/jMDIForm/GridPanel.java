@@ -8,6 +8,7 @@ public class GridPanel extends JPanel {
     private int xOffset = 20; // Смещение по X
     private int yOffset = 20; // Смещение по Y
     private int thickLineSpacing = 5; // Каждая пятая линия будет толстой
+    public static Color color = Color.GRAY;
 
     public GridPanel(int cellSize) {
         this.cellSize = cellSize;
@@ -23,7 +24,7 @@ public class GridPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // Установка серого цвета для сетки
-        g2d.setColor(Color.GRAY);
+        g2d.setColor(color);
 
         // Определяем размеры панели
         int panelWidth = getWidth();
