@@ -162,9 +162,26 @@ public class jMDIFrame extends JInternalFrame {
         });
 
         jSize.setEditable(false);
+        jSize.setBackground(getBackground());
         jSize.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jSize.setText("1");
         jSize.setToolTipText("");
+<<<<<<< Updated upstream
+=======
+        jSize.setBorder(null);
+        jSize.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jSize.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jSize.setFocusable(false);
+        jSize.setMixingCutoutShape(null);
+        jSize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSizeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSizeMouseExited(evt);
+            }
+        });
+>>>>>>> Stashed changes
 
         zplus.setText("+");
         zplus.setEnabled(true);
