@@ -1359,6 +1359,7 @@ public class mdi extends javax.swing.JFrame {
         jIFTextColor.setBackground(selectedColor);
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorIFActionPerformed
+
     Color gridColor = GridPanel.color;
     Boolean gridIsHide = false;
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
