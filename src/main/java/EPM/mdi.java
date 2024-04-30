@@ -1105,7 +1105,7 @@ public class mdi extends javax.swing.JFrame {
     }//GEN-LAST:event_CascadeActionPerformed
 
     private void AboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AboutActionPerformed
-        Info.showInternalMessageDialog(jDesktopPane, " Event-driven Process Methodology Editor"
+        Info.showInternalMessageDialog(jDesktopPane, " Event-driven Process Methodology Modeller"
                 + "\n Version: in dev process"
                 + "\n Copyright (C) 2023-24", "About", JOptionPane.INFORMATION_MESSAGE,null);
 
