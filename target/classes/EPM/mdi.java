@@ -143,8 +143,8 @@ public class mdi extends javax.swing.JFrame {
         jMenuItemClear = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuOptions = new javax.swing.JMenu();
-        jMenuItemSettings = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemColorSettings = new javax.swing.JMenuItem();
+        jMenuItemGrid = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         Cascade = new javax.swing.JMenuItem();
         Tile = new javax.swing.JMenuItem();
@@ -804,22 +804,23 @@ public class mdi extends javax.swing.JFrame {
 
         jMenuOptions.setText("Options");
 
-        jMenuItemSettings.setText("Settings");
-        jMenuItemSettings.setEnabled(true);
-        jMenuItemSettings.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemColorSettings.setText("Color settings");
+        jMenuItemColorSettings.setEnabled(false);
+        jMenuItemColorSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSettingsActionPerformed(evt);
+                jMenuItemColorSettingsActionPerformed(evt);
             }
         });
-        jMenuOptions.add(jMenuItemSettings);
+        jMenuOptions.add(jMenuItemColorSettings);
 
-        jMenuItem1.setText("Show/hide grid");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemGrid.setText("Grid off");
+        jMenuItemGrid.setEnabled(false);
+        jMenuItemGrid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemGridActionPerformed(evt);
             }
         });
-        jMenuOptions.add(jMenuItem1);
+        jMenuOptions.add(jMenuItemGrid);
 
         jMenuBar1.add(jMenuOptions);
 
@@ -1276,12 +1277,12 @@ public class mdi extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNVActionPerformed
 //Начало работы Иванова А.А. настройка цвета
     //меню настроек
-    private void jMenuItemSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSettingsActionPerformed
+    private void jMenuItemColorSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemColorSettingsActionPerformed
         jDesktopPane.repaint();
         jDialog1.setSize(400, 300);
         jDialog1.setLocation((jDesktopPane.getWidth()-jDialog1.getWidth())/2, (jDesktopPane.getHeight()-jDialog1.getHeight())/2);
         jDialog1.setVisible(true);
-    }//GEN-LAST:event_jMenuItemSettingsActionPerformed
+    }//GEN-LAST:event_jMenuItemColorSettingsActionPerformed
     //изменение цвета
     private void jChangeColorSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorSActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
@@ -1362,19 +1363,24 @@ public class mdi extends javax.swing.JFrame {
 
     Color gridColor = GridPanel.color;
     Boolean gridIsHide = false;
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGridActionPerformed
+
         if (gridIsHide) {
             GridPanel.color = gridColor;
             gridIsHide = false;
             jChangeColorGrid.setEnabled(true);
+            jMenuItemGrid.setText("Grid off");
+            
         } else {
             gridColor = GridPanel.color;
             GridPanel.color = jDesktopPane.getSelectedFrame().getBackground();
             gridIsHide = true;
             jChangeColorGrid.setEnabled(false);
+            jMenuItemGrid.setText("Grid on");
         }
+
         jDesktopPane.repaint();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemGridActionPerformed
 //Конец работы Иванова А.А.
     public static void main(String args[]) throws Exception{
         java.awt.EventQueue.invokeLater(new RunnableImpl());
@@ -1429,13 +1435,13 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuEdit;
-    private javax.swing.JMenuItem jMenuItem1;
     public static javax.swing.JMenuItem jMenuItemClear;
+    public static javax.swing.JMenuItem jMenuItemColorSettings;
+    public static javax.swing.JMenuItem jMenuItemGrid;
     public static javax.swing.JMenuItem jMenuItemIF;
     public static javax.swing.JMenuItem jMenuItemNV;
     public static javax.swing.JMenuItem jMenuItemR;
     public static javax.swing.JMenuItem jMenuItemS;
-    private javax.swing.JMenuItem jMenuItemSettings;
     public static javax.swing.JMenuItem jMenuItemV;
     private javax.swing.JMenu jMenuOptions;
     private javax.swing.JPanel jNVColor;

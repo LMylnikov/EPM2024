@@ -978,6 +978,8 @@ static BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_IN
            mdi.jMenuItemNV.setEnabled(true);
            mdi.jMenuItemIF.setEnabled(true);
            mdi.jMenuItemClear.setEnabled(true);
+           mdi.jMenuItemGrid.setEnabled(true);
+           mdi.jMenuItemColorSettings.setEnabled(true);
         } else {
            mdi.jButtonS.setEnabled(false);
            mdi.jButtonV.setEnabled(false); 
@@ -989,7 +991,9 @@ static BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_IN
            mdi.jMenuItemR.setEnabled(false);
            mdi.jMenuItemNV.setEnabled(false);
            mdi.jMenuItemIF.setEnabled(false);
-           mdi.jMenuItemClear.setEnabled(false);            
+           mdi.jMenuItemClear.setEnabled(false); 
+           mdi.jMenuItemGrid.setEnabled(false);       
+           mdi.jMenuItemColorSettings.setEnabled(false);
         }
     }          
     
