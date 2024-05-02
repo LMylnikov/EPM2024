@@ -9,6 +9,9 @@ import java.awt.Shape;
 import javax.swing.*;
 
 public class S extends JComponent{
+
+    static Color BackgroundColor;
+    static Color TextColor;
     int s, x, y;
     Shape shape;
     String str="Start/End";
