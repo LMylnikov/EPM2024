@@ -255,7 +255,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jVColor.setBackground(new java.awt.Color(255, 255, 255));
+        jVColor.setBackground(V.BackgroundColor);
 
         javax.swing.GroupLayout jVColorLayout = new javax.swing.GroupLayout(jVColor);
         jVColor.setLayout(jVColorLayout);
@@ -268,7 +268,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jNVColor.setBackground(new java.awt.Color(255, 255, 255));
+        jNVColor.setBackground(NV.BackgroundColor);
 
         javax.swing.GroupLayout jNVColorLayout = new javax.swing.GroupLayout(jNVColor);
         jNVColor.setLayout(jNVColorLayout);
@@ -281,7 +281,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jRColor.setBackground(new java.awt.Color(255, 255, 255));
+        jRColor.setBackground(R.BackgroundColor);
 
         javax.swing.GroupLayout jRColorLayout = new javax.swing.GroupLayout(jRColor);
         jRColor.setLayout(jRColorLayout);
@@ -294,7 +294,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jIFColor.setBackground(new java.awt.Color(255, 255, 255));
+        jIFColor.setBackground(d.BackgroundColor);
 
         javax.swing.GroupLayout jIFColorLayout = new javax.swing.GroupLayout(jIFColor);
         jIFColor.setLayout(jIFColorLayout);
@@ -1301,6 +1301,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         NV.BackgroundColor = selectedColor;
         jNVColor.setBackground(selectedColor);
+        NV.prefs.putInt("BackgroundColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorNVActionPerformed
 
