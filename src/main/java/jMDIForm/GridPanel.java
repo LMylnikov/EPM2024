@@ -2,13 +2,34 @@ package jMDIForm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.prefs.*;
 
 public class GridPanel extends JPanel {
+    public static Color color = Color.GRAY;
+    public static Preferences prefs = Preferences.userNodeForPackage(GridPanel.class);
+    static {
+        // Проверяем, существует ли узел
+        try {
+            if (!prefs.nodeExists("")) {
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                color = Color.GRAY;
+
+                prefs.putInt("color", color.getRGB());
+            } else {
+                // Узел существует - загружаем значения
+                color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
+            }
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+            // В случае ошибки устанавливаем значения по умолчанию
+            color = Color.GRAY;
+        }
+    }
+    
     private int cellSize;
     private int xOffset = 20; // Смещение по X
     private int yOffset = 20; // Смещение по Y
     private int thickLineSpacing = 5; // Каждая пятая линия будет толстой
-    public static Color color = Color.GRAY;
 
     public GridPanel(int cellSize) {
         this.cellSize = cellSize;

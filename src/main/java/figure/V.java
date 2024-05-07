@@ -9,11 +9,35 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import javax.swing.*;
+import java.util.prefs.Preferences;
+import java.util.prefs.BackingStoreException;
 
 public class V extends figures{
 //    int s, x, y;
-    public static Color BackgroundColor = Color.WHITE;
-    public static Color TextColor = Color.BLACK;
+    public static Color BackgroundColor;
+    public static Color TextColor;
+    static {
+        // Проверяем, существует ли узел
+        try {
+            if (!prefs.nodeExists("")) {
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                BackgroundColor = Color.WHITE;
+                TextColor = Color.BLACK;
+
+                prefs.putInt("VBackgroundColor", BackgroundColor.getRGB());
+                prefs.putInt("VTextColor", TextColor.getRGB());
+            } else {
+                // Узел существует - загружаем значения
+                BackgroundColor = new Color(prefs.getInt("VBackgroundColor", Color.WHITE.getRGB()));
+                TextColor = new Color(prefs.getInt("VTextColor", Color.BLACK.getRGB()));
+            }
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+            // В случае ошибки устанавливаем значения по умолчанию
+            BackgroundColor = Color.WHITE;
+            TextColor = Color.BLACK;
+        }
+    }
     public V(int x, int y, int s) {
         this.x=x + s/4;
         this.y=y + s/4;

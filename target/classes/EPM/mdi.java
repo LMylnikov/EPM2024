@@ -164,7 +164,7 @@ public class mdi extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Shape line"));
         jPanel2.setPreferredSize(new java.awt.Dimension(170, 170));
 
-        jSTextColor.setBackground(new java.awt.Color(255, 255, 255));
+        jSTextColor.setBackground(S1.TextColor);
         jSTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jSTextColor.setMaximumSize(new java.awt.Dimension(10, 10));
         jSTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
@@ -182,7 +182,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 23, Short.MAX_VALUE)
         );
 
-        jVTextColor.setBackground(new java.awt.Color(255, 255, 255));
+        jVTextColor.setBackground(V.TextColor);
         jVTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jVTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jVTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
@@ -198,7 +198,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 23, Short.MAX_VALUE)
         );
 
-        jNVTextColor.setBackground(new java.awt.Color(255, 255, 255));
+        jNVTextColor.setBackground(NV.TextColor);
         jNVTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jNVTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jNVTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
@@ -214,7 +214,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 23, Short.MAX_VALUE)
         );
 
-        jRTextColor.setBackground(new java.awt.Color(255, 255, 255));
+        jRTextColor.setBackground(R.TextColor);
         jRTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jRTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jRTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
@@ -230,7 +230,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 23, Short.MAX_VALUE)
         );
 
-        jIFTextColor.setBackground(new java.awt.Color(255, 255, 255));
+        jIFTextColor.setBackground(d.TextColor);
         jIFTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jIFTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jIFTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
@@ -302,15 +302,14 @@ public class mdi extends javax.swing.JFrame {
                         .addComponent(jIFTextColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jChangeTextColorIF, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jSTextColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jChangeTextColorS, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jVTextColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jChangeTextColorV, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jSTextColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jChangeTextColorS, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jVTextColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jChangeTextColorV, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12))
         );
         jPanel2Layout.setVerticalGroup(
@@ -342,7 +341,7 @@ public class mdi extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Shape filling"));
 
         jSColor.setBackground(S1.BackgroundColor);
-        jSColor.setBackground(new java.awt.Color(255, 255, 255));
+        jSColor.setBackground(S1.BackgroundColor);
         jSColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jSColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
@@ -357,7 +356,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        jVColor.setBackground(new java.awt.Color(255, 255, 255));
+        jVColor.setBackground(V.BackgroundColor);
         jVColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jVColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
@@ -372,7 +371,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        jNVColor.setBackground(new java.awt.Color(255, 255, 255));
+        jNVColor.setBackground(NV.BackgroundColor);
         jNVColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jNVColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
@@ -387,7 +386,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        jRColor.setBackground(new java.awt.Color(255, 255, 255));
+        jRColor.setBackground(R.BackgroundColor);
         jRColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jRColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
@@ -402,7 +401,7 @@ public class mdi extends javax.swing.JFrame {
             .addGap(0, 22, Short.MAX_VALUE)
         );
 
-        jIFColor.setBackground(new java.awt.Color(255, 255, 255));
+        jIFColor.setBackground(d.BackgroundColor);
         jIFColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jIFColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
@@ -472,17 +471,14 @@ public class mdi extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jChangeColorR, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jNVColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jChangeColorNV, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jIFColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jChangeColorIF, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(12, 12, 12))
+                        .addComponent(jNVColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jChangeColorNV, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jIFColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jChangeColorIF, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,7 +508,7 @@ public class mdi extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Grid"));
 
-        jGridColor.setBackground(new java.awt.Color(255, 255, 255));
+        jGridColor.setBackground(GridPanel.color);
         jGridColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jGridColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
@@ -1431,6 +1427,8 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         d.BackgroundColor = selectedColor;
         jIFColor.setBackground(selectedColor);
+        //jIFColor.setBackground(d.BackgroundColor);
+        figures.prefs.putInt("IFBackgroundColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorIFActionPerformed
 
@@ -1438,6 +1436,8 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         R.BackgroundColor = selectedColor;
         jRColor.setBackground(selectedColor);
+        //jRColor.setBackground(R.BackgroundColor);
+        figures.prefs.putInt("RBackgroundColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorRActionPerformed
 
@@ -1445,6 +1445,9 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         NV.BackgroundColor = selectedColor;
         jNVColor.setBackground(selectedColor);
+        //jNVColor.setBackground(NV.BackgroundColor);
+        //NV.prefs.putInt("BackgroundColor", selectedColor.getRGB());
+        figures.prefs.putInt("NVBackgroundColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorNVActionPerformed
 
@@ -1452,6 +1455,8 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         V.BackgroundColor = selectedColor;
         jVColor.setBackground(selectedColor);
+        //jVColor.setBackground(V.BackgroundColor);
+        figures.prefs.putInt("VBackgroundColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorVActionPerformed
 
@@ -1465,6 +1470,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         GridPanel.color = selectedColor;
         jGridColor.setBackground(selectedColor);
+        GridPanel.prefs.putInt("color", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorGridActionPerformed
 
@@ -1498,16 +1504,16 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         S1.BackgroundColor = selectedColor;
         jSColor.setBackground(selectedColor);
-
-   
-
-        // TODO add your handling code here:
+        figures.prefs.putInt("S1BackgroundColor", selectedColor.getRGB());  
+ 
+       // TODO add your handling code here:
     }//GEN-LAST:event_jChangeColorSActionPerformed
 
     private void jChangeTextColorSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorSActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         S1.TextColor = selectedColor;
         jSTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("S1TextColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorSActionPerformed
 
@@ -1515,6 +1521,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         V.TextColor = selectedColor;
         jVTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("VTextColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorVActionPerformed
 
@@ -1522,6 +1529,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         NV.TextColor = selectedColor;
         jNVTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("NVTextColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorNVActionPerformed
 
@@ -1529,6 +1537,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         R.TextColor = selectedColor;
         jRTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("RTextColor", selectedColor.getRGB());
         //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorRActionPerformed
 
@@ -1536,6 +1545,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         d.TextColor = selectedColor;
         jIFTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("IFTextColor", selectedColor.getRGB());
         // jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorIFActionPerformed
 

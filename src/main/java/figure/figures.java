@@ -5,8 +5,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JComponent;
+import java.util.prefs.Preferences;
 
 public class figures extends JComponent{
+    public static Preferences prefs = Preferences.userNodeForPackage(figures.class);
     int x, y;//x,y - координаты центра фигуры 
     Shape shape;
     int s;//s - size
