@@ -1287,6 +1287,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         S1.BackgroundColor = selectedColor;
         jSColor.setBackground(selectedColor);
+        figures.prefs.putInt("S1BackgroundColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorSActionPerformed
 
@@ -1294,6 +1295,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         V.BackgroundColor = selectedColor;
         jVColor.setBackground(selectedColor);
+        figures.prefs.putInt("VBackgroundColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorVActionPerformed
 
@@ -1301,7 +1303,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         NV.BackgroundColor = selectedColor;
         jNVColor.setBackground(selectedColor);
-        NV.prefs.putInt("BackgroundColor", selectedColor.getRGB());
+        figures.prefs.putInt("NVBackgroundColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorNVActionPerformed
 
@@ -1309,6 +1311,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         R.BackgroundColor = selectedColor;
         jRColor.setBackground(selectedColor);
+        figures.prefs.putInt("RBackgroundColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorRActionPerformed
 
@@ -1316,6 +1319,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         d.BackgroundColor = selectedColor;
         jIFColor.setBackground(selectedColor);
+        figures.prefs.putInt("IFBackgroundColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorIFActionPerformed
 
@@ -1323,6 +1327,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         GridPanel.color = selectedColor;
         jGridColor.setBackground(selectedColor);
+        GridPanel.prefs.putInt("color", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorGridActionPerformed
 
@@ -1330,6 +1335,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         S1.TextColor = selectedColor;
         jSTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("S1TextColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorSActionPerformed
 
@@ -1337,6 +1343,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         V.TextColor = selectedColor;
         jVTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("VTextColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorVActionPerformed
 
@@ -1344,6 +1351,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         NV.TextColor = selectedColor;
         jNVTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("NVTextColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorNVActionPerformed
 
@@ -1351,6 +1359,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         R.TextColor = selectedColor;
         jRTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("RTextColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorRActionPerformed
 
@@ -1358,6 +1367,7 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         d.TextColor = selectedColor;
         jIFTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("IFTextColor", selectedColor.getRGB());
         jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorIFActionPerformed
     Color gridColor = GridPanel.color;

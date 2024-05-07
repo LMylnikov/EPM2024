@@ -305,8 +305,8 @@
             </Container>
             <Container class="javax.swing.JPanel" name="jVColor">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="V.BackgroundColor" type="code"/>
                 </Property>
               </Properties>
 
@@ -325,8 +325,8 @@
             </Container>
             <Container class="javax.swing.JPanel" name="jNVColor">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="NV.BackgroundColor" type="code"/>
                 </Property>
               </Properties>
 
@@ -345,8 +345,8 @@
             </Container>
             <Container class="javax.swing.JPanel" name="jRColor">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="R.BackgroundColor" type="code"/>
                 </Property>
               </Properties>
 
@@ -365,8 +365,8 @@
             </Container>
             <Container class="javax.swing.JPanel" name="jIFColor">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="d.BackgroundColor" type="code"/>
                 </Property>
               </Properties>
 
