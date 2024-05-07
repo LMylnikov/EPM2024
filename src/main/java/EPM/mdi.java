@@ -72,6 +72,12 @@ public class mdi extends javax.swing.JFrame {
         initComponents();
         Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
         setSize (sSize);
+        
+        if (!GridPanel.prefs.getBoolean("isVisible", true)) {
+            GridPanel.color = new Color (240, 240, 240);
+            jChangeColorGrid.setEnabled(false);
+        }
+        
     }
     //часть для вырезки, вставки, копирования и удаления
     @SuppressWarnings("unchecked")
@@ -1412,17 +1418,16 @@ public class mdi extends javax.swing.JFrame {
         jDialogSettings.setTitle("Settings");
         jDialogSettings.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
         
-        if (gridIsHide) {
-          jCheckBox1.setSelected(false);   
+        if (GridPanel.isVisible) {
+          jCheckBox1.setSelected(true);   
         } else {
-          jCheckBox1.setSelected(true); 
+          jCheckBox1.setSelected(false); 
         }
         
         jDialogSettings.setVisible(true);
     }//GEN-LAST:event_jMenuItemColorSettingsActionPerformed
 
     Color gridColor = GridPanel.color;
-    Boolean gridIsHide = false;
     private void jChangeColorIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorIFActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         d.BackgroundColor = selectedColor;
@@ -1488,12 +1493,13 @@ public class mdi extends javax.swing.JFrame {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
 
             if (jCheckBox1.isSelected()) {
-                gridIsHide = false;
+                GridPanel.isVisible = true;
+                GridPanel.prefs.putBoolean("isVisible", true);
                 GridPanel.color =  gridColor;
-                gridIsHide = false;
                 jChangeColorGrid.setEnabled(true);                
             } else {
-                gridIsHide = true;            
+                GridPanel.isVisible = false;      
+                GridPanel.prefs.putBoolean("isVisible", false);
                 gridColor = GridPanel.color;
                 GridPanel.color = jDesktopPane.getSelectedFrame().getBackground();
                 jChangeColorGrid.setEnabled(false);

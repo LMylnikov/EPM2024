@@ -6,6 +6,7 @@ import java.util.prefs.*;
 
 public class GridPanel extends JPanel {
     public static Color color = Color.GRAY;
+    public static Boolean isVisible;
     public static Preferences prefs = Preferences.userNodeForPackage(GridPanel.class);
     static {
         // Проверяем, существует ли узел
@@ -13,11 +14,14 @@ public class GridPanel extends JPanel {
             if (!prefs.nodeExists("")) {
                 // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
                 color = Color.GRAY;
+                isVisible = true;
 
                 prefs.putInt("color", color.getRGB());
+                prefs.putBoolean("isVisible", true);
             } else {
                 // Узел существует - загружаем значения
                 color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
+                isVisible = prefs.getBoolean("isVisible", true);
             }
         } catch (BackingStoreException e) {
             e.printStackTrace();
