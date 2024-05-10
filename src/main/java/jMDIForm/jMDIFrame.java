@@ -844,36 +844,42 @@ public class jMDIFrame extends JInternalFrame {
         }
         //конец работы Иванова А.А.
         s = (int) (k * zoom);
-        x = jPanel1.getWidth();
-        y = jPanel1.getHeight();
 
+        // Получаем размеры панели
+        int panelWidth = jPanel1.getWidth();
+        int panelHeight = jPanel1.getHeight();
+
+        // Рассчитываем размеры видимой области панели
+        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+
+        // Максимальное значение скроллера
+        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
+        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
+
+        // Получаем текущее положение скроллеров
+        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
+        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
+
+        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
+        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
+        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
+        
         for (figures b : all) {
             b.setS(s);
             oldX = b.getXX();
             oldY = b.getYY();
-            //            dx = (int) zoom * abs((x / 2 - oldX));
-            //            if (oldX > x / 2) {
-                //                newX = oldX - dx;
-                //            } else {
-                //                newX = oldX + dx;
-                //            }
-            //            dy = (int) zoom * abs((y / 2 - oldY));
-            //            if (oldY > y / 2) {
-                //                newY = oldY - dy;
-                //            } else {
-                //                newY = oldY + dy;
-                //            }
-            //Начало работы Иванова А.А. изменение координат объектов
-            //смещение от центра
-            dx = oldX - x/2;
-            dy = oldY - y/2;
+            
+            //смещение от центра видимой области
+            dx = oldX - centerX;
+            dy = oldY - centerY;
 
             //смещаем к центру
             newX = oldX - dx;
             newY = oldY - dy;
 
-            dx = (int)(dx*(zoom-0.15)/zoom);
-            dy = (int)(dy*(zoom-0.15)/zoom);
+            dx = (int)(dx/(zoom+0.15)*zoom);
+            dy = (int)(dy/(zoom+0.15)*zoom);
 
             //прибавляем новое смещение
             newX += dx;
@@ -884,7 +890,7 @@ public class jMDIFrame extends JInternalFrame {
         }
 
         jSize.setText(String.format("%.0f", zoom*100)+'%');
-        //Конец работы Иванова А.А.
+        
         jPanel1.repaint();
     }//GEN-LAST:event_zminusActionPerformed
 
@@ -898,28 +904,35 @@ public class jMDIFrame extends JInternalFrame {
         }
         //конец работы работы Иванова А.А.
         s = (int) (k * zoom);
-        x = jPanel1.getWidth();
-        y = jPanel1.getHeight();
+        
+        // Получаем размеры панели
+        int panelWidth = jPanel1.getWidth();
+        int panelHeight = jPanel1.getHeight();
+
+        // Рассчитываем размеры видимой области панели
+        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+
+        // Максимальное значение скроллера
+        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
+        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
+
+        // Получаем текущее положение скроллеров
+        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
+        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
+
+        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
+        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
+        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
 
         for (figures b : all) {
             b.setS(s);
             oldX = b.getXX();
             oldY = b.getYY();
-            //            dx = (int) zoom * abs((x / 2 - oldX));
-            //            if (oldX > x / 2) {
-                //                newX = oldX + dx;
-                //            } else {
-                //                newX = oldX - dx;
-                //            }
-            //            dy = (int) zoom * abs((y / 2 - oldY));
-            //            if (oldY > y / 2) {
-                //                newY = oldY + dy;
-                //            } else {
-                //                newY = oldY - dy;
-                //            }
+            
             //начало работы Иванова А.А. изменение координат объектов
-            dx = oldX - x/2; //смещение от центра
-            dy = oldY - y/2;
+            dx = oldX - centerX; //смещение от центра
+            dy = oldY - centerY;
 
             //смещаем к центру
             newX = oldX - dx;
