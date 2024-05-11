@@ -61,5 +61,6 @@ public class NV extends figures{
         g2.setStroke(new BasicStroke(2));
         g2.draw(shape);
         g2.drawString("NV", x-15*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
+        rec=shape.getBounds2D();
     } 
 }
