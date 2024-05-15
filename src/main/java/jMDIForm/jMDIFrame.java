@@ -582,7 +582,79 @@ public class jMDIFrame extends JInternalFrame {
                     jPanel1.getPreferredSize().height + distanceY
                 ));
 
+<<<<<<< Updated upstream
                 // Перерисовываем панель
+=======
+            // Проверяем, выходит ли фигура за границы видимой области
+            boolean outOfBoundsX = newX > rightBorder;
+            boolean outOfBoundsY = newY > bottomBorder;
+
+            if (outOfBoundsX || outOfBoundsY) {
+                // Рассчитываем на сколько фигура выходит за границы
+                int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100 : 0;
+                int distanceY = outOfBoundsY ? Math.max(0, newY - bottomBorder) + 100 : 0;
+
+                // Проверяем, выходит ли фигура за границы размера панели           
+                boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
+
+                if (outOfPanelBounds) {
+                    // Увеличиваем размеры панели на это расстояние
+                    jPanel1.setPreferredSize(new Dimension(
+                            jPanel1.getPreferredSize().width + distanceX,
+                            jPanel1.getPreferredSize().height + distanceY
+                    ));
+
+                    // Перерисовываем панель
+                    jPanel1.add(new GridPanel(20));
+                    jPanel1.revalidate();
+                    jPanel1.repaint();
+                }
+            }
+
+            if (lined) {
+                for (Line ln : lines) {
+                    // for (figures f : all) {
+                    double dxx;
+                    double dyy;
+//                        if (b.getNameF().equals(ln.getID1())) {
+//                            dxx = ln.getC1().getX() - oldX;
+//                            dyy = ln.getC1().getY() - oldY;
+//                            Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p1);
+//                        }
+//                        if (b.getNameF().equals(ln.getID2())) {
+//                            dxx = ln.getC2().getX() - oldX;
+//                            dyy = ln.getC2().getY() - oldY;
+//                            Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p2);
+//                        }
+                    if (b.getNameF().equals(ln.getID1()) || b.getNameF().equals(ln.getID2())) {
+//                            dxx = ln.getC1().getX() - oldX;
+//                            dyy = ln.getC1().getY() - oldY;
+//                            Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p1);
+//                            dxx = ln.getC2().getX() - oldX;
+//                            dyy = ln.getC2().getY() - oldY;
+//                            Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p2);
+//                        oneShapePoints(0);
+//                        //Point2D.Double p2 = new Point2D.Double(pointShape.get(ln.getID11()));
+//                        ln.setC1((Point2D) pointShape.get(ln.getID11()));
+//                        ln.setC2((Point2D) pointShape.get(ln.getID22()));
+                        dxx = ln.getC1().getX() - oldX;
+                        dyy = ln.getC1().getY() - oldY;
+                        Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+                        ln.setC1(p1);
+                        dxx = ln.getC2().getX() - oldX;
+                        dyy = ln.getC2().getY() - oldY;
+                        Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+                        ln.setC2(p2);
+                        //ln.setCC();
+                    }
+                    // }
+                }
+                jPanel1.add(new GridPanel(20));
+>>>>>>> Stashed changes
                 jPanel1.revalidate();
             }
         }

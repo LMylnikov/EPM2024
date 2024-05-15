@@ -66,5 +66,6 @@ public class S1 extends figures {
         g2.draw(shape);
         g2.setFont(font);
         g2.drawString(str, (x)+17*s/100, (y)+34*s/100);// в дальнейшем кнопка //Иванов А.А. надпись центруется с учетом масштаба
+        rec=shape.getBounds2D();
     }
 }

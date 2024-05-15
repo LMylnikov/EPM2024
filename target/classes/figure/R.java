@@ -69,6 +69,7 @@ public class R extends figures{
         g2.draw(shape);
         g2.drawString("R", x-10*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
  
-        
+        rec=shape.getBounds2D();
+
     }
 }

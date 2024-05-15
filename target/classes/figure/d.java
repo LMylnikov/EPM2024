@@ -67,5 +67,6 @@ public class  d extends figures{//document
         g2.draw(gp);
         g2.drawString("IF", x-34*s/100, y+7*s/100); //Иванов А.А. надпись центруется с учетом масштаба
         shape =gp;
+        rec=shape.getBounds2D();
         }
 }
