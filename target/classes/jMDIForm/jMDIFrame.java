@@ -29,16 +29,15 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 
-
 public class jMDIFrame extends JInternalFrame {
 
 //    DatabaseHandler dbHandler = new DatabaseHandler();
-
     public int s;
     public final int k = 100;
     public ArrayList<figures> all = new ArrayList();//массив хранящий фугуры по порядку расположения !!!!!!!!!!!!!!!!!!!!!!!!!!
 //    public ArrayList<points> points = new ArrayList();//массив хранящий точки по порядку расположения
-    
+    public ArrayList<points> points = new ArrayList();//массив хранящий точки по порядку расположения
+    public ArrayList<Line> lines = new ArrayList();//массив линий 
     public ArrayList<Shape> pointShape = new ArrayList();//массив форм точек на 1 фигуре//обновляется для каждой отдельной фигуры
     public int x;//координаты мыши
     public int y;
@@ -48,28 +47,37 @@ public class jMDIFrame extends JInternalFrame {
     int dy = 0;
     public static int oldX, oldY;//coordinates before moving
     int newX, newY;//новые координаты после преобразований
-    static double zoom = 1;// коэффициент масштаба
+    double zoom = 1;// коэффициент масштаба
     Shape ss;
     boolean touch;
     boolean pointed = false;//есть ли точки
-    boolean change_idx=false; //Индикатор который показывает были или нет изменения в схеме
-    boolean draw_idx=true; //Показывает можно рисовать или нет
-    
-    public String fileName=""; // Имя файла в котором храниться схема
-   
+    boolean checkLine = false;//для проведения соединений объектов
+    boolean lined = false;//есть линии или нет
+    int id11, id22;// индексы расположения точек, соединенных линиями
+    String ID1, ID2;
+
+    boolean change_idx = false; //Индикатор который показывает были или нет изменения в схеме
+    boolean draw_idx = true; //Показывает можно рисовать или нет
+
+    public String fileName = ""; // Имя файла в котором храниться схема
+
     long thisTimeFirstClick;//начальный замер времени
     
+    GridPanel grid;
+
     public jMDIFrame(String title, Boolean resizable, Boolean closable, Boolean maximizable, Boolean iconifiable, String file) {
         super(title, resizable, closable, maximizable, iconifiable);
         initComponents();
 
         // Добавляем GridPanel на jPanel1
-        jPanel1.add(new GridPanel(20)); // 20 - это размер ячейки сетки
+        grid = new GridPanel(GridPanel.GetBaseCellSize());
+        jPanel1.add(grid);
+        
     }
 
     @SuppressWarnings("unchecked")
-    
-    
+
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -221,316 +229,424 @@ public class jMDIFrame extends JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//Вставляем элемент S
-    private void SActionPerformed(java.awt.event.ActionEvent evt) {                                  
-    s = k;
-    
-    // Получаем размеры панели
-    int panelWidth = jPanel1.getWidth();
-    int panelHeight = jPanel1.getHeight();
-
-    // Рассчитываем размеры видимой области панели
-    int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-    int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-    // Максимальное значение скроллера
-    int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-    int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-        
-    // Получаем текущее положение скроллеров
-    int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-    int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-    // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-    int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-    int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
-
-    // Рассчитываем координаты центра фигуры
-    int x = centerX;
-    int y = centerY;
-
-    // Создаем экземпляр фигуры и устанавливаем его координаты
-    S1 Sn = new S1(x, y, (int)(s*zoom));
-    
-    // Добавляем фигуру на панель
-    jPanel1.removeAll();
-    all.add(0, Sn);
-    for (figures c : all) { 
-        jPanel1.add(c); 
-    }
-    jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
-    jPanel1.revalidate();    
-    jPanel1.repaint();
-    
-    // Устанавливаем флаг изменения
-    change_idx=true;
-    ButtonActivated();
-}
-
-    
-    //Вставляем элемент V
-    private void VActionPerformed(java.awt.event.ActionEvent evt) {                                  
-        s = k;
+    //Получения центра видимой области панели по координате X
+    public int GetCenterX(){
         // Получаем размеры панели
         int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
 
         // Рассчитываем размеры видимой области панели
         int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
 
         // Максимальное значение скроллера
         int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
 
         // Получаем текущее положение скроллеров
         int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
 
         // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
         int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
+        
+        return centerX;
+    }
+    
+    //Получения центра видимой области панели по координате Y
+    public int GetCenterY(){
+        // Получаем размеры панели
+        int panelHeight = jPanel1.getHeight();
+        
+        // Рассчитываем размеры видимой области панели
+        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+        
+        // Максимальное значение скроллера
+        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
+        
+        // Получаем текущее положение скроллеров
+        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
+        
+        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
         int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
+        
+        return centerY;
+    }
+    
+//Вставляем элемент S
+    private void SActionPerformed(java.awt.event.ActionEvent evt) {
+        s = k;
+
+        // Рассчитываем координаты центра фигуры
+        int x = GetCenterX();
+        int y = GetCenterY();
+
+        // Создаем экземпляр фигуры и устанавливаем его координаты
+        S1 Sn = new S1(x, y, (int) (s * zoom));
+
+        // Добавляем фигуру на панель
+        jPanel1.removeAll();
+        all.add(0, Sn);
+        for (figures c : all) {
+            jPanel1.add(c);
+        }
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+        jPanel1.revalidate();
+        jPanel1.repaint();
+
+        // Устанавливаем флаг изменения
+        change_idx = true;
+        ButtonActivated();
+    }
+
+    //Вставляем элемент V
+    private void VActionPerformed(java.awt.event.ActionEvent evt) {
+        s = k;
 
         // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
-    
-        V Vn = new V(x, y, (int)(s*zoom));
+        int x = GetCenterX();
+        int y = GetCenterY();
+
+        V Vn = new V(x, y, (int) (s * zoom));
         Vn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
         Vn.setVisible(true);
         Vn.setOpaque(false); // Сделаем фигуру прозрачной
 
         jPanel1.removeAll();
         all.add(0, Vn);
-        for (figures b : all) { jPanel1.add(b); }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
-        jPanel1.revalidate();    
+        for (figures b : all) {
+            jPanel1.add(b);
+        }
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+        jPanel1.revalidate();
         jPanel1.repaint();
-        
-        change_idx=true;
+
+        change_idx = true;
         ButtonActivated();
-    }   
-    
+    }
+
     //Вставляем элемент R
-    private void RActionPerformed(java.awt.event.ActionEvent evt) {                                  
+    private void RActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
 
         // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
-        
-        R Rn = new R(x, y, (int)(s*zoom));
+        int x = GetCenterX();
+        int y = GetCenterY();
+
+        R Rn = new R(x, y, (int) (s * zoom));
         Rn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
         Rn.setVisible(true);
-        
+
         jPanel1.removeAll();
         all.add(0, Rn);
-        for (figures b : all) { jPanel1.add(b); }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
-        jPanel1.revalidate();         
+        for (figures b : all) {
+            jPanel1.add(b);
+        }
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+        jPanel1.revalidate();
         jPanel1.repaint();
 
-        change_idx=true;
+        change_idx = true;
         ButtonActivated();
-    }  
-    
+    }
+
     //Вставляем элемент NV
-    private void NVActionPerformed(java.awt.event.ActionEvent evt) {                                   
+    private void NVActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
-
-        // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
         
-        NV NVn = new NV(x, y, (int)(s*zoom));
+        int x = GetCenterX();
+        int y = GetCenterY();
+
+        NV NVn = new NV(x, y, (int) (s * zoom));
         NVn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
         NVn.setVisible(true);
-        
+
         jPanel1.removeAll();
         all.add(0, NVn);
-        for (figures b : all) { jPanel1.add(b); }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
-        jPanel1.revalidate();         
+        for (figures b : all) {
+            jPanel1.add(b);
+        }
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+        jPanel1.revalidate();
         jPanel1.repaint();
 
-        change_idx=true;
+        change_idx = true;
         ButtonActivated();
-    }                                  
+    }
 
     //Вставляем элемент условие (IF)
-    private void DActionPerformed(java.awt.event.ActionEvent evt) {                                  
+    private void DActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
+                
+        int x = GetCenterX();
+        int y = GetCenterY();
 
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
-
-        // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
-        
         //d dn = new d(x, y, s);
-        d dn = new d(x, y, (int)(s*zoom));
+        d dn = new d(x, y, (int) (s * zoom));
         dn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
         dn.setVisible(true);
 
         jPanel1.removeAll();
         all.add(0, dn);
-        for (figures b : all) { jPanel1.add(b); }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
-        jPanel1.revalidate();         
+        for (figures b : all) {
+            jPanel1.add(b);
+        }
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+        jPanel1.revalidate();
         jPanel1.repaint();
 
-        change_idx=true;
+        change_idx = true;
         ButtonActivated();
-    }                                 
-    
-      
-    
+    }
+
+    private void drawObjects() {//перерисовка всех объектов
+        jPanel1.removeAll();
+        for (figures b : all) {
+            jPanel1.add(b);
+        }
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
+
+    private void addPoints() {//добавление точек на все фигуры + их отображение
+        points.clear();
+        for (figures ff : all) {//заполнение массива точками для каждой фигуры с соответствием их идексам
+            if (ff.getRec() != null) {
+                pointStraight pn = new pointStraight(ff.getRec());
+                pn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
+                pn.setVisible(true);
+                points.add(all.indexOf(ff), pn);//по итогу полностью заполнится всеми точками на текущий момент
+            }
+        }
+        //drawObjects();
+    }
+
+    private void oneShapePoints(int i) {//обновляет массив с внутренними точками фигуры
+        pointShape.clear();
+        pointShape = points.get(i).getShape();//
+    }
+
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         oldX = evt.getX();
         oldY = evt.getY();
         p = evt.getPoint();
         boolean is_dc = false;
+
+        id11 = 0;//индекс по точкам
+        id22 = 0;
+        int countf = 0;//счет нерасмотренных фигур
+        int countp = 0;//счет нерассмотренных точек//на них не попал курсор
+        addPoints();
         for (figures b : all) {
             ss = b.getShape();
-            if (ss.contains(p) == true) {  
-                
-                
-               
-                
+            if (ss.contains(p) == true) {
+
                 //if (figures.doubleCl == true){ //если уже был клик на фигуру
-                if (evt.getClickCount() == 2){ //если уже был клик на фигуру
-                   long thisTimeSecondClick = System.currentTimeMillis();   //время второго клика               
-                   if (abs(thisTimeSecondClick - thisTimeFirstClick) < 400){ //если разница в кликах невелика
+                if (evt.getClickCount() == 2) { //если уже был клик на фигуру
+                    long thisTimeSecondClick = System.currentTimeMillis();   //время второго клика               
+                    if (abs(thisTimeSecondClick - thisTimeFirstClick) < 400) { //если разница в кликах невелика
                         //Тут вызывем окно с свойствами
                         //JOptionPane.showMessageDialog(this, "X: " +b.getXX() + " Y " +b.getYY() , "О фигуре", JOptionPane.ERROR_MESSAGE);
-                        Properties prop = new Properties("Figure",false,true,true,false,null,b);
+                        Properties prop = new Properties("Figure", false, true, true, false, null, b);
                         //prop.setPreferredSize(new Dimension(200, 200));
                         //prop.setSize(prop.getPreferredSize());
 
                         //prop.setResizable(true);
                         //prop.pack();
                         //prop.setLocation(2, 2);
-                        
                         jPanel1.add(prop);
                         jPanel1.repaint();
                         prop.toFront();
-                        prop.setVisible(true);   
+                        prop.setVisible(true);
                         jPanel1.repaint();
                         is_dc = true;
                         //Пытаюсь открыть окно, но не получается. Думаю на оюновление через removeall мешает.
-                        
-                   }
-                   else{ //Иначе ничиго
-                       //JOptionPane.showMessageDialog(this, "LOL." , "Ошибка", JOptionPane.ERROR_MESSAGE);       
-                   }
-                   //figures.doubleCl = false;  //Убираем воспоминание о первом клике
-                }
-                else{ //Есди не было первого клика
+
+                    } else { //Иначе ничиго
+                        //JOptionPane.showMessageDialog(this, "LOL." , "Ошибка", JOptionPane.ERROR_MESSAGE);       
+                    }
+                    //figures.doubleCl = false;  //Убираем воспоминание о первом клике
+                } else { //Есди не было первого клика
                     thisTimeFirstClick = System.currentTimeMillis(); //Берем время первого клика
                     //figures.doubleCl = true; //Обновляем флаг о первом клике                 
                 } //Далее код для переноса фигуры, не относ к двойному клику
-                
-               // if (is_dc = false){
-               //     jPanel1.removeAll();          
-               // }
 
+                // if (is_dc = false){
+                //     jPanel1.removeAll();          
+                // }
                 all.remove(b);
                 all.add(0, b);
-                
+                addPoints();
                 //установить новые координты для x и y, прибавить к координате значение положения скроллера
-                
-                
-                jPanel1.removeAll();  
-                for (JComponent c : all) { jPanel1.add(c); } 
-                jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+                jPanel1.removeAll();
+                for (JComponent c : all) {
+                    jPanel1.add(c);
+                }
 
-                
+                if (pointed == false) {//если нет, то добавление точек на фигуру
+                    jPanel1.removeAll();
+                    jPanel1.add(points.get(0));
+                    if (lined) {
+                        for (Line ln : lines) {
+                            jPanel1.add(ln);
+                        }
+                    }
+                    for (JComponent c : all) {
+                        jPanel1.add(c);
+                    }
+                    jPanel1.add(grid);
+                    jPanel1.revalidate();
+                    jPanel1.repaint();
+                    pointed = true;
+
+                } else {//если да, то проверка попадания на фигуру или точку
+                    oneShapePoints(0);
+                    for (Shape l : pointShape) {
+                        if (l.contains(p)) {
+                            //выделение всех точек и соединение
+                            id11 = pointShape.indexOf(l);
+                            jPanel1.removeAll();
+                            for (points a : points) {
+                                jPanel1.add(a);
+                                if (lined) {
+                                    for (Line ln : lines) {
+                                        jPanel1.add(ln);
+                                    }
+                                }
+                                jPanel1.add(all.get(points.indexOf(a)));
+                                LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
+                                        (Point2D) evt.getPoint(), ID1, id11, ID1, id11);
+                                ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
+                                ls.setVisible(true);
+                                jPanel1.add(ls);
+                                lines.add(0, ls);
+                                checkLine = true;
+                                jPanel1.add(grid);
+                                jPanel1.revalidate();
+                                jPanel1.repaint();
+                            }
+                            // break;
+                        } else {
+                            countp++;
+                        }
+                    }
+
+                }
+
+                jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+
                 // Нажате правой кнопки
-                if (evt.isPopupTrigger() ){
-                    
-                    
+                if (evt.isPopupTrigger()) {
+
                     // create a popup menu
                     //JPopupMenu pm = new JPopupMenu("Message");
- 
                     // create a label
                     //JLabel l = new JLabel("this is the popup menu");
- 
                     // add the label to the popup
                     //pm.add(l);
-            
-            
                     //JFrame f = new JFrame("Popup");
- 
                     // set the size of the frame
                     //f.setSize(400, 400);
- 
                     // add the popup to the frame
                     rcMenu.show(this, oldX, oldY);
-                    
+
                 }
-                jPanel1.revalidate();         
+                jPanel1.revalidate();
                 jPanel1.repaint();
                 ButtonActivated();
                 break;
+            } else {//не попадает на фигуру
+                countf++;
             }
         }
+        if ((countp == pointShape.size()) && (countf == all.size())) {
+            jPanel1.removeAll();
+            if (lined) {
+                for (Line ln : lines) {
+                    jPanel1.add(ln);
+                }
+            }
+            for (JComponent c : all) {
+                jPanel1.add(c);
+            }
+            pointed = false;
+            jPanel1.add(grid);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+        }
+        if ((countp == pointShape.size()) && (countf != all.size())) {
+            jPanel1.removeAll();
+            jPanel1.add(points.get(0));
+            if (lined) {
+                for (Line ln : lines) {
+                    jPanel1.add(ln);
+                }
+            }
+            for (JComponent c : all) {
+                jPanel1.add(c);
+            }
+            pointed = true;
+            jPanel1.add(grid);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+        }
+        countp = 0;
+        if (countf == all.size()) {//не попадает ни на фигуру
+            if (pointed) {
+                // pointShape = points.get(0).getShape();//!
+                oneShapePoints(0);
+                for (Shape l : pointShape) {
+                    if (l.contains(p)) {
+                        //выделение всех точек и соединение
+                        id11 = pointShape.indexOf(l);
+                        jPanel1.removeAll();
+                        for (points a : points) {
+                            jPanel1.add(a);
+                            if (lined) {
+                                for (Line ln : lines) {
+                                    jPanel1.add(ln);
+                                }
+                            }
+                            //id1=all.get(0).getId();
+                            jPanel1.add(all.get(points.indexOf(a)));
+                            LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
+                                    (Point2D) evt.getPoint(), ID1, id11, ID1, id11);
+                            ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
+                            ls.setVisible(true);
+                            jPanel1.add(ls);
+                            lines.add(0, ls);
+                            checkLine = true;
+                            //jPanel1.add(grid);
+                            jPanel1.revalidate();
+                            jPanel1.repaint();
+
+                        }
+                        jPanel1.add(grid);
+                        jPanel1.revalidate();
+                        jPanel1.repaint();
+                        break;
+                    } else {
+                        countp++;
+                    }
+                }
+                if (countp == 4) {
+                    jPanel1.removeAll();
+                    if (lined) {
+                        for (Line ln : lines) {
+                            jPanel1.add(ln);
+                        }
+                    }
+                    for (JComponent c : all) {
+                        jPanel1.add(c);
+                    }
+                    jPanel1.add(grid);
+                    jPanel1.revalidate();
+                    jPanel1.repaint();
+                    //jPanel1.repaint();
+                    pointed = false;
+                }
+            }
+        }
+
         touch = ss.contains(p) == true;
-        
+
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void Resizing(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_Resizing
@@ -540,93 +656,165 @@ public class jMDIFrame extends JInternalFrame {
         //            jPanel1.repaint();
 
     }//GEN-LAST:event_Resizing
-
-    private void moveobj(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveobj
-        figures b = all.get(0);
-    ss = b.getShape();
-    if (touch == true) {
-        
-        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        dx = -oldX + b.getXX();
-        dy = -oldY + b.getYY();
-        newX = evt.getX() + dx;
-        newY = evt.getY() + dy;
-
-        // Рассчитываем правую и нижнюю границы видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-        int rightBorder = jScrollPane1.getHorizontalScrollBar().getValue() + visibleWidth;
-        int bottomBorder = jScrollPane1.getVerticalScrollBar().getValue() + visibleHeight;
-
-        // Рассчитываем текущие размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Проверяем, выходит ли фигура за границы видимой области
-        boolean outOfBoundsX = newX > rightBorder;
-        boolean outOfBoundsY = newY > bottomBorder;
-
-        if (outOfBoundsX || outOfBoundsY) {
-            // Рассчитываем на сколько фигура выходит за границы
-            int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100: 0;
-            int distanceY = outOfBoundsY ? Math.max(0, newY - bottomBorder) + 100 : 0;
-
-            // Проверяем, выходит ли фигура за границы размера панели           
-            boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
-
-            if (outOfPanelBounds) {
-                // Увеличиваем размеры панели на это расстояние
-                jPanel1.setPreferredSize(new Dimension(
-                    jPanel1.getPreferredSize().width + distanceX ,
-                    jPanel1.getPreferredSize().height + distanceY
-                ));
-
-                // Перерисовываем панель
-                jPanel1.revalidate();
-            }
-        }
-
-        // Устанавливаем новые координаты для фигуры
+    private void chcord(figures b) {
         b.setXX(newX);
         b.setYY(newY);
-        change_idx = true; 
-        jPanel1.revalidate(); 
-        jPanel1.repaint();
-        oldX = evt.getX();
-        oldY = evt.getY();
-        ButtonActivated();
+    }
+    private void moveobj(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveobj
+        figures b = all.get(0);
+        ss = b.getShape();
+
+        if (pointed == true) {//убирать точки теекущего объекта при перетаскивании
+            jPanel1.remove(points.get(0));
+            jPanel1.add(new GridPanel((int)(GridPanel.GetBaseCellSize()*zoom))); // Добавляем сетку перед добавлением фигур
+            jPanel1.revalidate();
+            //jPanel1.repaint();
+            jPanel1.repaint();
+            pointed = false;
         }
-       
+
+        if (touch == true) {
+
+            this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            dx = -oldX + b.getXX();
+            dy = -oldY + b.getYY();
+            newX = evt.getX() + dx;
+            newY = evt.getY() + dy;
+
+            // Рассчитываем правую и нижнюю границы видимой области панели
+            int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+            int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+            int rightBorder = jScrollPane1.getHorizontalScrollBar().getValue() + visibleWidth;
+            int bottomBorder = jScrollPane1.getVerticalScrollBar().getValue() + visibleHeight;
+
+            // Рассчитываем текущие размеры панели
+            int panelWidth = jPanel1.getWidth();
+            int panelHeight = jPanel1.getHeight();
+
+            // Проверяем, выходит ли фигура за границы видимой области
+            boolean outOfBoundsX = newX > rightBorder;
+            boolean outOfBoundsY = newY > bottomBorder;
+
+            if (outOfBoundsX || outOfBoundsY) {
+                // Рассчитываем на сколько фигура выходит за границы
+                int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100 : 0;
+                int distanceY = outOfBoundsY ? Math.max(0, newY - bottomBorder) + 100 : 0;
+
+                // Проверяем, выходит ли фигура за границы размера панели           
+                boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
+
+                if (outOfPanelBounds) {
+                    // Увеличиваем размеры панели на это расстояние
+                    jPanel1.setPreferredSize(new Dimension(
+                            jPanel1.getPreferredSize().width + distanceX,
+                            jPanel1.getPreferredSize().height + distanceY
+                    ));
+
+                    // Перерисовываем панель
+                    jPanel1.revalidate();
+                }
+            }
+
+            if (lined) {
+                for (Line ln : lines) {
+                    // for (figures f : all) {
+                    double dxx;
+                    double dyy;
+//                        if (b.getNameF().equals(ln.getID1())) {
+//                            dxx = ln.getC1().getX() - oldX;
+//                            dyy = ln.getC1().getY() - oldY;
+//                            Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p1);
+//                        }
+//                        if (b.getNameF().equals(ln.getID2())) {
+//                            dxx = ln.getC2().getX() - oldX;
+//                            dyy = ln.getC2().getY() - oldY;
+//                            Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p2);
+//                        }
+                    if (b.getNameF().equals(ln.getID1()) || b.getNameF().equals(ln.getID2())) {
+//                            dxx = ln.getC1().getX() - oldX;
+//                            dyy = ln.getC1().getY() - oldY;
+//                            Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p1);
+//                            dxx = ln.getC2().getX() - oldX;
+//                            dyy = ln.getC2().getY() - oldY;
+//                            Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+//                            ln.setC1(p2);
+//                        oneShapePoints(0);
+//                        //Point2D.Double p2 = new Point2D.Double(pointShape.get(ln.getID11()));
+//                        ln.setC1((Point2D) pointShape.get(ln.getID11()));
+//                        ln.setC2((Point2D) pointShape.get(ln.getID22()));
+                        dxx = ln.getC1().getX() - oldX;
+                        dyy = ln.getC1().getY() - oldY;
+                        Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+                        ln.setC1(p1);
+                        dxx = ln.getC2().getX() - oldX;
+                        dyy = ln.getC2().getY() - oldY;
+                        Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
+                        ln.setC2(p2);
+                        //ln.setCC();
+                    }
+                    // }
+                }
+                jPanel1.add(grid);
+                jPanel1.revalidate();
+                //jPanel1.repaint();
+                jPanel1.repaint();
+            }
+
+            // Устанавливаем новые координаты для фигуры
+            b.setAbsoluteX((int)(b.getAbsoluteX() + (newX-b.getXX())/zoom));
+            b.setAbsoluteY((int)(b.getAbsoluteY() + (newY-b.getYY())/zoom));
+            b.setXX(newX);
+            b.setYY(newY);
+            change_idx = true;
+            jPanel1.revalidate();
+            jPanel1.repaint();
+            oldX = evt.getX();
+            oldY = evt.getY();
+            ButtonActivated();
+        }
+
+        if (checkLine == true) {
+            Line l = lines.get(0);
+            this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            l.setC2((Point2D) evt.getPoint());//обновление второй точки
+            //jPanel1.repaint();
+            jPanel1.add(grid);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+        }
+
 
     }//GEN-LAST:event_moveobj
 
-  //  private void SaveInDb(ArrayList<figures> all, String saveName) {
-  //      //// код для сохранения всех элементов
- //
- //       //с тем же названием нет, пока такой случай не обработан.
- //       System.out.println("start saving");
- //       for (figures f : all) { //Перебираем все фигуры и заносим данные в функцию
- //           Figure_s fig = new Figure_s();
+    //  private void SaveInDb(ArrayList<figures> all, String saveName) {
+    //      //// код для сохранения всех элементов
+    //
+    //       //с тем же названием нет, пока такой случай не обработан.
+    //       System.out.println("start saving");
+    //       for (figures f : all) { //Перебираем все фигуры и заносим данные в функцию
+    //           Figure_s fig = new Figure_s();
 //
-  //          String gType = f.getClass().toString();
-  //          gType = gType.replace("class figure.", "");
-  //          fig.setX_pos(Integer.toString(f.getXX()));
-  //          fig.setY_pos(Integer.toString(f.getYY()));
-  //          fig.setShape(gType);
-  //          fig.setSize(Integer.toString(f.getSises()));
-  //          fig.setId(Integer.toString(f.getId()));
+    //          String gType = f.getClass().toString();
+    //          gType = gType.replace("class figure.", "");
+    //          fig.setX_pos(Integer.toString(f.getXX()));
+    //          fig.setY_pos(Integer.toString(f.getYY()));
+    //          fig.setShape(gType);
+    //          fig.setSize(Integer.toString(f.getSises()));
+    //          fig.setId(Integer.toString(f.getId()));
 //
- //           //System.out.println(f.getClass().toString() + " ;" + f.getSises() + " , " + f.getXX() + " , " + f.getYY() );
- //           //        String gX_pos = Integer.toString(f.getXX());
- //           //        String gY_pos = Integer.toString(f.getYY());
- //           //        String gSize = Integer.toString(f.getSises());
- //           //        String gId = Integer.toString(f.getId());
- //           dbHandler.addFig(saveName, fig/*gX_pos,gY_pos,gType,gSize,gId*/);
- //       }
- //       System.out.println("end saving");
- //   }
-
+    //           //System.out.println(f.getClass().toString() + " ;" + f.getSises() + " , " + f.getXX() + " , " + f.getYY() );
+    //           //        String gX_pos = Integer.toString(f.getXX());
+    //           //        String gY_pos = Integer.toString(f.getYY());
+    //           //        String gSize = Integer.toString(f.getSises());
+    //           //        String gId = Integer.toString(f.getId());
+    //           dbHandler.addFig(saveName, fig/*gX_pos,gY_pos,gType,gSize,gId*/);
+    //       }
+    //       System.out.println("end saving");
+    //   }
 //    private ArrayList<figures> LoadFromDb(ArrayList<figures> all, String saveName) {
 //        DatabaseHandler dbHandler = new DatabaseHandler();
 //        ResultSet resSet = dbHandler.getFigure(saveName);
@@ -645,11 +833,6 @@ public class jMDIFrame extends JInternalFrame {
 //        }
 //        return all;
 //    }
-
-
-
-
-
     //Сохранение файла
     public void SaveInJSON(String fn) {
         try {
@@ -669,10 +852,10 @@ public class jMDIFrame extends JInternalFrame {
                 // Добавляем объект Figure_s в список
                 figuresList.add(fig);
             }
-            
+
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(Paths.get(fn).toFile(), figuresList);
-            
+
         } catch (JsonProcessingException ex) {
             Logger.getLogger(jMDIFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -689,21 +872,17 @@ public class jMDIFrame extends JInternalFrame {
             //String jsonString = Files.readString(Paths.get(saveName));
             Path filePath = Path.of(saveName);
             String jsonString = Files.readString(filePath);
-            
-            
+
             //File file = new File(saveName);
             //String content = FileUtils.readFileToString(file, "UTF-8");
-            
-            
-            
-            
             //String jsonString;
             //jsonString = objectMapper.readValue(Paths.get(saveName));// . .read readValue(Paths.get(saveName));
             // Преобразуем JSON в список объектов Figure_s
             List<Figure_s> figuresList;
-            figuresList = objectMapper.readValue(jsonString, new TypeReference<List<Figure_s>>() { });
+            figuresList = objectMapper.readValue(jsonString, new TypeReference<List<Figure_s>>() {
+            });
             jPanel1.removeAll();
-            jPanel1.revalidate(); 
+            jPanel1.revalidate();
             jPanel1.repaint();
             all.clear();
             // Преобразуем объекты Figure_s в объекты Figure
@@ -717,7 +896,8 @@ public class jMDIFrame extends JInternalFrame {
                 b.setVisible(true);
                 jPanel1.add(b);
             }
-            jPanel1.revalidate(); 
+            jPanel1.add(new GridPanel(GridPanel.GetBaseCellSize()));
+            jPanel1.revalidate();
             jPanel1.repaint();
             fileName = saveName;
         } catch (Exception ex) {
@@ -727,15 +907,15 @@ public class jMDIFrame extends JInternalFrame {
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         // TODO add your handling code here:
-       ButtonActivated();
-    }  
+        ButtonActivated();
+    }
 
     //Рисование сетки / миллимитровки
     private void paintGrid(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
         // Определяем размер ячейки сетки
-        int cellSize = 20;
+        int cellSize = grid.GetCellSize();
 
         // Определяем размеры панели
         int panelWidth = jPanel1.getWidth();
@@ -753,50 +933,50 @@ public class jMDIFrame extends JInternalFrame {
         // Отрисовываем горизонтальные линии сетки
         for (int y = startY; y <= panelHeight; y += cellSize) {
             g2d.drawLine(0, y, panelWidth, y);
-        }       
+        }
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         // TODO add your handling code here:
-        
-        if (change_idx){
+
+        if (change_idx) {
             Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-            int dialogResult = JOptionPane.showConfirmDialog (this, "Project wasn't saved. Would you like to save your project?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon(image));
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Project wasn't saved. Would you like to save your project?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon(image));
             if (dialogResult == JOptionPane.YES_OPTION) {
-               if (!("".equals(fileName))) {
-                   SaveInJSON(fileName);
-               } else {
-                   JFileChooser SaveChooser = new javax.swing.JFileChooser();
-                   SaveChooser.setDialogTitle("Specify a file to save");
-                   SaveChooser.setCurrentDirectory(new File("."));
-                   SaveChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                   SaveChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "epm"));
-                   SaveChooser.approveSelection();
-                   int option = SaveChooser.showSaveDialog(this);
+                if (!("".equals(fileName))) {
+                    SaveInJSON(fileName);
+                } else {
+                    JFileChooser SaveChooser = new javax.swing.JFileChooser();
+                    SaveChooser.setDialogTitle("Specify a file to save");
+                    SaveChooser.setCurrentDirectory(new File("."));
+                    SaveChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    SaveChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "epm"));
+                    SaveChooser.approveSelection();
+                    int option = SaveChooser.showSaveDialog(this);
 
                     Field field2 = null;
-        
-                    if(option != JFileChooser.CANCEL_OPTION) {
-            
-                        File file1 = SaveChooser.getSelectedFile(); 
+
+                    if (option != JFileChooser.CANCEL_OPTION) {
+
+                        File file1 = SaveChooser.getSelectedFile();
                         String file = null;
-            
+
                         try {
                             file = file1.getCanonicalPath();
                         } catch (IOException ex) {
                             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                        fileName=file;
+
+                        fileName = file;
                         SaveInJSON(fileName);
-                     }                   
-                   
-               } 
+                    }
+
+                }
             }
         }
-        
-        change_idx=false;
-        draw_idx=false;
+
+        change_idx = false;
+        draw_idx = false;
         ButtonActivated();
     }//GEN-LAST:event_formInternalFrameClosing
 
@@ -804,6 +984,57 @@ public class jMDIFrame extends JInternalFrame {
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
         // Когда закончили перетаскивать объект и отпкстили мышку снова делаем курсор-стрелочку
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+
+        touch = false;
+        int countp = 0;
+        if (checkLine) {//прорисовка линий
+            for (points ps : points) {
+                oneShapePoints(points.indexOf(ps));
+                for (Shape l : pointShape) {
+                    if (l.contains(evt.getPoint()) && (l.contains(lines.get(0).getC1()) == false)) {
+//                        id22 = pointShape.indexOf(l);
+//                        id2 = all.get(points.indexOf(ps)).getId();
+                        jPanel1.removeAll();
+                        lines.get(0).setC2((Point2D) ps.getPoint().get(pointShape.indexOf(l)));
+                        lines.get(0).setID2(all.get(points.indexOf(ps)).getNameF());
+//                        lines.get(0).setID22(id22);
+                        if (lined) {
+                            for (Line ln : lines) {
+                                jPanel1.add(ln);
+                            }
+                            jPanel1.repaint();
+                        } else {
+                            jPanel1.add(lines.get(0));
+                        }
+
+                        for (figures a : all) {
+                            jPanel1.add(a);
+                        }
+                        jPanel1.add(grid);
+                        jPanel1.revalidate();
+                        jPanel1.repaint();
+                        lined = true;
+                        break;
+                    } else {
+                        countp++;
+                    }
+                }
+            }
+            if (countp == (4)) {
+                jPanel1.removeAll();
+                lines.remove(0);
+                if (lined) {
+                    for (Line ln : lines) {
+                        jPanel1.add(ln);
+                    }
+                }
+                for (JComponent c : all) {
+                    jPanel1.add(c);
+                }
+                jPanel1.repaint();
+            }
+        }
+        checkLine = false;
     }//GEN-LAST:event_jPanel1MouseReleased
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
@@ -812,163 +1043,185 @@ public class jMDIFrame extends JInternalFrame {
         //mdi.jMenuIt
         //emClear.clearActionPerformed(evt);
         //jPanel1.clear
-        
+
         //нужно сделать вызов из jPanel чтобы не переписывать несколько раз
-        
         //jPanel1.removeAll();
         //jPanel1.repaint();
         //all.clear();
         zoom = 1;
         //ButtonActivated();
-        
+
     }//GEN-LAST:event_clearActionPerformed
 
     private void jScrollPane1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane1MouseWheelMoved
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_jScrollPane1MouseWheelMoved
 
     private void jScrollPane1CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jScrollPane1CaretPositionChanged
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jScrollPane1CaretPositionChanged
 
     private void zminusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zminusActionPerformed
         //начало работы Иванова А.А. изменение масштаба и его мин значение
-        if (zoom >0.25)
-        {
+        if (zoom > 0.25) {
             zoom = zoom - 0.15;
         } else {
             return;
         }
         //конец работы Иванова А.А.
-        s = (int) (k * zoom);
+        s = (int) Math.round(k * zoom);
 
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
+        int centerX = GetCenterX();
+        int centerY = GetCenterY();
 
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
-        
         for (figures b : all) {
             b.setS(s);
-            oldX = b.getXX();
-            oldY = b.getYY();
             
-            //смещение от центра видимой области
-            dx = oldX - centerX;
-            dy = oldY - centerY;
+            //абсолютное смещение от центра видимой области
+            dx = (int)(b.getAbsoluteX() - centerX);
+            dy = (int)(b.getAbsoluteY() - centerY);
 
-            //смещаем к центру
-            newX = oldX - dx;
-            newY = oldY - dy;
-
-            dx = (int)(dx/(zoom+0.15)*zoom);
-            dy = (int)(dy/(zoom+0.15)*zoom);
-
-            //прибавляем новое смещение
-            newX += dx;
-            newY += dy;
+            newX = (int) (centerX + dx*zoom);
+            newY = (int) (centerY + dy*zoom);
 
             b.setXX(newX);
             b.setYY(newY);
-        }
+            
+            // Рассчитываем правую и нижнюю границы видимой области панели
+            int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+            int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+            int rightBorder = jScrollPane1.getHorizontalScrollBar().getValue() + visibleWidth;
+            int bottomBorder = jScrollPane1.getVerticalScrollBar().getValue() + visibleHeight;
 
-        jSize.setText(String.format("%.0f", zoom*100)+'%');
+            // Рассчитываем текущие размеры панели
+            int panelWidth = jPanel1.getWidth();
+            int panelHeight = jPanel1.getHeight();
+
+            // Проверяем, выходит ли фигура за границы видимой области
+            boolean outOfBoundsX = newX > rightBorder;
+            boolean outOfBoundsY = newY > bottomBorder;
+
+            if (outOfBoundsX || outOfBoundsY) {
+                // Рассчитываем на сколько фигура выходит за границы
+                int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100 : 0;
+                int distanceY = outOfBoundsY ? Math.max(0, newY - bottomBorder) + 100 : 0;
+
+                // Проверяем, выходит ли фигура за границы размера панели           
+                boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
+
+                if (outOfPanelBounds) {
+                    // Увеличиваем размеры панели на это расстояние
+                    jPanel1.setPreferredSize(new Dimension(
+                            jPanel1.getPreferredSize().width + distanceX,
+                            jPanel1.getPreferredSize().height + distanceY
+                    ));
+
+                    // Перерисовываем панель
+                    jPanel1.revalidate();
+                }
+            }
+        }
         
+        
+        //изменение сетки
+        grid.SetCellSize ((int) Math.round(GridPanel.GetBaseCellSize()*zoom));
+        
+        //изменение скроллеров
+        int HorizontalScrollBarScale = (int) (jScrollPane1.getHorizontalScrollBar().getMaximum() * zoom / (zoom + 0.15));
+        int VerticalScrollBarScale = (int) (jScrollPane1.getVerticalScrollBar().getMaximum() * zoom / (zoom + 0.15));
+        
+        jScrollPane1.getHorizontalScrollBar().setMaximum(HorizontalScrollBarScale);
+        jScrollPane1.getVerticalScrollBar().setMaximum(VerticalScrollBarScale);
+
+        jSize.setText(String.format("%.0f", zoom * 100) + '%');
+
         jPanel1.repaint();
     }//GEN-LAST:event_zminusActionPerformed
 
     private void zplusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zplusActionPerformed
         //начало работы Иванова А.А. максимальное значение масштаба и шаг
-        if (zoom < 3.9)
-        {
+        if (zoom < 3.9) {
             zoom = zoom + 0.15;
         } else {
             return;
         }
         //конец работы работы Иванова А.А.
-        s = (int) (k * zoom);
-        
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
+        s = (int) Math.round(k * zoom);
 
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
+        int centerX = GetCenterX();
+        int centerY = GetCenterY();
 
         for (figures b : all) {
             b.setS(s);
-            oldX = b.getXX();
-            oldY = b.getYY();
-            //            dx = (int) zoom * abs((x / 2 - oldX));
-            //            if (oldX > x / 2) {
-                //                newX = oldX + dx;
-                //            } else {
-                //                newX = oldX - dx;
-                //            }
-            //            dy = (int) zoom * abs((y / 2 - oldY));
-            //            if (oldY > y / 2) {
-                //                newY = oldY + dy;
-                //            } else {
-                //                newY = oldY - dy;
-                //            }
-            //начало работы Иванова А.А. изменение координат объектов
-            dx = oldX - centerX; //смещение от центра
-            dy = oldY - centerY;
+            
+            //абсолютное смещение от центра видимой области
+            dx = (int)(b.getAbsoluteX() - centerX);
+            dy = (int)(b.getAbsoluteY() - centerY);
 
-            //смещаем к центру
-            newX = oldX - dx;
-            newY = oldY - dy;
-
-            //умножаем смещение на zoom
-            dx = (int)(dx/(zoom-0.15)*zoom);
-            dy = (int)(dy/(zoom-0.15)*zoom);
-
-            //прибавляем новое смещение
-            newX += dx;
-            newY += dy;
+            newX = (int) (centerX + dx*zoom);
+            newY = (int) (centerY + dy*zoom);
 
             b.setXX(newX);
             b.setYY(newY);
-        }
+            
+            // Рассчитываем правую и нижнюю границы видимой области панели
+            int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+            int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+            int rightBorder = jScrollPane1.getHorizontalScrollBar().getValue() + visibleWidth;
+            int bottomBorder = jScrollPane1.getVerticalScrollBar().getValue() + visibleHeight;
 
-        jSize.setText(String.format("%.0f", zoom*100)+'%');
+            // Рассчитываем текущие размеры панели
+            int panelWidth = jPanel1.getWidth();
+            int panelHeight = jPanel1.getHeight();
+
+            // Проверяем, выходит ли фигура за границы видимой области
+            boolean outOfBoundsX = newX > rightBorder;
+            boolean outOfBoundsY = newY > bottomBorder;
+
+            if (outOfBoundsX || outOfBoundsY) {
+                // Рассчитываем на сколько фигура выходит за границы
+                int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100 : 0;
+                int distanceY = outOfBoundsY ? Math.max(0, newY - bottomBorder) + 100 : 0;
+
+                // Проверяем, выходит ли фигура за границы размера панели           
+                boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
+
+                if (outOfPanelBounds) {
+                    // Увеличиваем размеры панели на это расстояние
+                    jPanel1.setPreferredSize(new Dimension(
+                            jPanel1.getPreferredSize().width + distanceX,
+                            jPanel1.getPreferredSize().height + distanceY
+                    ));
+
+                    // Перерисовываем панель
+                    jPanel1.revalidate();
+                }
+            }
+        }
+        
+        //изменение сетки
+        grid.SetCellSize ((int) Math.round(GridPanel.GetBaseCellSize()*zoom));
+        
+        //изменение скроллеров
+        int HorizontalScrollBarScale = (int) (jScrollPane1.getHorizontalScrollBar().getMaximum() * zoom / (zoom - 0.15));
+        int VerticalScrollBarScale = (int) (jScrollPane1.getVerticalScrollBar().getMaximum() * zoom / (zoom - 0.15));;
+        
+        jScrollPane1.getHorizontalScrollBar().setMaximum(HorizontalScrollBarScale);
+        jScrollPane1.getVerticalScrollBar().setMaximum(VerticalScrollBarScale);
+        
+        
+
+        jSize.setText(String.format("%.0f", zoom * 100) + '%');
         //Конец работы Иванова А.А.
         jPanel1.repaint();
     }//GEN-LAST:event_zplusActionPerformed
-static BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+    static BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
     // Create a new blank cursor.
     Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-    cursorImg, new Point(0, 0), "blank cursor");
+            cursorImg, new Point(0, 0), "blank cursor");
     private void jSizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSizeMouseEntered
         setCursor(blankCursor);
     }//GEN-LAST:event_jSizeMouseEntered
@@ -977,49 +1230,48 @@ static BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_IN
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_jSizeMouseExited
 
-    
-  // Активация / деактивация кнопки Save 
-  public void ButtonActivated() {                                            
+    // Активация / деактивация кнопки Save 
+    public void ButtonActivated() {
         if (change_idx) {
-            mdi.Save.setEnabled(true); 
+            mdi.Save.setEnabled(true);
             mdi.jButtonSave.setEnabled(true);
             mdi.Saveas.setEnabled(true);
         } else {
-           mdi.Save.setEnabled(false); 
-           mdi.jButtonSave.setEnabled(false);
-           mdi.Saveas.setEnabled(false);
+            mdi.Save.setEnabled(false);
+            mdi.jButtonSave.setEnabled(false);
+            mdi.Saveas.setEnabled(false);
         }
-        
+
         if (draw_idx) {
-           mdi.jButtonS.setEnabled(true);
-           mdi.jButtonV.setEnabled(true); 
-           mdi.jButtonNV.setEnabled(true);
-           mdi.jButtonR.setEnabled(true);
-           mdi.jButtonIF.setEnabled(true);
-           mdi.jMenuItemS.setEnabled(true);
-           mdi.jMenuItemV.setEnabled(true);
-           mdi.jMenuItemR.setEnabled(true);
-           mdi.jMenuItemNV.setEnabled(true);
-           mdi.jMenuItemIF.setEnabled(true);
-           mdi.jMenuItemClear.setEnabled(true);
-        
+            mdi.jButtonS.setEnabled(true);
+            mdi.jButtonV.setEnabled(true);
+            mdi.jButtonNV.setEnabled(true);
+            mdi.jButtonR.setEnabled(true);
+            mdi.jButtonIF.setEnabled(true);
+            mdi.jMenuItemS.setEnabled(true);
+            mdi.jMenuItemV.setEnabled(true);
+            mdi.jMenuItemR.setEnabled(true);
+            mdi.jMenuItemNV.setEnabled(true);
+            mdi.jMenuItemIF.setEnabled(true);
+            mdi.jMenuItemClear.setEnabled(true);
+
         } else {
-           mdi.jButtonS.setEnabled(false);
-           mdi.jButtonV.setEnabled(false); 
-           mdi.jButtonNV.setEnabled(false);
-           mdi.jButtonR.setEnabled(false);
-           mdi.jButtonIF.setEnabled(false);
-           mdi.jMenuItemS.setEnabled(false);
-           mdi.jMenuItemV.setEnabled(false);
-           mdi.jMenuItemR.setEnabled(false);
-           mdi.jMenuItemNV.setEnabled(false);
-           mdi.jMenuItemIF.setEnabled(false);
-           mdi.jMenuItemClear.setEnabled(false); 
-           
+            mdi.jButtonS.setEnabled(false);
+            mdi.jButtonV.setEnabled(false);
+            mdi.jButtonNV.setEnabled(false);
+            mdi.jButtonR.setEnabled(false);
+            mdi.jButtonIF.setEnabled(false);
+            mdi.jMenuItemS.setEnabled(false);
+            mdi.jMenuItemV.setEnabled(false);
+            mdi.jMenuItemR.setEnabled(false);
+            mdi.jMenuItemNV.setEnabled(false);
+            mdi.jMenuItemIF.setEnabled(false);
+            mdi.jMenuItemClear.setEnabled(false);
+
         }
-    }          
-    
-    
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
     private javax.swing.JMenuItem jMenuItemClear;

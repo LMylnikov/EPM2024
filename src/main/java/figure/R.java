@@ -41,6 +41,8 @@ public class R extends figures{
     public R(int x, int y, int s) {
         this.x=x + s/4;
         this.y=y + s/4;
+        this.absoluteX = (int)(x);
+        this.absoluteY = (int)(y);
         this.s=s;
         this.nameF = "R" + this.id;
     }

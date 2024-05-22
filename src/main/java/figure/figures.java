@@ -10,6 +10,7 @@ import java.util.prefs.Preferences;
 public class figures extends JComponent{
     public static Preferences prefs = Preferences.userNodeForPackage(figures.class);
     int x, y;//x,y - координаты центра фигуры 
+    int absoluteX, absoluteY; // - координаты при масштабе 100%
     Shape shape;
     int s;//s - size
     Rectangle2D rec;
@@ -25,7 +26,7 @@ public class figures extends JComponent{
     
     static AtomicInteger nextId = new AtomicInteger();
     static int id;
-    //static public boolean doubleCl = false;
+    //static public boolean doubleCl = false;    
     public figures() {
         id = nextId.incrementAndGet();   
     }
@@ -55,6 +56,19 @@ public class figures extends JComponent{
     }
       public int getYY(){
        return y;       
+    }
+      
+    public void setAbsoluteX(int value){
+        this.absoluteX = value;
+    }
+    public void setAbsoluteY(int value){
+        this.absoluteY = value;
+    }
+    public int getAbsoluteX(){
+        return absoluteX;
+    }
+    public int getAbsoluteY(){
+        return absoluteY;
     }
       
     public int getSises(){

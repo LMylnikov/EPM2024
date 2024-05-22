@@ -43,6 +43,8 @@ public class S1 extends figures {
     public S1(int x, int y, int s) {
         this.x = x;
         this.y = y;
+        this.absoluteX = (int)(x);
+        this.absoluteY = (int)(y);
         this.s = s;
         id = nextId.incrementAndGet();
         this.nameF = "S" + this.id;
@@ -66,5 +68,6 @@ public class S1 extends figures {
         g2.draw(shape);
         g2.setFont(font);
         g2.drawString(str, (x)+17*s/100, (y)+34*s/100);// в дальнейшем кнопка //Иванов А.А. надпись центруется с учетом масштаба
+        rec=shape.getBounds2D();
     }
 }

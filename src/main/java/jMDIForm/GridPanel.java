@@ -20,8 +20,9 @@ public class GridPanel extends JPanel {
                 prefs.putBoolean("isVisible", true);
             } else {
                 // Узел существует - загружаем значения
-                color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
                 isVisible = prefs.getBoolean("isVisible", true);
+                if (isVisible == true)
+                    color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
             }
         } catch (BackingStoreException e) {
             e.printStackTrace();
@@ -30,13 +31,26 @@ public class GridPanel extends JPanel {
         }
     }
     
-    private int cellSize;
+    private int cellSize;   
     private int xOffset = 20; // Смещение по X
     private int yOffset = 20; // Смещение по Y
     private int thickLineSpacing = 5; // Каждая пятая линия будет толстой
+    
+    public int GetCellSize(){
+        return this.cellSize;
+    }
+    
+    public void SetCellSize(int value){
+        this.cellSize = value;
+    }
 
     public GridPanel(int cellSize) {
         this.cellSize = cellSize;
+    }
+    
+    private static int baseCellSize = 20;
+    public static int GetBaseCellSize(){
+        return baseCellSize;
     }
 
     @Override

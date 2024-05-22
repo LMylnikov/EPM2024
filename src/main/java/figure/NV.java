@@ -44,6 +44,8 @@ public class NV extends figures{
     public NV(int x, int y, int s) {
         this.x=x + s/4;
         this.y=y + s/4;
+        this.absoluteX = (int)(x);
+        this.absoluteY = (int)(y);
         this.s=s;
         this.nameF = "NV" + this.id;
     }

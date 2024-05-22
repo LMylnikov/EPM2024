@@ -47,7 +47,7 @@ public class jMDIFrame extends JInternalFrame {
     int dy = 0;
     public static int oldX, oldY;//coordinates before moving
     int newX, newY;//новые координаты после преобразований
-    static double zoom = 1;// коэффициент масштаба
+    double zoom = 1;// коэффициент масштаба
     Shape ss;
     boolean touch;
     boolean pointed = false;//есть ли точки
@@ -62,13 +62,17 @@ public class jMDIFrame extends JInternalFrame {
     public String fileName = ""; // Имя файла в котором храниться схема
 
     long thisTimeFirstClick;//начальный замер времени
+    
+    GridPanel grid;
 
     public jMDIFrame(String title, Boolean resizable, Boolean closable, Boolean maximizable, Boolean iconifiable, String file) {
         super(title, resizable, closable, maximizable, iconifiable);
         initComponents();
 
         // Добавляем GridPanel на jPanel1
-        jPanel1.add(new GridPanel(20)); // 20 - это размер ячейки сетки
+        grid = new GridPanel(GridPanel.GetBaseCellSize());
+        jPanel1.add(grid);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -225,33 +229,53 @@ public class jMDIFrame extends JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Получения центра видимой области панели по координате X
+    public int GetCenterX(){
+        // Получаем размеры панели
+        int panelWidth = jPanel1.getWidth();
+
+        // Рассчитываем размеры видимой области панели
+        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+
+        // Максимальное значение скроллера
+        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
+
+        // Получаем текущее положение скроллеров
+        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
+
+        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
+        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
+        
+        return centerX;
+    }
+    
+    //Получения центра видимой области панели по координате Y
+    public int GetCenterY(){
+        // Получаем размеры панели
+        int panelHeight = jPanel1.getHeight();
+        
+        // Рассчитываем размеры видимой области панели
+        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+        
+        // Максимальное значение скроллера
+        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
+        
+        // Получаем текущее положение скроллеров
+        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
+        
+        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
+        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
+        
+        return centerY;
+    }
+    
 //Вставляем элемент S
     private void SActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
 
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
-
         // Рассчитываем координаты центра фигуры
-        int x = centerX;
-        int y = centerY;
+        int x = GetCenterX();
+        int y = GetCenterY();
 
         // Создаем экземпляр фигуры и устанавливаем его координаты
         S1 Sn = new S1(x, y, (int) (s * zoom));
@@ -262,7 +286,7 @@ public class jMDIFrame extends JInternalFrame {
         for (figures c : all) {
             jPanel1.add(c);
         }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
         jPanel1.revalidate();
         jPanel1.repaint();
 
@@ -274,29 +298,10 @@ public class jMDIFrame extends JInternalFrame {
     //Вставляем элемент V
     private void VActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
 
         // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
+        int x = GetCenterX();
+        int y = GetCenterY();
 
         V Vn = new V(x, y, (int) (s * zoom));
         Vn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
@@ -308,7 +313,7 @@ public class jMDIFrame extends JInternalFrame {
         for (figures b : all) {
             jPanel1.add(b);
         }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
         jPanel1.revalidate();
         jPanel1.repaint();
 
@@ -319,29 +324,10 @@ public class jMDIFrame extends JInternalFrame {
     //Вставляем элемент R
     private void RActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
 
         // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
+        int x = GetCenterX();
+        int y = GetCenterY();
 
         R Rn = new R(x, y, (int) (s * zoom));
         Rn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
@@ -352,7 +338,7 @@ public class jMDIFrame extends JInternalFrame {
         for (figures b : all) {
             jPanel1.add(b);
         }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
         jPanel1.revalidate();
         jPanel1.repaint();
 
@@ -363,29 +349,9 @@ public class jMDIFrame extends JInternalFrame {
     //Вставляем элемент NV
     private void NVActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
-
-        // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
+        
+        int x = GetCenterX();
+        int y = GetCenterY();
 
         NV NVn = new NV(x, y, (int) (s * zoom));
         NVn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
@@ -396,7 +362,7 @@ public class jMDIFrame extends JInternalFrame {
         for (figures b : all) {
             jPanel1.add(b);
         }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
         jPanel1.revalidate();
         jPanel1.repaint();
 
@@ -407,29 +373,9 @@ public class jMDIFrame extends JInternalFrame {
     //Вставляем элемент условие (IF)
     private void DActionPerformed(java.awt.event.ActionEvent evt) {
         s = k;
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
-
-        // Рассчитываем координаты верхнего левого угла фигуры
-        int x = centerX;
-        int y = centerY;
+                
+        int x = GetCenterX();
+        int y = GetCenterY();
 
         //d dn = new d(x, y, s);
         d dn = new d(x, y, (int) (s * zoom));
@@ -441,7 +387,7 @@ public class jMDIFrame extends JInternalFrame {
         for (figures b : all) {
             jPanel1.add(b);
         }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
         jPanel1.revalidate();
         jPanel1.repaint();
 
@@ -454,7 +400,7 @@ public class jMDIFrame extends JInternalFrame {
         for (figures b : all) {
             jPanel1.add(b);
         }
-        jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+        jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
         jPanel1.revalidate();
         jPanel1.repaint();
     }
@@ -545,7 +491,7 @@ public class jMDIFrame extends JInternalFrame {
                     for (JComponent c : all) {
                         jPanel1.add(c);
                     }
-                    jPanel1.add(new GridPanel(20));
+                    jPanel1.add(grid);
                     jPanel1.revalidate();
                     jPanel1.repaint();
                     pointed = true;
@@ -572,7 +518,7 @@ public class jMDIFrame extends JInternalFrame {
                                 jPanel1.add(ls);
                                 lines.add(0, ls);
                                 checkLine = true;
-                                jPanel1.add(new GridPanel(20));
+                                jPanel1.add(grid);
                                 jPanel1.revalidate();
                                 jPanel1.repaint();
                             }
@@ -584,7 +530,7 @@ public class jMDIFrame extends JInternalFrame {
 
                 }
 
-                jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
+                jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
 
                 // Нажате правой кнопки
                 if (evt.isPopupTrigger()) {
@@ -621,7 +567,7 @@ public class jMDIFrame extends JInternalFrame {
                 jPanel1.add(c);
             }
             pointed = false;
-            jPanel1.add(new GridPanel(20));
+            jPanel1.add(grid);
             jPanel1.revalidate();
             jPanel1.repaint();
         }
@@ -637,7 +583,7 @@ public class jMDIFrame extends JInternalFrame {
                 jPanel1.add(c);
             }
             pointed = true;
-            jPanel1.add(new GridPanel(20));
+            jPanel1.add(grid);
             jPanel1.revalidate();
             jPanel1.repaint();
         }
@@ -667,12 +613,12 @@ public class jMDIFrame extends JInternalFrame {
                             jPanel1.add(ls);
                             lines.add(0, ls);
                             checkLine = true;
-                            //jPanel1.add(new GridPanel(20));
+                            //jPanel1.add(grid);
                             jPanel1.revalidate();
                             jPanel1.repaint();
 
                         }
-                        jPanel1.add(new GridPanel(20));
+                        jPanel1.add(grid);
                         jPanel1.revalidate();
                         jPanel1.repaint();
                         break;
@@ -690,7 +636,7 @@ public class jMDIFrame extends JInternalFrame {
                     for (JComponent c : all) {
                         jPanel1.add(c);
                     }
-                    jPanel1.add(new GridPanel(20));
+                    jPanel1.add(grid);
                     jPanel1.revalidate();
                     jPanel1.repaint();
                     //jPanel1.repaint();
@@ -720,7 +666,7 @@ public class jMDIFrame extends JInternalFrame {
 
         if (pointed == true) {//убирать точки теекущего объекта при перетаскивании
             jPanel1.remove(points.get(0));
-            jPanel1.add(new GridPanel(20));
+            jPanel1.add(new GridPanel((int)(GridPanel.GetBaseCellSize()*zoom))); // Добавляем сетку перед добавлением фигур
             jPanel1.revalidate();
             //jPanel1.repaint();
             jPanel1.repaint();
@@ -812,13 +758,15 @@ public class jMDIFrame extends JInternalFrame {
                     }
                     // }
                 }
-                jPanel1.add(new GridPanel(20));
+                jPanel1.add(grid);
                 jPanel1.revalidate();
                 //jPanel1.repaint();
                 jPanel1.repaint();
             }
 
             // Устанавливаем новые координаты для фигуры
+            b.setAbsoluteX((int)(b.getAbsoluteX() + (newX-b.getXX())/zoom));
+            b.setAbsoluteY((int)(b.getAbsoluteY() + (newY-b.getYY())/zoom));
             b.setXX(newX);
             b.setYY(newY);
             change_idx = true;
@@ -834,7 +782,7 @@ public class jMDIFrame extends JInternalFrame {
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             l.setC2((Point2D) evt.getPoint());//обновление второй точки
             //jPanel1.repaint();
-            jPanel1.add(new GridPanel(20));
+            jPanel1.add(grid);
             jPanel1.revalidate();
             jPanel1.repaint();
         }
@@ -948,6 +896,7 @@ public class jMDIFrame extends JInternalFrame {
                 b.setVisible(true);
                 jPanel1.add(b);
             }
+            jPanel1.add(new GridPanel(GridPanel.GetBaseCellSize()));
             jPanel1.revalidate();
             jPanel1.repaint();
             fileName = saveName;
@@ -966,7 +915,7 @@ public class jMDIFrame extends JInternalFrame {
         Graphics2D g2d = (Graphics2D) g;
 
         // Определяем размер ячейки сетки
-        int cellSize = 20;
+        int cellSize = grid.GetCellSize();
 
         // Определяем размеры панели
         int panelWidth = jPanel1.getWidth();
@@ -1061,7 +1010,7 @@ public class jMDIFrame extends JInternalFrame {
                         for (figures a : all) {
                             jPanel1.add(a);
                         }
-                        jPanel1.add(new GridPanel(20));
+                        jPanel1.add(grid);
                         jPanel1.revalidate();
                         jPanel1.repaint();
                         lined = true;
@@ -1123,51 +1072,69 @@ public class jMDIFrame extends JInternalFrame {
             return;
         }
         //конец работы Иванова А.А.
-        s = (int) (k * zoom);
+        s = (int) Math.round(k * zoom);
 
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
+        int centerX = GetCenterX();
+        int centerY = GetCenterY();
 
         for (figures b : all) {
             b.setS(s);
-            oldX = b.getXX();
-            oldY = b.getYY();
+            
+            //абсолютное смещение от центра видимой области
+            dx = (int)(b.getAbsoluteX() - centerX);
+            dy = (int)(b.getAbsoluteY() - centerY);
 
-            //смещение от центра видимой области
-            dx = oldX - centerX;
-            dy = oldY - centerY;
-
-            //смещаем к центру
-            newX = oldX - dx;
-            newY = oldY - dy;
-
-            dx = (int) (dx / (zoom + 0.15) * zoom);
-            dy = (int) (dy / (zoom + 0.15) * zoom);
-
-            //прибавляем новое смещение
-            newX += dx;
-            newY += dy;
+            newX = (int) (centerX + dx*zoom);
+            newY = (int) (centerY + dy*zoom);
 
             b.setXX(newX);
             b.setYY(newY);
+            
+            // Рассчитываем правую и нижнюю границы видимой области панели
+            int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+            int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+            int rightBorder = jScrollPane1.getHorizontalScrollBar().getValue() + visibleWidth;
+            int bottomBorder = jScrollPane1.getVerticalScrollBar().getValue() + visibleHeight;
+
+            // Рассчитываем текущие размеры панели
+            int panelWidth = jPanel1.getWidth();
+            int panelHeight = jPanel1.getHeight();
+
+            // Проверяем, выходит ли фигура за границы видимой области
+            boolean outOfBoundsX = newX > rightBorder;
+            boolean outOfBoundsY = newY > bottomBorder;
+
+            if (outOfBoundsX || outOfBoundsY) {
+                // Рассчитываем на сколько фигура выходит за границы
+                int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100 : 0;
+                int distanceY = outOfBoundsY ? Math.max(0, newY - bottomBorder) + 100 : 0;
+
+                // Проверяем, выходит ли фигура за границы размера панели           
+                boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
+
+                if (outOfPanelBounds) {
+                    // Увеличиваем размеры панели на это расстояние
+                    jPanel1.setPreferredSize(new Dimension(
+                            jPanel1.getPreferredSize().width + distanceX,
+                            jPanel1.getPreferredSize().height + distanceY
+                    ));
+
+                    // Перерисовываем панель
+                    jPanel1.revalidate();
+                }
+            }
         }
+        
+        
+        //изменение сетки
+        grid.SetCellSize ((int) Math.round(GridPanel.GetBaseCellSize()*zoom));
+        
+        //изменение скроллеров
+        int HorizontalScrollBarScale = (int) (jScrollPane1.getHorizontalScrollBar().getMaximum() * zoom / (zoom + 0.15));
+        int VerticalScrollBarScale = (int) (jScrollPane1.getVerticalScrollBar().getMaximum() * zoom / (zoom + 0.15));
+        
+        jScrollPane1.getHorizontalScrollBar().setMaximum(HorizontalScrollBarScale);
+        jScrollPane1.getVerticalScrollBar().setMaximum(VerticalScrollBarScale);
 
         jSize.setText(String.format("%.0f", zoom * 100) + '%');
 
@@ -1182,52 +1149,70 @@ public class jMDIFrame extends JInternalFrame {
             return;
         }
         //конец работы работы Иванова А.А.
-        s = (int) (k * zoom);
+        s = (int) Math.round(k * zoom);
 
-        // Получаем размеры панели
-        int panelWidth = jPanel1.getWidth();
-        int panelHeight = jPanel1.getHeight();
-
-        // Рассчитываем размеры видимой области панели
-        int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
-        int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
-
-        // Максимальное значение скроллера
-        int maxScrollX = jScrollPane1.getHorizontalScrollBar().getMaximum();
-        int maxScrollY = jScrollPane1.getVerticalScrollBar().getMaximum();
-
-        // Получаем текущее положение скроллеров
-        int scrollX = jScrollPane1.getHorizontalScrollBar().getValue();
-        int scrollY = jScrollPane1.getVerticalScrollBar().getValue();
-
-        // Рассчитываем координаты центра видимой области панели относительно текущего положения скроллеров
-        int centerX = panelWidth / maxScrollX * scrollX + visibleWidth / 2 - s / 4;
-        int centerY = panelHeight / maxScrollY * scrollY + visibleHeight / 2 - s / 4;
+        int centerX = GetCenterX();
+        int centerY = GetCenterY();
 
         for (figures b : all) {
             b.setS(s);
-            oldX = b.getXX();
-            oldY = b.getYY();
+            
+            //абсолютное смещение от центра видимой области
+            dx = (int)(b.getAbsoluteX() - centerX);
+            dy = (int)(b.getAbsoluteY() - centerY);
 
-            //начало работы Иванова А.А. изменение координат объектов
-            dx = oldX - centerX; //смещение от центра
-            dy = oldY - centerY;
-
-            //смещаем к центру
-            newX = oldX - dx;
-            newY = oldY - dy;
-
-            //умножаем смещение на zoom
-            dx = (int) (dx / (zoom - 0.15) * zoom);
-            dy = (int) (dy / (zoom - 0.15) * zoom);
-
-            //прибавляем новое смещение
-            newX += dx;
-            newY += dy;
+            newX = (int) (centerX + dx*zoom);
+            newY = (int) (centerY + dy*zoom);
 
             b.setXX(newX);
             b.setYY(newY);
+            
+            // Рассчитываем правую и нижнюю границы видимой области панели
+            int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
+            int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
+            int rightBorder = jScrollPane1.getHorizontalScrollBar().getValue() + visibleWidth;
+            int bottomBorder = jScrollPane1.getVerticalScrollBar().getValue() + visibleHeight;
+
+            // Рассчитываем текущие размеры панели
+            int panelWidth = jPanel1.getWidth();
+            int panelHeight = jPanel1.getHeight();
+
+            // Проверяем, выходит ли фигура за границы видимой области
+            boolean outOfBoundsX = newX > rightBorder;
+            boolean outOfBoundsY = newY > bottomBorder;
+
+            if (outOfBoundsX || outOfBoundsY) {
+                // Рассчитываем на сколько фигура выходит за границы
+                int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100 : 0;
+                int distanceY = outOfBoundsY ? Math.max(0, newY - bottomBorder) + 100 : 0;
+
+                // Проверяем, выходит ли фигура за границы размера панели           
+                boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
+
+                if (outOfPanelBounds) {
+                    // Увеличиваем размеры панели на это расстояние
+                    jPanel1.setPreferredSize(new Dimension(
+                            jPanel1.getPreferredSize().width + distanceX,
+                            jPanel1.getPreferredSize().height + distanceY
+                    ));
+
+                    // Перерисовываем панель
+                    jPanel1.revalidate();
+                }
+            }
         }
+        
+        //изменение сетки
+        grid.SetCellSize ((int) Math.round(GridPanel.GetBaseCellSize()*zoom));
+        
+        //изменение скроллеров
+        int HorizontalScrollBarScale = (int) (jScrollPane1.getHorizontalScrollBar().getMaximum() * zoom / (zoom - 0.15));
+        int VerticalScrollBarScale = (int) (jScrollPane1.getVerticalScrollBar().getMaximum() * zoom / (zoom - 0.15));;
+        
+        jScrollPane1.getHorizontalScrollBar().setMaximum(HorizontalScrollBarScale);
+        jScrollPane1.getVerticalScrollBar().setMaximum(VerticalScrollBarScale);
+        
+        
 
         jSize.setText(String.format("%.0f", zoom * 100) + '%');
         //Конец работы Иванова А.А.
