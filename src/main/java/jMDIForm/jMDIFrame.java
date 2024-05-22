@@ -1074,8 +1074,8 @@ public class jMDIFrame extends JInternalFrame {
         //конец работы Иванова А.А.
         s = (int) Math.round(k * zoom);
 
-        int centerX = GetCenterX();
-        int centerY = GetCenterY();
+        int centerX = (int)jPanel1.getVisibleRect().getWidth()/2;
+        int centerY = (int)jPanel1.getVisibleRect().getHeight()/2;
 
         for (figures b : all) {
             b.setS(s);
@@ -1151,8 +1151,8 @@ public class jMDIFrame extends JInternalFrame {
         //конец работы работы Иванова А.А.
         s = (int) Math.round(k * zoom);
 
-        int centerX = GetCenterX();
-        int centerY = GetCenterY();
+        int centerX = (int)jPanel1.getVisibleRect().getWidth()/2;
+        int centerY = (int)jPanel1.getVisibleRect().getHeight()/2;
 
         for (figures b : all) {
             b.setS(s);
