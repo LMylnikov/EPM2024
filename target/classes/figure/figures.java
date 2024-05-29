@@ -8,11 +8,8 @@ import javax.swing.JComponent;
 public class figures extends JComponent{
     int x, y;//x,y - координаты центра фигуры 
     Shape shape;
-    int s;//s - size
-//    String str;
-//     private static int counter = 0;
-//    public final int id = 0;
-    
+    int s;//size
+
     String nameF; // Имя фигуры
     String descriptionF; // Подробное описание объекта
     ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными

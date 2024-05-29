@@ -608,9 +608,10 @@ public class jMDIFrame extends JInternalFrame {
     //Сохранение файла
     public void SaveInJSON(String fn) {
         try {
-
             // Создаем список для хранения объектов Figure_s
             List<Figure_s> figuresList = new ArrayList<>();
+            List<figures> figuresList2 = new ArrayList<>();
+
             for (figures f : all) {
                 Figure_s fig = new Figure_s();
                 String gType = f.getClass().toString();
@@ -621,6 +622,11 @@ public class jMDIFrame extends JInternalFrame {
                 fig.setShape(gType);
                 fig.setSize(Integer.toString(f.getSises()));
                 fig.setId(Integer.toString(f.getId()));
+                fig.setName(f.getNameF());
+                fig.setDescription(f.getDescriptionF());
+                fig.setCode(f.getCodeF());
+                fig.setInVariable(f.getInVariable());
+                fig.setOutVariable(f.getOutVariable());
                 // Добавляем объект Figure_s в список
                 figuresList.add(fig);
             }
@@ -644,16 +650,6 @@ public class jMDIFrame extends JInternalFrame {
             //String jsonString = Files.readString(Paths.get(saveName));
             Path filePath = Path.of(saveName);
             String jsonString = Files.readString(filePath);
-            
-            
-            //File file = new File(saveName);
-            //String content = FileUtils.readFileToString(file, "UTF-8");
-            
-            
-            
-            
-            //String jsonString;
-            //jsonString = objectMapper.readValue(Paths.get(saveName));// . .read readValue(Paths.get(saveName));
             // Преобразуем JSON в список объектов Figure_s
             List<Figure_s> figuresList;
             figuresList = objectMapper.readValue(jsonString, new TypeReference<List<Figure_s>>() { });
@@ -664,7 +660,7 @@ public class jMDIFrame extends JInternalFrame {
             // Преобразуем объекты Figure_s в объекты Figure
             for (Figure_s fig : figuresList) {
                 readSaveData rs = new readSaveData();
-                all = rs.getElement(all, fig.getShape(), fig.getX_pos(), fig.getY_pos(), fig.getSize()/*Sshape,Sx,Sy,Ss*/); //Заносим фигуру в список используемых в проекте фигур
+                all = rs.getElement(all, fig.getShape(), fig.getX_pos(), fig.getY_pos(), fig.getSize(),fig.getName(),fig.getCode(),fig.getDescription(),fig.getInVariable(),fig.getOutVariable()); //Заносим фигуру в список используемых в проекте фигур
             }
             // Выводим результат
             for (figures b : all) { //добавляем фигуры
