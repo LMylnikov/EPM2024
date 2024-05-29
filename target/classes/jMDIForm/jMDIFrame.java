@@ -36,7 +36,7 @@ public class jMDIFrame extends JInternalFrame {
 
     public int s;
     public final int k = 100;
-    public ArrayList<figures> all = new ArrayList();//массив хранящий фугуры по порядку расположения !!!!!!!!!!!!!!!!!!!!!!!!!!
+    public ArrayList<figures> all = new ArrayList();//массив хранящий фугуры по порядку расположения !
     public int x;//координаты мыши
     public int y;
     Point2D p;// текущая точка
@@ -430,52 +430,26 @@ public class jMDIFrame extends JInternalFrame {
         oldY = evt.getY();
         p = evt.getPoint();
         boolean is_dc = false;
-        for (figures b : all) {
-            ss = b.getShape();
-            if (ss.contains(p) == true) {  
-                
-                
-               
-                
+        for (figures currentFigure : all) {
+            ss = currentFigure.getShape();
+            if (ss.contains(p) == true) {   
                 //if (figures.doubleCl == true){ //если уже был клик на фигуру
                 if (evt.getClickCount() == 2){ //если уже был клик на фигуру
                    long thisTimeSecondClick = System.currentTimeMillis();   //время второго клика               
                    if (abs(thisTimeSecondClick - thisTimeFirstClick) < 400){ //если разница в кликах невелика
-                        //Тут вызывем окно с свойствами
-                        //JOptionPane.showMessageDialog(this, "X: " +b.getXX() + " Y " +b.getYY() , "О фигуре", JOptionPane.ERROR_MESSAGE);
-                        Properties prop = new Properties("Figure",false,true,true,false,null,b);
-                        //prop.setPreferredSize(new Dimension(200, 200));
-                        //prop.setSize(prop.getPreferredSize());
-
-                        //prop.setResizable(true);
-                        //prop.pack();
-                        //prop.setLocation(2, 2);
-                        
-                        jPanel1.add(prop);
-                        jPanel1.repaint();
-                        prop.toFront();
-                        prop.setVisible(true);   
-                        jPanel1.repaint();
+                        PropertiesDialog pDialog = new PropertiesDialog(null, true,currentFigure);
+                        pDialog.setVisible(true);
                         is_dc = true;
-                        //Пытаюсь открыть окно, но не получается. Думаю на оюновление через removeall мешает.
-                        
                    }
-                   else{ //Иначе ничиго
-                       //JOptionPane.showMessageDialog(this, "LOL." , "Ошибка", JOptionPane.ERROR_MESSAGE);       
-                   }
-                   //figures.doubleCl = false;  //Убираем воспоминание о первом клике
+                   else{ //Иначе ничиго                           
+                   }               
                 }
                 else{ //Есди не было первого клика
-                    thisTimeFirstClick = System.currentTimeMillis(); //Берем время первого клика
-                    //figures.doubleCl = true; //Обновляем флаг о первом клике                 
+                    thisTimeFirstClick = System.currentTimeMillis(); //Берем время первого клика             
                 } //Далее код для переноса фигуры, не относ к двойному клику
-                
-               // if (is_dc = false){
-               //     jPanel1.removeAll();          
-               // }
 
-                all.remove(b);
-                all.add(0, b);
+                all.remove(currentFigure);
+                all.add(0, currentFigure);
                 
                 //установить новые координты для x и y, прибавить к координате значение положения скроллера
                 
@@ -483,12 +457,9 @@ public class jMDIFrame extends JInternalFrame {
                 jPanel1.removeAll();  
                 for (JComponent c : all) { jPanel1.add(c); } 
                 jPanel1.add(new GridPanel(20)); // Добавляем сетку перед добавлением фигур
-
-                
+          
                 // Нажате правой кнопки
-                if (evt.isPopupTrigger() ){
-                    
-                    
+                if (evt.isPopupTrigger() ){ 
                     // create a popup menu
                     //JPopupMenu pm = new JPopupMenu("Message");
  
@@ -523,7 +494,6 @@ public class jMDIFrame extends JInternalFrame {
         //        zoom=evt.getUnitsToScroll();
         //
         //            jPanel1.repaint();
-
     }//GEN-LAST:event_Resizing
 
     private void moveobj(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveobj
