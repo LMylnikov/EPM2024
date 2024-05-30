@@ -402,7 +402,7 @@ public class jMDIFrame extends JInternalFrame {
         oldX = evt.getX();
         oldY = evt.getY();
         p = evt.getPoint();
-
+        
         id11 = 0;//индекс по точкам
         id22 = 0;
         int countf = 0;//счет нерасмотренных фигур
@@ -692,14 +692,21 @@ public class jMDIFrame extends JInternalFrame {
                         dyy = ln.getC1().getY() - oldY;
                         Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
                         ln.setC1(p1);
+                        ln.arrow.x1 = p1.x;
+                        ln.arrow.y1 = p1.y;
+                        ln.arrow.repaint();
                         
                         //ln.setCC();
-                    } 
+                    }
+                    //У объекта рисуется сразу 2 линии: правильная и линия, у которой начало и конец является одной точкой
                     if (b.getNameF().equals(ln.getID2())) {
                         dxx = ln.getC2().getX() - oldX;
                         dyy = ln.getC2().getY() - oldY;
                         Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
                         ln.setC2(p2);
+                        ln.arrow.x2 = p2.x;
+                        ln.arrow.y2 = p2.y;
+                        ln.arrow.repaint();
                     }
                     // }
                 }
@@ -726,6 +733,9 @@ public class jMDIFrame extends JInternalFrame {
             Line l = lines.get(0);
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             l.setC2((Point2D) evt.getPoint());//обновление второй точки
+            l.arrow.x2 = l.getC2().getX();
+            l.arrow.y2 = l.getC2().getY();
+            l.arrow.repaint();
             //jPanel1.repaint();
             jPanel1.add(grid);
             jPanel1.revalidate();
@@ -971,6 +981,7 @@ public class jMDIFrame extends JInternalFrame {
                 for (JComponent c : all) {
                     jPanel1.add(c);
                 }
+                jPanel1.add(grid);
                 jPanel1.repaint();
             }
         }
@@ -1002,6 +1013,7 @@ public class jMDIFrame extends JInternalFrame {
 
     }//GEN-LAST:event_jScrollPane1CaretPositionChanged
 
+    //При изменении масштаба учитывать, что должны меняться и координаты линии
     private void zminusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zminusActionPerformed
         this.zminus();
     }//GEN-LAST:event_zminusActionPerformed
@@ -1028,8 +1040,28 @@ public class jMDIFrame extends JInternalFrame {
             newX = (int) (centerX + dx*zoom);
             newY = (int) (centerY + dy*zoom);
 
+            dx = newX-b.getXX();
+            dy = newY-b.getYY();
+            
             b.setXX(newX);
             b.setYY(newY);
+            
+            if (lined) {
+                for (Line line : lines) {
+                    if (b.getNameF().equals(line.getID1())) {
+                        Point2D c1 = new Point2D.Double(line.getC1().getX()+dx, line.getC1().getY()+dy);
+                        line.setC1(c1);
+                        line.arrow.x1 = c1.getX();
+                        line.arrow.y1 = c1.getY();
+                    }
+                    if (b.getNameF().equals(line.getID2())) {
+                        Point2D c2 = new Point2D.Double(line.getC2().getX()+dx, line.getC2().getY()+dy);
+                        line.setC2(c2);
+                        line.arrow.x2 = c2.getX();
+                        line.arrow.y2 = c2.getY();
+                    }
+                }
+            }
             
             this.OutOfBounds();
         }
@@ -1046,7 +1078,7 @@ public class jMDIFrame extends JInternalFrame {
         jScrollPane1.getVerticalScrollBar().setMaximum(VerticalScrollBarScale);
 
         jSize.setText(String.format("%.0f", zoom * 100) + '%');
-
+        
         jPanel1.repaint();
     }
     
@@ -1076,8 +1108,32 @@ public class jMDIFrame extends JInternalFrame {
             newX = (int) (centerX + dx*zoom);
             newY = (int) (centerY + dy*zoom);
 
+            dx = newX-b.getXX();
+            dy = newY-b.getYY();
+            
             b.setXX(newX);
             b.setYY(newY);
+            
+            if (lined) {
+                for (Line line : lines) {
+                    if (b.getNameF().equals(line.getID1())) {
+//                        Point2D c1 = new Point2D.Double(line.getC1().getX()+dx, line.getC1().getY()+dy);
+//                        line.setC1(c1);
+//                        line.arrow.x1 = c1.getX();
+//                        line.arrow.y1 = c1.getY();
+                        line.repaint();
+                        line.arrow.repaint();
+                    }
+                    if (b.getNameF().equals(line.getID2())) {
+//                        Point2D c2 = new Point2D.Double(line.getC2().getX()+dx, line.getC2().getY()+dy);
+//                        line.setC2(c2);
+//                        line.arrow.x2 = c2.getX();
+//                        line.arrow.y2 = c2.getY();
+                        line.repaint();
+                        line.arrow.repaint();
+                    }
+                }
+            }
             
             this.OutOfBounds();
         }

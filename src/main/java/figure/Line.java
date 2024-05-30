@@ -14,6 +14,7 @@ public class Line extends JComponent{
     public ArrayList<Shape> pointShape = new ArrayList();
     int id11, id22;//id  соединяемых объектов
     String ID1, ID2;//имя соединяемоых объектов
+    public Arrow arrow;//стрелка
     
     public Line(){
     }

@@ -17,6 +17,7 @@ public class LineStraight extends Line{
         this.id11=id11;
         this.id22=id22;
         this.ID1=ID1;
+        this.arrow = new Arrow(c1, c2);
     }
     @Override
     public void paintComponent(Graphics g){
@@ -29,5 +30,6 @@ public class LineStraight extends Line{
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(2));
         g2.draw(gp);
+        arrow.paintComponent(g);
         }
 }
