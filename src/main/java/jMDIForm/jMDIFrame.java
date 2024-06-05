@@ -375,6 +375,9 @@ public class jMDIFrame extends JInternalFrame {
         for (figures b : all) {
             jPanel1.add(b);
         }
+        for (Line line : lines){
+            jPanel1.add(line);
+        }
         jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
         jPanel1.revalidate();
         jPanel1.repaint();
@@ -476,6 +479,7 @@ public class jMDIFrame extends JInternalFrame {
                                     }
                                 }
                                 jPanel1.add(all.get(points.indexOf(a)));
+                            }
                                 LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
                                         (Point2D) evt.getPoint(), b.getNameF(), id11, b.getNameF(), id11);
                                 ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
@@ -486,8 +490,6 @@ public class jMDIFrame extends JInternalFrame {
                                 jPanel1.add(grid);
                                 jPanel1.revalidate();
                                 jPanel1.repaint();
-                            }
-                            // break;
                         } else {
                             countp++;
                         }
@@ -571,6 +573,7 @@ public class jMDIFrame extends JInternalFrame {
                             }
                             //id1=all.get(0).getId();
                             jPanel1.add(all.get(points.indexOf(a)));
+                        }
                             LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
                                     (Point2D) evt.getPoint(), ID1, id11, ID1, id11);
                             ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
@@ -582,7 +585,6 @@ public class jMDIFrame extends JInternalFrame {
                             jPanel1.revalidate();
                             jPanel1.repaint();
 
-                        }
                         jPanel1.add(grid);
                         jPanel1.revalidate();
                         jPanel1.repaint();
@@ -939,7 +941,7 @@ public class jMDIFrame extends JInternalFrame {
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
         // Когда закончили перетаскивать объект и отпкстили мышку снова делаем курсор-стрелочку
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
+        
         touch = false;
         int countp = 0;
         if (checkLine) {//прорисовка линий
@@ -1024,6 +1026,7 @@ public class jMDIFrame extends JInternalFrame {
         } else {
             return;
         }
+        jPanel1.remove(points.get(0));
         //конец работы Иванова А.А.
         s = (int) Math.round(k * zoom);
 
@@ -1092,6 +1095,7 @@ public class jMDIFrame extends JInternalFrame {
         } else {
             return;
         }
+        jPanel1.remove(points.get(0));
         //конец работы работы Иванова А.А.
         s = (int) Math.round(k * zoom);
 
