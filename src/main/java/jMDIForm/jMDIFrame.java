@@ -34,7 +34,7 @@ public class jMDIFrame extends JInternalFrame {
 //    DatabaseHandler dbHandler = new DatabaseHandler();
     public int s;
     public final int k = 100;
-    public ArrayList<figures> all = new ArrayList();//массив хранящий фугуры по порядку расположения !!!!!!!!!!!!!!!!!!!!!!!!!!
+    public ArrayList<figures> all = new ArrayList();//массив хранящий фугуры по порядку расположения !
 //    public ArrayList<points> points = new ArrayList();//массив хранящий точки по порядку расположения
     public ArrayList<points> points = new ArrayList();//массив хранящий точки по порядку расположения
     public ArrayList<Line> lines = new ArrayList();//массив линий 
@@ -411,36 +411,20 @@ public class jMDIFrame extends JInternalFrame {
         int countf = 0;//счет нерасмотренных фигур
         int countp = 0;//счет нерассмотренных точек//на них не попал курсор
         addPoints();
-        for (figures b : all) {
-            ss = b.getShape();
+        for (figures currentFigure : all) {
+            ss = currentFigure.getShape();
             if (ss.contains(p) == true) {
 
                 if (evt.getClickCount() == 2) { //если двойной клик
-                        //Тут вызывем окно с свойствами
-                        //JOptionPane.showMessageDialog(this, "X: " +b.getXX() + " Y " +b.getYY() , "О фигуре", JOptionPane.ERROR_MESSAGE);
-                        Properties prop = new Properties("Figure", false, true, true, false, null, b);
-                        //prop.setPreferredSize(new Dimension(200, 200));
-                        //prop.setSize(prop.getPreferredSize());
-
-                        //prop.setResizable(true);
-                        //prop.pack();
-                        //prop.setLocation(2, 2);
-                        jPanel1.add(prop);
-                        jPanel1.repaint();
-                        prop.toFront();
-                        prop.setVisible(true);
-                        jPanel1.repaint();
-                        //Пытаюсь открыть окно, но не получается. Думаю на оюновление через removeall мешает.
+                        PropertiesDialog pDialog = new PropertiesDialog(null, true,currentFigure);
+                        pDialog.setVisible(true);
 
                 } else { //Иначе ничего
                     
                 } //Далее код для переноса фигуры, не относ к двойному клику
 
-                // if (is_dc = false){
-                //     jPanel1.removeAll();          
-                // }
-                all.remove(b);
-                all.add(0, b);
+                all.remove(currentFigure);
+                all.add(0, currentFigure);
                 addPoints();
                 //установить новые координты для x и y, прибавить к координате значение положения скроллера
                 jPanel1.removeAll();
@@ -481,7 +465,7 @@ public class jMDIFrame extends JInternalFrame {
                                 jPanel1.add(all.get(points.indexOf(a)));
                             }
                                 LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
-                                        (Point2D) evt.getPoint(), b.getNameF(), id11, b.getNameF(), id11);
+                                        (Point2D) evt.getPoint(), currentFigure.getNameF(), id11, currentFigure.getNameF(), id11);
                                 ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
                                 ls.setVisible(true);
                                 jPanel1.add(ls);
@@ -501,7 +485,6 @@ public class jMDIFrame extends JInternalFrame {
 
                 // Нажате правой кнопки
                 if (evt.isPopupTrigger()) {
-
                     // create a popup menu
                     //JPopupMenu pm = new JPopupMenu("Message");
                     // create a label
@@ -513,7 +496,6 @@ public class jMDIFrame extends JInternalFrame {
                     //f.setSize(400, 400);
                     // add the popup to the frame
                     rcMenu.show(this, oldX, oldY);
-
                 }
                 jPanel1.revalidate();
                 jPanel1.repaint();
@@ -793,9 +775,10 @@ public class jMDIFrame extends JInternalFrame {
     //Сохранение файла
     public void SaveInJSON(String fn) {
         try {
-
             // Создаем список для хранения объектов Figure_s
             List<Figure_s> figuresList = new ArrayList<>();
+            List<figures> figuresList2 = new ArrayList<>();
+            
             for (figures f : all) {
                 Figure_s fig = new Figure_s();
                 String gType = f.getClass().toString();
@@ -806,8 +789,17 @@ public class jMDIFrame extends JInternalFrame {
                 fig.setShape(gType);
                 fig.setSize(Integer.toString(f.getSises()));
                 fig.setId(Integer.toString(f.getId()));
+                fig.setName(f.getNameF());
+                fig.setDescription(f.getDescriptionF());
+                fig.setCode(f.getCodeF());
+                fig.setInVariable(f.getInVariable());
+                fig.setOutVariable(f.getOutVariable());
                 // Добавляем объект Figure_s в список
                 figuresList.add(fig);
+            }
+            
+            for (Line line : lines) {
+                //записываем все линии
             }
 
             ObjectMapper mapper = new ObjectMapper();
@@ -829,11 +821,6 @@ public class jMDIFrame extends JInternalFrame {
             //String jsonString = Files.readString(Paths.get(saveName));
             Path filePath = Path.of(saveName);
             String jsonString = Files.readString(filePath);
-
-            //File file = new File(saveName);
-            //String content = FileUtils.readFileToString(file, "UTF-8");
-            //String jsonString;
-            //jsonString = objectMapper.readValue(Paths.get(saveName));// . .read readValue(Paths.get(saveName));
             // Преобразуем JSON в список объектов Figure_s
             List<Figure_s> figuresList;
             figuresList = objectMapper.readValue(jsonString, new TypeReference<List<Figure_s>>() {
@@ -845,7 +832,8 @@ public class jMDIFrame extends JInternalFrame {
             // Преобразуем объекты Figure_s в объекты Figure
             for (Figure_s fig : figuresList) {
                 readSaveData rs = new readSaveData();
-                all = rs.getElement(all, fig.getShape(), fig.getX_pos(), fig.getY_pos(), fig.getSize()/*Sshape,Sx,Sy,Ss*/); //Заносим фигуру в список используемых в проекте фигур
+                all = rs.getElement(all, fig.getShape(), fig.getX_pos(), fig.getY_pos(), fig.getSize(),fig.getName(),fig.getCode(),fig.getDescription(),fig.getInVariable(),fig.getOutVariable()); //Заносим фигуру в список используемых в проекте фигур
+                //lines = rs.GetLines(lines) //берем элементы линий
             }
             // Выводим результат
             for (figures b : all) { //добавляем фигуры

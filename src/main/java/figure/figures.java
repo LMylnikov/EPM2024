@@ -12,11 +12,8 @@ public class figures extends JComponent{
     int x, y;//x,y - координаты центра фигуры 
     int absoluteX, absoluteY; // - координаты при масштабе 100%
     Shape shape;
-    int s;//s - size
+    int s;//size
     Rectangle2D rec;
-//    String str;
-//     private static int counter = 0;
-//    public final int id = 0;
     
     String nameF; // Имя фигуры
     String descriptionF; // Подробное описание объекта
