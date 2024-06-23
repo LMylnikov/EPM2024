@@ -10,14 +10,41 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.prefs.Preferences;
+import java.util.prefs.BackingStoreException;
 
 public class S1 extends figures {
     String str = "S";
-    public static Color BackgroundColor = Color.WHITE;
-    public static Color TextColor = Color.BLACK;
+    public static Color BackgroundColor;
+    public static Color TextColor;
+    //Применение прошлых настроек
+    static {
+        // Проверяем, существует ли узел
+        try {
+            if (!prefs.nodeExists("")) {
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                BackgroundColor = Color.WHITE;
+                TextColor = Color.BLACK;
+
+                prefs.putInt("S1BackgroundColor", BackgroundColor.getRGB());
+                prefs.putInt("S1TextColor", TextColor.getRGB());
+            } else {
+                // Узел существует - загружаем значения
+                BackgroundColor = new Color(prefs.getInt("S1BackgroundColor", Color.WHITE.getRGB()));
+                TextColor = new Color(prefs.getInt("S1TextColor", Color.BLACK.getRGB()));
+            }
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+            // В случае ошибки устанавливаем значения по умолчанию
+            BackgroundColor = Color.WHITE;
+            TextColor = Color.BLACK;
+        }
+    }
     public S1(int x, int y, int s) {
         this.x = x;
         this.y = y;
+        this.absoluteX = (int)(x);
+        this.absoluteY = (int)(y);
         this.s = s;
         id = nextId.incrementAndGet();
         this.nameF = "S" + this.id;
@@ -41,5 +68,6 @@ public class S1 extends figures {
         g2.draw(shape);
         g2.setFont(font);
         g2.drawString(str, (x)+17*s/100, (y)+34*s/100);// в дальнейшем кнопка //Иванов А.А. надпись центруется с учетом масштаба
+        rec=shape.getBounds2D();
     }
 }

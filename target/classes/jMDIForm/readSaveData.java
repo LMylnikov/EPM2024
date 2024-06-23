@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package jMDIForm;
 
+import line.Line;
 import figure.*;
 import java.util.ArrayList;
 
@@ -24,7 +21,6 @@ public class readSaveData {
             dn.setOutVariable(outVariable);
             dn.setCodeF(code);
             list.add(0,dn);
-            
         }
         if ("V".equals(shape)){
             V dn =  new V(x, y, s); 
@@ -66,6 +62,10 @@ public class readSaveData {
             dn.setCodeF(code);
             list.add(0,dn);
         }
+        return list;
+    }
+    public ArrayList <Line> getLines(ArrayList <Line> list){
+        //выгрузка элементов линий
         return list;
     }
 }

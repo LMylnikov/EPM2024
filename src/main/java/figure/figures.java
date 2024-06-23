@@ -1,15 +1,20 @@
 package figure;
 
 import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JComponent;
+import java.util.prefs.Preferences;
 
 public class figures extends JComponent{
+    public static Preferences prefs = Preferences.userNodeForPackage(figures.class);
     int x, y;//x,y - координаты центра фигуры 
+    int absoluteX, absoluteY; // - координаты при масштабе 100%
     Shape shape;
     int s;//size
-
+    Rectangle2D rec;
+    
     String nameF; // Имя фигуры
     String descriptionF; // Подробное описание объекта
     ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
@@ -18,7 +23,7 @@ public class figures extends JComponent{
     
     static AtomicInteger nextId = new AtomicInteger();
     static int id;
-    //static public boolean doubleCl = false;
+    //static public boolean doubleCl = false;    
     public figures() {
         id = nextId.incrementAndGet();   
     }
@@ -48,6 +53,19 @@ public class figures extends JComponent{
     }
       public int getYY(){
        return y;       
+    }
+      
+    public void setAbsoluteX(int value){
+        this.absoluteX = value;
+    }
+    public void setAbsoluteY(int value){
+        this.absoluteY = value;
+    }
+    public int getAbsoluteX(){
+        return absoluteX;
+    }
+    public int getAbsoluteY(){
+        return absoluteY;
     }
       
     public int getSises(){
@@ -96,5 +114,11 @@ public class figures extends JComponent{
     public String getCodeF() {
         return codeF;
     }
+    public Rectangle2D getRec(){  
+        return rec;
+    }
+    public void setRec(Rectangle2D rec){
+        this.rec=rec;
+    } 
        
 }

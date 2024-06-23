@@ -337,8 +337,8 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="outVariableList" min="-2" pref="176" max="-2" attributes="0"/>
-                          <Component id="inVariableList" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="inVariableList" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                          <Component id="outVariableList" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">

@@ -2,15 +2,55 @@ package jMDIForm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.prefs.*;
 
 public class GridPanel extends JPanel {
-    private int cellSize;
+    public static Color color = Color.GRAY;
+    public static Boolean isVisible;
+    public static Preferences prefs = Preferences.userNodeForPackage(GridPanel.class);
+    static {
+        // Проверяем, существует ли узел
+        try {
+            if (!prefs.nodeExists("")) {
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                color = Color.GRAY;
+                isVisible = true;
+
+                prefs.putInt("color", color.getRGB());
+                prefs.putBoolean("isVisible", true);
+            } else {
+                // Узел существует - загружаем значения
+                isVisible = prefs.getBoolean("isVisible", true);
+                if (isVisible == true)
+                    color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
+            }
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+            // В случае ошибки устанавливаем значения по умолчанию
+            color = Color.GRAY;
+        }
+    }
+    
+    private int cellSize;   
     private int xOffset = 20; // Смещение по X
     private int yOffset = 20; // Смещение по Y
     private int thickLineSpacing = 5; // Каждая пятая линия будет толстой
+    
+    public int GetCellSize(){
+        return this.cellSize;
+    }
+    
+    public void SetCellSize(int value){
+        this.cellSize = value;
+    }
 
     public GridPanel(int cellSize) {
         this.cellSize = cellSize;
+    }
+    
+    private static int baseCellSize = 20;
+    public static int GetBaseCellSize(){
+        return baseCellSize;
     }
 
     @Override
@@ -23,7 +63,7 @@ public class GridPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         // Установка серого цвета для сетки
-        g2d.setColor(Color.GRAY);
+        g2d.setColor(color);
 
         // Определяем размеры панели
         int panelWidth = getWidth();
