@@ -703,17 +703,17 @@ public class jMDIFrame extends JInternalFrame {
                     }
                     // }
                 }
-                jPanel1.add(grid);
-                jPanel1.revalidate();
-                //jPanel1.repaint();
-                jPanel1.repaint();
+//                jPanel1.add(grid);
+//                jPanel1.revalidate();
+//                //jPanel1.repaint();
+//                jPanel1.repaint();
             }
 
             // Устанавливаем новые координаты для фигуры
-            b.setAbsoluteX((int) (b.getAbsoluteX() + (newX - b.getXX()) * zoom/100));
-            b.setAbsoluteY((int) (b.getAbsoluteY() + (newY - b.getYY()) * zoom/100));
             b.setXX(newX);
             b.setYY(newY);
+            b.setAbsoluteX((int)(b.getXX()/(double)zoom*100));
+            b.setAbsoluteY((int)(b.getYY()/(double)zoom*100));
             change_idx = true;
             jPanel1.revalidate();
             jPanel1.repaint();
