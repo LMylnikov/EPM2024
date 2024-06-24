@@ -875,6 +875,8 @@ public class jMDIFrame extends JInternalFrame {
                 jPanel1.add(ls);
                 lines.add(0, ls);
             }
+            if (lines.isEmpty() == false)
+                lined = true;
             
             jPanel1.add(new GridPanel(GridPanel.GetBaseCellSize()));
             jPanel1.revalidate();
