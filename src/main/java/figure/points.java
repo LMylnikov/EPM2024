@@ -16,7 +16,7 @@ import javax.swing.JComponent;
 public class points extends JComponent {
 
     Shape shape;
-    int ss = 10;
+    int ss = 12;
     double x, y, w, h;
     Point2D p1, p2, p3, p4;// координаты точки (её центр)
     Rectangle2D r;

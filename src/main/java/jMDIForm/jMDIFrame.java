@@ -692,7 +692,6 @@ public class jMDIFrame extends JInternalFrame {
                         
                         //ln.setCC();
                     }
-                    //У объекта рисуется сразу 2 линии: правильная и линия, у которой начало и конец является одной точкой
                     if (b.getNameF().equals(ln.getID2())) {
                         dxx = ln.getC2().getX() - oldX;
                         dyy = ln.getC2().getY() - oldY;
@@ -1047,6 +1046,7 @@ public class jMDIFrame extends JInternalFrame {
     } else {
         return;
     }
+    jPanel1.remove(points.get(0));
     // конец работы Иванова А.А.
     s = (int) Math.round(k * zoom/100);
 
@@ -1105,7 +1105,19 @@ public class jMDIFrame extends JInternalFrame {
             }
         }
     }
-
+    
+    //изменение линий
+    for (Line currentLine : lines){
+        Point2D p1 = new Point2D.Double(currentLine.getC1().getX()*zoom/(zoom+20), currentLine.getC1().getY()*zoom/(zoom+20));
+        currentLine.setC1(p1);
+        Point2D p2 = new Point2D.Double(currentLine.getC2().getX()*zoom/(zoom+20), currentLine.getC2().getY()*zoom/(zoom+20));
+        currentLine.setC2(p2);
+        currentLine.arrow.x1 = p1.getX();
+        currentLine.arrow.y1 = p1.getY();
+        currentLine.arrow.x2 = p2.getX();
+        currentLine.arrow.y2 = p2.getY();
+    }
+        
     // изменение сетки
     grid.SetCellSize((int) ((GridPanel.GetBaseCellSize() * zoom)/100));
 
@@ -1134,6 +1146,7 @@ public class jMDIFrame extends JInternalFrame {
     } else {
         return;
     }
+    jPanel1.remove(points.get(0));
     // конец работы Иванова А.А.
     s = (int) Math.round((k * zoom) /100);
 
@@ -1164,7 +1177,7 @@ public class jMDIFrame extends JInternalFrame {
         
         b.setXX((int) ((b.getAbsoluteX()) * zoom/100));
         b.setYY((int) ((b.getAbsoluteY())* zoom/100));
-
+        
         // Рассчитываем правую и нижнюю границы видимой области панели
         int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
         int visibleHeight = jScrollPane1.getViewport().getViewRect().height;
@@ -1192,7 +1205,19 @@ public class jMDIFrame extends JInternalFrame {
             int distanceY = outOfBoundsY ? Math.max(0, (int) newY - bottomBorder) + 100 : 0;
         }
     }
-
+    
+    //изменение линий
+    for (Line currentLine : lines){
+        Point2D p1 = new Point2D.Double(currentLine.getC1().getX()*zoom/(zoom-20), currentLine.getC1().getY()*zoom/(zoom-20));
+        currentLine.setC1(p1);
+        Point2D p2 = new Point2D.Double(currentLine.getC2().getX()*zoom/(zoom-20), currentLine.getC2().getY()*zoom/(zoom-20));
+        currentLine.setC2(p2);
+        currentLine.arrow.x1 = p1.getX();
+        currentLine.arrow.y1 = p1.getY();
+        currentLine.arrow.x2 = p2.getX();
+        currentLine.arrow.y2 = p2.getY();
+    }
+        
     // изменение сетки
     grid.SetCellSize((int) ((GridPanel.GetBaseCellSize() * zoom)/100));
 

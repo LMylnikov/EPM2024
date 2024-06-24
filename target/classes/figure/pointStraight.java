@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -19,16 +19,24 @@ public class pointStraight extends points {
         this.y = r.getCenterY();
         this.w = r.getWidth();
         this.h = r.getHeight();
-        this.p1 = new Point2D.Double(x - w / 2 + 5, y);
-        this.p2 = new Point2D.Double(x, y - h / 2 +5);
-        this.p3 = new Point2D.Double(x + w / 2 - 5, y);
-        this.p4 = new Point2D.Double(x, y + h / 2 - 5);
+        this.p1 = new Point2D.Double(x - w / 2, y);
+        this.p2 = new Point2D.Double(x, y - h / 2);
+        this.p3 = new Point2D.Double(x + w / 2, y);
+        this.p4 = new Point2D.Double(x, y + h / 2);
         this.point.add(p1);
         this.point.add(p2);
         this.point.add(p3);
         this.point.add(p4);
         for (Point2D b : point) {
-            shape = new Ellipse2D.Double(b.getX() - ss / 2, b.getY() - ss / 2, ss, ss);
+            if (b == p1) {
+                shape = new Arc2D.Double(b.getX() - ss / 2, b.getY() - ss / 2, ss, ss, 270, 180, Arc2D.OPEN);
+            } else if (b == p2) {
+                shape = new Arc2D.Double(b.getX() - ss / 2, b.getY() - ss / 2, ss, ss, 180, 180, Arc2D.OPEN);
+            } else if (b == p3) {
+                shape = new Arc2D.Double(b.getX() - ss / 2, b.getY() - ss / 2, ss, ss, 90, 180, Arc2D.OPEN);
+            } else {
+                shape = new Arc2D.Double(b.getX() - ss / 2, b.getY() - ss / 2, ss, ss, 0, 180, Arc2D.OPEN);
+            }
             this.pointShape.add(shape);
         }
     }
