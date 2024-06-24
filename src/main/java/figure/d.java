@@ -39,6 +39,8 @@ public class  d extends figures{//document
     public d(int x, int y, int s) {
         this.x=x + s/2;
         this.y=y + s/4;
+        this.absoluteX = this.x;
+        this.absoluteY = this.y;
         this.s=s;
         this.nameF = "D(IF)" + this.id;
     }
@@ -67,5 +69,6 @@ public class  d extends figures{//document
         g2.draw(gp);
         g2.drawString("IF", x-34*s/100, y+7*s/100); //Иванов А.А. надпись центруется с учетом масштаба
         shape =gp;
+        rec=shape.getBounds2D();
         }
 }

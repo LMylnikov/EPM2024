@@ -39,6 +39,8 @@ public class  d extends figures{//document
     public d(int x, int y, int s) {
         this.x=x + s/2;
         this.y=y + s/4;
+        this.absoluteX = this.x;
+        this.absoluteY = this.y;
         this.s=s;
         this.nameF = "D(IF)" + this.id;
     }

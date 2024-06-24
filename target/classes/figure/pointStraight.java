@@ -19,10 +19,10 @@ public class pointStraight extends points {
         this.y = r.getCenterY();
         this.w = r.getWidth();
         this.h = r.getHeight();
-        this.p1 = new Point2D.Double(x - w / 2, y);
-        this.p2 = new Point2D.Double(x, y - h / 2);
-        this.p3 = new Point2D.Double(x + w / 2, y);
-        this.p4 = new Point2D.Double(x, y + h / 2);
+        this.p1 = new Point2D.Double(x - w / 2 + 5, y);
+        this.p2 = new Point2D.Double(x, y - h / 2 +5);
+        this.p3 = new Point2D.Double(x + w / 2 - 5, y);
+        this.p4 = new Point2D.Double(x, y + h / 2 - 5);
         this.point.add(p1);
         this.point.add(p2);
         this.point.add(p3);

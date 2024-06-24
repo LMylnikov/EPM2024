@@ -20,8 +20,9 @@ public class GridPanel extends JPanel {
                 prefs.putBoolean("isVisible", true);
             } else {
                 // Узел существует - загружаем значения
-                color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
                 isVisible = prefs.getBoolean("isVisible", true);
+                if (isVisible == true)
+                    color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
             }
         } catch (BackingStoreException e) {
             e.printStackTrace();
@@ -30,13 +31,26 @@ public class GridPanel extends JPanel {
         }
     }
     
-    private int cellSize;
+    private int cellSize;   
     private int xOffset = 20; // Смещение по X
     private int yOffset = 20; // Смещение по Y
     private int thickLineSpacing = 5; // Каждая пятая линия будет толстой
+    
+    public int GetCellSize(){
+        return this.cellSize;
+    }
+    
+    public void SetCellSize(int value){
+        this.cellSize = value;
+    }
 
     public GridPanel(int cellSize) {
         this.cellSize = cellSize;
+    }
+    
+    private static int baseCellSize = 20;
+    public static int GetBaseCellSize(){
+        return baseCellSize;
     }
 
     @Override
@@ -56,18 +70,23 @@ public class GridPanel extends JPanel {
         int panelHeight = getHeight();
 
         // Определяем начальные координаты для рисования сетки с учетом смещения
-        int startX = xOffset;
-        int startY = yOffset;
+        //int startX = xOffset;
+        //int startY = yOffset;
+
+        int startX = cellSize;
+        int startY = cellSize;
+ 
+        g2d.setFont(new Font("TimesRoman", Font.PLAIN, cellSize)); 
 
         // Рисуем буквенные обозначения столбцов
         for (int i = 0; i < panelWidth / cellSize; i++) {
             char columnChar = (char) ('A' + i);  // Начинаем с буквы 'A' и увеличиваем на i
-            g2d.drawString(String.valueOf(columnChar), startX + cellSize * i * 5 + cellSize / 2 + 37, startY - 5);
+            g2d.drawString(String.valueOf(columnChar), startX + cellSize * i * 5 + cellSize*5 / 2 - cellSize/ 3 , startY - cellSize/4);
         }
 
         // Рисуем числовые обозначения строк
         for (int i = 0; i < panelHeight / cellSize; i++) {
-            g2d.drawString(String.valueOf(i + 1), startX - 15, startY + cellSize * i * 5 + cellSize / 2 + 45);
+            g2d.drawString(String.valueOf(i + 1), cellSize/3, startY + cellSize * i * 5 + cellSize*5 / 2+ cellSize/ 3);
         }
 
         // Отрисовываем вертикальные линии сетки

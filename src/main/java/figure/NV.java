@@ -44,6 +44,8 @@ public class NV extends figures{
     public NV(int x, int y, int s) {
         this.x=x + s/4;
         this.y=y + s/4;
+        this.absoluteX = this.x;
+        this.absoluteY = this.y;
         this.s=s;
         this.nameF = "NV" + this.id;
     }
@@ -61,5 +63,6 @@ public class NV extends figures{
         g2.setStroke(new BasicStroke(2));
         g2.draw(shape);
         g2.drawString("NV", x-15*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
+        rec=shape.getBounds2D();
     } 
 }

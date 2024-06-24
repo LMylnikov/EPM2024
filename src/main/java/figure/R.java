@@ -41,6 +41,8 @@ public class R extends figures{
     public R(int x, int y, int s) {
         this.x=x + s/4;
         this.y=y + s/4;
+        this.absoluteX = this.x;
+        this.absoluteY = this.y;
         this.s=s;
         this.nameF = "R" + this.id;
     }
@@ -69,6 +71,7 @@ public class R extends figures{
         g2.draw(shape);
         g2.drawString("R", x-10*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
  
-        
+        rec=shape.getBounds2D();
+
     }
 }

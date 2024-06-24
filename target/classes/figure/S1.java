@@ -43,6 +43,8 @@ public class S1 extends figures {
     public S1(int x, int y, int s) {
         this.x = x;
         this.y = y;
+        this.absoluteX = (int)(x);
+        this.absoluteY = (int)(y);
         this.s = s;
         id = nextId.incrementAndGet();
         this.nameF = "S" + this.id;

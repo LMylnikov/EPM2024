@@ -1488,7 +1488,8 @@ public class mdi extends javax.swing.JFrame {
         jDialogSettings.setVisible(false); 
         jDesktopPane.repaint();
         
-        GridPanel.prefs.putInt("color", GridPanel.color.getRGB());
+        if (GridPanel.isVisible == true)
+            GridPanel.prefs.putInt("color", GridPanel.color.getRGB());
         GridPanel.prefs.putBoolean("isVisible", GridPanel.isVisible);
         
         figures.prefs.putInt("IFBackgroundColor", d.BackgroundColor.getRGB());
@@ -1509,7 +1510,7 @@ public class mdi extends javax.swing.JFrame {
             if (jCheckBox1.isSelected()) {
                 GridPanel.isVisible = true;
                 //GridPanel.prefs.putBoolean("isVisible", true);
-                GridPanel.color =  gridColor;
+                GridPanel.color = new Color(GridPanel.prefs.getInt("color", Color.GRAY.getRGB()));
                 jChangeColorGrid.setEnabled(true);                
             } else {
                 GridPanel.isVisible = false;      
