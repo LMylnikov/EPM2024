@@ -624,15 +624,8 @@ public class jMDIFrame extends JInternalFrame {
         figures b = all.get(0);
         ss = b.getShape();
         
-        //Проверка, что мы не рисуем линию
-        boolean isPointClicked = false;
-        for (Shape l : pointShape) {
-            if (l.contains(p)) {
-                isPointClicked = true;
-            }
-        }
         
-        if (pointed == true && isPointClicked == false) {//убирать точки теекущего объекта при перетаскивании
+        if (pointed == true && checkLine == false) {//убирать точки теекущего объекта при перетаскивании
             jPanel1.remove(points.get(0));
             jPanel1.add(new GridPanel((int)(GridPanel.GetBaseCellSize()*zoom/100))); // Добавляем сетку перед добавлением фигур
             jPanel1.revalidate();
@@ -641,7 +634,7 @@ public class jMDIFrame extends JInternalFrame {
             pointed = false;
         }
 
-        if (touch == true && isPointClicked == false) {
+        if (touch == true && checkLine == false) {
 
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -875,8 +868,8 @@ public class jMDIFrame extends JInternalFrame {
                 jPanel1.add(ls);
                 lines.add(0, ls);
             }
-            if (lines.isEmpty() == false)
-                lined = true;
+            //if (lines.isEmpty() == false)
+            lined = !lines.isEmpty();
             
             jPanel1.add(new GridPanel(GridPanel.GetBaseCellSize()));
             jPanel1.revalidate();
@@ -973,12 +966,39 @@ public class jMDIFrame extends JInternalFrame {
             for (points ps : points) {
                 oneShapePoints(points.indexOf(ps));
                 for (Shape l : pointShape) {
-                    if (l.contains(evt.getPoint()) && (l.contains(lines.get(0).getC1()) == false)) {
+                    if (l.contains(evt.getPoint()) /*&& !(all.get(points.indexOf(ps)).getNameF().equals(lines.get(0).getID1()))*/) { //курсор находится на точке соединения и имена соединяемых объектов различаются
 //                        id22 = pointShape.indexOf(l);
 //                        id2 = all.get(points.indexOf(ps)).getId();
                         jPanel1.removeAll();
                         lines.get(0).setC2((Point2D) ps.getPoint().get(pointShape.indexOf(l)));
                         lines.get(0).setID2(all.get(points.indexOf(ps)).getNameF());
+                        Class first = null, second = null;
+                        for (figures currentFigure : all){
+                            if (currentFigure.getNameF().equals(lines.get(0).getID1()))
+                                first = currentFigure.getClass();
+                            else if(currentFigure.getNameF().equals(lines.get(0).getID2()))
+                                second = currentFigure.getClass();
+                        }
+                        if (!(first.equals(NV.class) && second.equals(V.class)) && //первая фигура - NV, вторая фигура - V ИЛИ
+                                !(first.equals(S1.class) && second.equals(V.class)) && //первая фигура - S, вторая фигура - V ИЛИ
+                                !(first.equals(V.class) && second.equals(R.class)) && //первая фигура - V, вторая фигура - R ИЛИ
+                                !(first.equals(R.class) && second.equals(NV.class)) &&  //первая фигура - R, вторая фигура - NV ИЛИ
+                                !(first.equals(R.class) && second.equals(V.class)) &&  //первая фигура - R, вторая фигура - V ИЛИ
+                                !(first.equals(R.class) && second.equals(d.class)) &&  //первая фигура - R, вторая фигура - IF ИЛИ
+                                !(first.equals(d.class))) { //первая фигура - IF
+                            jPanel1.removeAll();
+                            lines.remove(0);
+                            if (lined) {
+                                for (Line ln : lines) {
+                                    jPanel1.add(ln);
+                                }
+                            }
+                            for (JComponent c : all) {
+                                jPanel1.add(c);
+                            }
+                            jPanel1.add(grid);
+                            jPanel1.repaint();
+                        }
 //                        lines.get(0).setID22(id22);
                         if (lined) {
                             for (Line ln : lines) {
@@ -992,12 +1012,12 @@ public class jMDIFrame extends JInternalFrame {
                         this.drawObjects();
                         lined = true;
                         break;
-                    } else {
+                    } /*else {
                         countp++;
-                    }
+                    }*/
                 }
             }
-            if (countp == (4)) {
+            if (lines.get(0).getID1().equals(lines.get(0).getID2())) {
                 jPanel1.removeAll();
                 lines.remove(0);
                 if (lined) {
