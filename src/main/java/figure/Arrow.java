@@ -26,14 +26,12 @@ public class Arrow extends JComponent{
         double dx = x2 - x1;
         double dy = y2 - y1;
         double angle = Math.atan2(dy, dx);
-        int len = (int) Math.sqrt(dx * dx + dy * dy);
-        AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
+        AffineTransform at = AffineTransform.getTranslateInstance(x2, y2);
         at.rotate(angle);
         g2d.transform(at);
-
-        // Draw horizontal arrow starting in (0, 0)
-        g2d.drawLine(0, 0, len, 0);
-        g2d.fillPolygon(new int[] {len, len - 10, len - 10, len},
+        
+        // Draw arrow tip
+        g2d.fillPolygon(new int[] {0, -10, -10, 0},
                         new int[] {0, -5, 5, 0}, 4);
     }
 }

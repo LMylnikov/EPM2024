@@ -30,6 +30,10 @@ public class LineStraight extends Line{
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(2));
         g2.draw(gp);
+        arrow.x1 = c1.getX();
+        arrow.y1 = c1.getY();
+        arrow.x2 = c2.getX();
+        arrow.y2 = c2.getY();
         arrow.paintComponent(g);
         }
 }
