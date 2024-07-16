@@ -14,6 +14,7 @@ import EPM.mdi;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import converter.ConvertedObject;
+import descritGen.generatorObj;
 import figure.*;
 import java.awt.Cursor;
 import java.awt.Shape;
@@ -69,10 +70,7 @@ public class jMDIFrame extends JInternalFrame {
     boolean change_idx = false; //Индикатор который показывает были или нет изменения в схеме
     boolean draw_idx = true; //Показывает можно рисовать или нет
 
-    public String fileName = ""; // Имя файла в котором храниться схема
-
-    //long thisTimeFirstClick;//начальный замер времени
-    
+    public String fileName = ""; // Имя файла в котором храниться схема    
     GridPanel grid;
 
     public jMDIFrame(String title, Boolean resizable, Boolean closable, Boolean maximizable, Boolean iconifiable, String file) {
@@ -94,14 +92,30 @@ public class jMDIFrame extends JInternalFrame {
         rcMenu = new javax.swing.JPopupMenu();
         jMenuItemDelette = new javax.swing.JMenuItem();
         jMenuItemClear = new javax.swing.JMenuItem();
+        jMenuItemGenDesc = new javax.swing.JMenuItem();
         canvas1 = new java.awt.Canvas();
+        descrShowDialog = new javax.swing.JDialog();
+        scrollPane = new javax.swing.JScrollPane();
+        textDescription = new javax.swing.JTextArea();
+        updateBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         zminus = new javax.swing.JButton();
         jSize = new javax.swing.JTextField();
         zplus = new javax.swing.JButton();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        zminus1 = new javax.swing.JButton();
+        jSize1 = new javax.swing.JTextField();
+        zplus1 = new javax.swing.JButton();
 
         jMenuItemDelette.setText("Delette");
+        jMenuItemDelette.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDeletteActionPerformed(evt);
+            }
+        });
         rcMenu.add(jMenuItemDelette);
 
         jMenuItemClear.setText("Clear All");
@@ -111,6 +125,51 @@ public class jMDIFrame extends JInternalFrame {
             }
         });
         rcMenu.add(jMenuItemClear);
+
+        jMenuItemGenDesc.setText("Generate code");
+        jMenuItemGenDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGenDescActionPerformed(evt);
+            }
+        });
+        rcMenu.add(jMenuItemGenDesc);
+
+        descrShowDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        textDescription.setEditable(false);
+        textDescription.setColumns(20);
+        textDescription.setRows(5);
+        scrollPane.setViewportView(textDescription);
+
+        updateBut.setText("Обновить");
+        updateBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout descrShowDialogLayout = new javax.swing.GroupLayout(descrShowDialog.getContentPane());
+        descrShowDialog.getContentPane().setLayout(descrShowDialogLayout);
+        descrShowDialogLayout.setHorizontalGroup(
+            descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(descrShowDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, descrShowDialogLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(updateBut)))
+                .addContainerGap())
+        );
+        descrShowDialogLayout.setVerticalGroup(
+            descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(descrShowDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(updateBut)
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
 
         setMaximizable(true);
         setResizable(true);
@@ -151,6 +210,7 @@ public class jMDIFrame extends JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setComponentPopupMenu(rcMenu);
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 400));
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -208,6 +268,131 @@ public class jMDIFrame extends JInternalFrame {
             }
         });
 
+        jInternalFrame1.setMaximizable(true);
+        jInternalFrame1.setResizable(true);
+        jInternalFrame1.setAutoscrolls(true);
+        jInternalFrame1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jInternalFrame1.addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                jInternalFrame1formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                jInternalFrame1formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
+        jScrollPane2.setAutoscrolls(true);
+        jScrollPane2.setComponentPopupMenu(rcMenu);
+        jScrollPane2.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jScrollPane2MouseWheelMoved(evt);
+            }
+        });
+        jScrollPane2.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                jScrollPane2CaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setPreferredSize(new java.awt.Dimension(600, 400));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2moveobj(evt);
+            }
+        });
+        jPanel2.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                jPanel2Resizing(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel2MouseReleased(evt);
+            }
+        });
+        jPanel2.setLayout(new javax.swing.OverlayLayout(jPanel2));
+        jScrollPane2.setViewportView(jPanel2);
+
+        zminus1.setText("-");
+        zminus1.setEnabled(true);
+        zminus1.setPreferredSize(new java.awt.Dimension(27, 23));
+        zminus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zminus1ActionPerformed(evt);
+            }
+        });
+
+        jSize1.setEditable(false);
+        jSize1.setBackground(getBackground());
+        jSize1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jSize1.setText("100%");
+        jSize1.setToolTipText("");
+        jSize1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jSize1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jSize1.setFocusable(false);
+        jSize1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSize1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSize1MouseExited(evt);
+            }
+        });
+
+        zplus1.setText("+");
+        zplus1.setEnabled(true);
+        zplus1.setPreferredSize(new java.awt.Dimension(27, 23));
+        zplus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zplus1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(zminus1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSize1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(zplus1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(4, 4, 4)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(zplus1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(zminus1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSize1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,6 +409,11 @@ public class jMDIFrame extends JInternalFrame {
                         .addComponent(zplus, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addGap(14, 14, 14))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,6 +424,11 @@ public class jMDIFrame extends JInternalFrame {
                     .addComponent(zplus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(zminus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSize, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -737,12 +932,9 @@ public class jMDIFrame extends JInternalFrame {
 
 
     }//GEN-LAST:event_moveobj
-
-    //Сохранение файла
-    public void SaveInJSON(String fn) {
-        try {
-            // Создаем список для хранения объектов Figure_s
-            List<Figure_s> figuresList = new ArrayList<>();
+    public ConvertedObject CreatorConvertObject(){
+        // Создаем список для хранения объектов Figure_s
+            ArrayList<Figure_s> figuresList = new ArrayList<>();
             
             for (figures f : all) {
                 Figure_s fig = new Figure_s();
@@ -762,7 +954,7 @@ public class jMDIFrame extends JInternalFrame {
                 // Добавляем объект Figure_s в список
                 figuresList.add(fig);
             }
-            List<Line_s> linesList = new ArrayList<>();
+            ArrayList<Line_s> linesList = new ArrayList<>();
             for (Line currentLine : lines) {
                 Line_s ln = new Line_s();
                 ln.SetID1(currentLine.getID1());
@@ -775,10 +967,16 @@ public class jMDIFrame extends JInternalFrame {
                 linesList.add(ln);
             }
             ConvertedObject cv = new ConvertedObject(linesList,figuresList);
-            
+            return cv;
+    }
+    //Сохранение файла
+    public void SaveInJSON(String fn) {
+        try {
+            //создание объекта со всеми фигурами и связями
+            ConvertedObject co = CreatorConvertObject();
             ObjectMapper mapper = new ObjectMapper();
             mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-            mapper.writeValue(Paths.get(fn).toFile(), cv);
+            mapper.writeValue(Paths.get(fn).toFile(), co);
            //код далее работает, но устарел, проблема с перезаписью файла информацией о линиях
 //            mapper.writeValue(Paths.get(fn).toFile(), figuresList); //раюочий код сохранения фигур
 //            mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
@@ -971,19 +1169,13 @@ public class jMDIFrame extends JInternalFrame {
     }//GEN-LAST:event_jPanel1MouseReleased
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        // TODO add your handling code here:
-        // очищаем все
-        //mdi.jMenuIt
-        //emClear.clearActionPerformed(evt);
-        //jPanel1.clear
-
-        //нужно сделать вызов из jPanel чтобы не переписывать несколько раз
-        //jPanel1.removeAll();
-        //jPanel1.repaint();
-        //all.clear();
+        //Удаление всего, отрисовка сетки
+        jPanel1.removeAll();
+        jPanel1.add(grid);
+        jPanel1.repaint();
+        all.clear();
+        lines.clear();
         zoom = 1;
-        //ButtonActivated();
-
     }//GEN-LAST:event_clearActionPerformed
 
     private void jScrollPane1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane1MouseWheelMoved
@@ -1146,6 +1338,76 @@ public class jMDIFrame extends JInternalFrame {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_jSizeMouseExited
 
+    private void jMenuItemDeletteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeletteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemDeletteActionPerformed
+
+    private void jPanel2moveobj(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2moveobj
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2moveobj
+
+    private void jPanel2Resizing(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jPanel2Resizing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2Resizing
+
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2MouseReleased
+
+    private void jScrollPane2MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jScrollPane2MouseWheelMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2MouseWheelMoved
+
+    private void jScrollPane2CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jScrollPane2CaretPositionChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2CaretPositionChanged
+
+    private void zminus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zminus1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zminus1ActionPerformed
+
+    private void jSize1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSize1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSize1MouseEntered
+
+    private void jSize1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSize1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSize1MouseExited
+
+    private void zplus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zplus1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zplus1ActionPerformed
+
+    private void jInternalFrame1formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_jInternalFrame1formInternalFrameActivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jInternalFrame1formInternalFrameActivated
+
+    private void jInternalFrame1formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_jInternalFrame1formInternalFrameClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jInternalFrame1formInternalFrameClosing
+
+    private void jMenuItemGenDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGenDescActionPerformed
+        GenerateDescription();
+    }//GEN-LAST:event_jMenuItemGenDescActionPerformed
+
+    private void updateButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButActionPerformed
+        generatorObj genOb = new generatorObj(CreatorConvertObject());
+        textDescription.setText(genOb.generateString());
+    }//GEN-LAST:event_updateButActionPerformed
+    private void GenerateDescription(){
+        generatorObj genOb = new generatorObj(CreatorConvertObject());
+        textDescription.setText(genOb.generateString());
+        descrShowDialog.setDefaultCloseOperation(descrShowDialog.DISPOSE_ON_CLOSE);
+        descrShowDialog.pack();
+        descrShowDialog.setModal(true);
+        descrShowDialog.setLocationRelativeTo(this);
+        descrShowDialog.setVisible(true);
+        
+    }
     private void OutOfBounds(){
         // Рассчитываем правую и нижнюю границы видимой области панели
             int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
@@ -1226,14 +1488,25 @@ public class jMDIFrame extends JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
+    private javax.swing.JDialog descrShowDialog;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenuItem jMenuItemClear;
     private javax.swing.JMenuItem jMenuItemDelette;
+    private javax.swing.JMenuItem jMenuItemGenDesc;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jSize;
+    private javax.swing.JTextField jSize1;
     private javax.swing.JPopupMenu rcMenu;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTextArea textDescription;
+    private javax.swing.JButton updateBut;
     private javax.swing.JButton zminus;
+    private javax.swing.JButton zminus1;
     private javax.swing.JButton zplus;
+    private javax.swing.JButton zplus1;
     // End of variables declaration//GEN-END:variables
 
 }

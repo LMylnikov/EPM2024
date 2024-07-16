@@ -1,31 +1,31 @@
 package converter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.List;
+import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 //Совмещает в себе все классы, которые нужно сохранить в json
 public class ConvertedObject {
-    private List<Line_s> currentLine;
-    private List<Figure_s> currentFigures;
+    private ArrayList<Line_s> currentLine;
+    private ArrayList<Figure_s> currentFigures;
 
     public ConvertedObject() {}
     
-    public ConvertedObject(List<Line_s> linesList, List<Figure_s> figuresList) {
+    public ConvertedObject(ArrayList<Line_s> linesList, ArrayList<Figure_s> figuresList) {
         currentFigures = figuresList;
         currentLine = linesList;
     }
     
-    public void setCurrentLine(List<Line_s> linesList){
+    public void setCurrentLine(ArrayList<Line_s> linesList){
         this.currentLine = linesList;
     }
-    public void setCurrentFigures(List<Figure_s> figuresList){
+    public void setCurrentFigures(ArrayList<Figure_s> figuresList){
         this.currentFigures = figuresList;
     }
-    public List<Line_s> getCurrentLine(){
+    public ArrayList<Line_s> getCurrentLine(){
         return currentLine;
     }
-    public List<Figure_s> getCurrentFigures(){
+    public ArrayList<Figure_s> getCurrentFigures(){
         return currentFigures;
     }
 }
