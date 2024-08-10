@@ -1,6 +1,9 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package jMDIForm;
 
-import line.Line;
 import figure.*;
 import java.util.ArrayList;
 
@@ -13,7 +16,7 @@ public class readSaveData {
         double zoom = 1; 
         
         if ("d".equals(shape)){
-            d dn =  new d(x, y, s); 
+            d dn =  new d(x-s/2, y-s/4, s); 
             dn.setVisible(true);
             dn.setNameF(name);
             dn.setDescriptionF(description);
@@ -23,7 +26,7 @@ public class readSaveData {
             list.add(0,dn);
         }
         if ("V".equals(shape)){
-            V dn =  new V(x, y, s); 
+            V dn =  new V(x-s/4, y-s/4, s); 
             dn.setVisible(true);
             dn.setNameF(name);
             dn.setDescriptionF(description);
@@ -33,7 +36,7 @@ public class readSaveData {
             list.add(0,dn);
         }
         if ("R".equals(shape)){
-            R dn =  new R(x, y, s); 
+            R dn =  new R(x-s/4, y-s/4, s); 
             dn.setVisible(true);
             dn.setNameF(name);
             dn.setDescriptionF(description);
@@ -43,7 +46,7 @@ public class readSaveData {
             list.add(0,dn);
         }
         if ("NV".equals(shape)){
-            NV dn =  new NV(x, y, s); 
+            NV dn =  new NV(x-s/4, y-s/4, s); 
             dn.setVisible(true);
             dn.setNameF(name);
             dn.setDescriptionF(description);
@@ -54,6 +57,16 @@ public class readSaveData {
         }
         if ("S1".equals(shape)){
             S1 dn =  new S1(x, y, s); 
+            dn.setVisible(true);
+            dn.setNameF(name);
+            dn.setDescriptionF(description);
+            dn.setInVariable(inVariable);
+            dn.setOutVariable(outVariable);
+            dn.setCodeF(code);
+            list.add(0,dn);
+        }
+        if ("O".equals(shape)){
+            O dn =  new O(x-s/4, y-s/4, s); 
             dn.setVisible(true);
             dn.setNameF(name);
             dn.setDescriptionF(description);

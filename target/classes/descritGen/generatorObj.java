@@ -11,8 +11,8 @@ public class generatorObj {
     private ArrayList<Figure_s> curFig = new ArrayList<Figure_s>(); // Массив фигур
     private ArrayList<Line_s> curLine = new ArrayList<Line_s>(); // Массив линий
     private ArrayList<genSubObj> curAllRes = new ArrayList<genSubObj>(); // Массив со всеми ураванениями
-    private ArrayList<String> fastCheck = new ArrayList<String>(); // Массив для быстрой проверки 
-    public generatorObj(ConvertedObject co){
+    
+    public generatorObj(ConvertedObject co){ //стандартный генератор из объекта сохранения*
         curObj = co;
         curFig = curObj.getCurrentFigures();
         curLine = curObj.getCurrentLine();
@@ -30,36 +30,46 @@ public class generatorObj {
         return globalString;
     }
     public void generateObject(){
-        for (Figure_s s : curFig){
-            if (s.getShape().equals("R")){ //Если R то создаем "новую строку"
-                genSubObj newSubOb = new genSubObj(s.getName());
-                curAllRes.add(newSubOb); 
-                fastCheck.add(s.getName());
+        for (Figure_s rFig : curFig){
+            if (rFig.getShape().equals("R")){ //Если R то создаем "новую строку"
+                genSubObj newSubOb = new genSubObj(rFig.getName());              
+                for (Line_s l : curLine){ //проверяем все линии с концом в results
+                    if (rFig.getName().equals(l.GetID2())){
+                        String startLine = l.GetID1(); //откуда идёт связь
+                        for (Figure_s vFig : curFig){
+                            if (vFig.getName().equals(startLine)){ //если фигура является начальной
+                                if (vFig.getShape().equals("V")){ //если фигура V
+                                    newSubOb.setVFig(vFig.getName());
+                                    collectFigToV(vFig.getName(),newSubOb);
+                                }
+                                break; //сразу выходим тк в теории есть только одна V связанная с R !! можно заменять для более солжных формул
+                            }
+                        }
+                    }                  
+                }   
+                curAllRes.add(newSubOb); //добавляем одно уравнение в массив
             }
         }
-        for (Line_s l : curLine){
-            String toFind = l.GetID2();
-            if (fastCheck.contains(toFind)){
-                String startLine = l.GetID1();
-                String startShape = ""; 
-                for (Figure_s s : curFig){
-                    if (s.getName().equals(startLine)){
-                        startShape = s.getShape();
-                        break;
+    }  
+    private void collectFigToV(String vName, genSubObj subOb ){
+        for (Line_s l : curLine){ //проверяем все линии с концом в v
+            if (vName.equals(l.GetID2())){
+                String startLine = l.GetID1(); //откуда идёт связь
+                for (Figure_s startFig : curFig){
+                    if (startFig.getName().equals(startLine)){ //если фигура является начальной
+                        if (startFig.getShape().equals("S1")){ //если фигура S
+                            subOb.AddToS(startFig.getName());
+                            continue;
+                        }
+                        if (startFig.getShape().equals("NV")){ //если фигура NV
+                            subOb.AddToNV(startFig.getName());
+                            continue;
+                        }                    
                     }
                 }
-                
-                for (genSubObj objc : curAllRes){
-                    if (toFind.equals(objc.getNameMainFig())){
-                        if (startShape.equals("R") || startShape.equals("S1")){
-                            objc.AddToSum(startLine);
-                        }
-                        else{
-                            objc.AddToPointAdd(startLine);
-                        }
-                    }   
-                }
-            }
-        }
+            }                  
+        }   
     }
 }
+
+

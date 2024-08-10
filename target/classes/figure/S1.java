@@ -5,6 +5,7 @@ import static figure.figures.nextId;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -14,9 +15,10 @@ import java.util.prefs.Preferences;
 import java.util.prefs.BackingStoreException;
 
 public class S1 extends figures {
-    String str = "S";
+
     public static Color BackgroundColor;
     public static Color TextColor;
+
     //Применение прошлых настроек
     static {
         // Проверяем, существует ли узел
@@ -40,25 +42,26 @@ public class S1 extends figures {
             TextColor = Color.BLACK;
         }
     }
+
     public S1(int x, int y, int s) {
         this.x = x;
         this.y = y;
-        this.absoluteX = (int)(x);
-        this.absoluteY = (int)(y);
+        this.absoluteX = (int) (x);
+        this.absoluteY = (int) (y);
         this.s = s;
-        id = nextId.incrementAndGet();
+//        id = nextId.incrementAndGet();
+//        id=idChange(c);
         this.nameF = "S" + this.id;
     }
 
     //Font font = new Font("Arial", Font.BOLD, 24);
-
     @Override
     public void paintComponent(Graphics g) {
-        Font font = new Font("Arial", Font.BOLD, (int)(24*s/100));//Иванов А.А. перемещен в конструктор для обновления при перерисовке
+        Font font = new Font("Arial", Font.BOLD, (int) (24 * s / 100));//Иванов А.А. перемещен в конструктор для обновления при перерисовке
         Graphics2D g2 = (Graphics2D) g;
         // s=(int) (zoom*s);
         // shape = new RoundRectangle2D.Double(x-s/2, y-s/4, s, s/2, 50, 100);
-        shape = new Ellipse2D.Double(x, y, s/2, s/2);
+        shape = new Ellipse2D.Double(x, y, s / 2, s / 2);
         //shape = new Ellipse2D.Double(x-s, y-s/2, s/2, s/2);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(BackgroundColor);
@@ -67,7 +70,12 @@ public class S1 extends figures {
         g2.setStroke(new BasicStroke(2));
         g2.draw(shape);
         g2.setFont(font);
-        g2.drawString(str, (x)+17*s/100, (y)+34*s/100);// в дальнейшем кнопка //Иванов А.А. надпись центруется с учетом масштаба
-        rec=shape.getBounds2D();
+        
+        FontMetrics fm = g.getFontMetrics();
+        int width = fm.stringWidth(nameF);
+        g2.drawString(nameF, x - width/2+s/4, y+34*s/100);
+        
+//        g2.drawString(nameF, (x) + 17 * s / 100, (y) + 34 * s / 100);// в дальнейшем кнопка //Иванов А.А. надпись центруется с учетом масштаба
+        rec = shape.getBounds2D();
     }
 }

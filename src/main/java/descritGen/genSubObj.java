@@ -5,57 +5,72 @@ package descritGen;
 import java.util.ArrayList;
 
 public class genSubObj {
-    private String nameMainFig; //Имя основнйо фигуры
-    private ArrayList<String> figToSum = new ArrayList<String>();  //Имена фигур для суммы (S+R+S1)
-    private ArrayList<String> figToPointAdd = new ArrayList<String>(); // Имена фигур для перечисления через тч с зп (...;NV1;NV2)
+    private String resultFigName; //Имя result фигуры
+    private String vFigName; //Имя v фиугры, ведущей к result
+    private ArrayList<String> figAsS = new ArrayList<String>();  //Имена фигур s (S+S1)
+    private ArrayList<String> figAsNV = new ArrayList<String>(); // Имена фигур NV (NV1+NV2)
     
-    public genSubObj(String mainF){
-        nameMainFig = mainF;
+    public genSubObj(String mainF){ //станартный генератор с созданием первоначальной фигурой
+        resultFigName = mainF;
     }
-    
-    public void AddToSum(String toSum){
-        figToSum.add(toSum);
+    public void setVFig(String vFig){ //привязка v фигуры
+        vFigName = vFig;
     }
-    public void AddToPointAdd(String toPA){
-        figToPointAdd.add(toPA);
+   
+    public void AddToS(String toSum){
+        figAsS.add(toSum);
+    }
+    public void AddToNV(String toPA){
+        figAsNV.add(toPA);
     }
     public String getDescriptionAsString(){
         String finalString;
-        if (figToPointAdd.size() == 0 & figToSum.size() == 0){
+        if (figAsNV.size() == 0 & figAsS.size() == 0){
             return "ERORR! Connection didnt exist";
         }
-        finalString = nameMainFig + " = ";
+        finalString = resultFigName + " = " + vFigName + "(";
         boolean isFirst = true;
-        for (String ts : figToSum){
+        for (String sFig : figAsS){
             if (isFirst){
-                finalString += ts;
+                finalString += sFig;
                 isFirst = false;
                 continue;
             }
-            finalString += " + " + ts;
+            finalString += " + " + sFig;
         }
-        for (String tpa : figToPointAdd){
-            finalString += "; " + tpa;
+        if (isFirst == false){
+            finalString += ", ";
         }
+        isFirst = true;
+        for (String nvFig : figAsNV){
+            if (isFirst){
+                finalString += nvFig;
+                isFirst = false;
+                continue;
+            }
+            finalString += " + " + nvFig;
+        }
+        finalString += ")";
+        
         return finalString;
     }
     
     public String getNameMainFig(){
-        return nameMainFig;
+        return resultFigName;
     }
     public ArrayList<String> getFigToSum(){
-        return figToSum;
+        return figAsS;
     }
     public ArrayList<String> getFigToPointAdd(){
-        return figToPointAdd;
+        return figAsNV;
     }
      public void setNameMainFig(String newName){
-        nameMainFig = newName;
+        resultFigName = newName;
     }
     public void setFigToSum(ArrayList<String> newList){
-        figToSum = newList;
+        figAsS = newList;
     }
     public void setFigToPointAdd(ArrayList<String> newList){
-        figToPointAdd = newList;
+        figAsNV = newList;
     }
 }

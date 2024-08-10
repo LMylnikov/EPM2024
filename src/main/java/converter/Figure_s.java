@@ -1,19 +1,31 @@
 package converter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Figure_s {
+
+    @JsonProperty("x_pos")
     private String x_pos;
+    @JsonProperty("y_pos")
     private String y_pos;
+    @JsonProperty("shape")
     private String shape;
+    @JsonProperty("size")
     private String size;
-    private String id;  
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("name")
     private String name; // Имя фигуры
+    @JsonProperty("description")
     private String description; // Подробное описание объекта
+    @JsonProperty("inVariable")
     private ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
+    @JsonProperty("outVariable")
     private ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
+    @JsonProperty("code")
     private String code; // Код фигуры
 
     public void setX_pos(String x_pos) {
@@ -59,6 +71,7 @@ public class Figure_s {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
@@ -66,6 +79,7 @@ public class Figure_s {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public String getDescription() {
         return description;
     }
@@ -73,6 +87,7 @@ public class Figure_s {
     public void setCode(String code) {
         this.code = code;
     }
+
     public String getCode() {
         return code;
     }
@@ -80,6 +95,7 @@ public class Figure_s {
     public void setInVariable(ArrayList<String> inVar) {
         this.inVariable = inVar;
     }
+
     public ArrayList<String> getInVariable() {
         return inVariable;
     }
@@ -87,6 +103,7 @@ public class Figure_s {
     public void setOutVariable(ArrayList<String> outVar) {
         this.outVariable = outVar;
     }
+
     public ArrayList<String> getOutVariable() {
         return outVariable;
     }

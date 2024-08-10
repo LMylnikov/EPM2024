@@ -6,7 +6,6 @@ package jMDIForm;
 
 import java.util.ArrayList;
 
-
 public class Figure_s {
     private String x_pos;
     private String y_pos;
@@ -58,35 +57,35 @@ public class Figure_s {
     public String getId() {
         return id;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
     public String getName() {
         return name;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
     public String getDescription() {
         return description;
     }
-    
+
     public void setCode(String code) {
         this.code = code;
     }
     public String getCode() {
         return code;
     }
-    
+
     public void setInVariable(ArrayList<String> inVar) {
         this.inVariable = inVar;
     }
     public ArrayList<String> getInVariable() {
         return inVariable;
     }
-    
+
     public void setOutVariable(ArrayList<String> outVar) {
         this.outVariable = outVar;
     }

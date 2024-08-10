@@ -12,7 +12,7 @@
         <exec.mainClass>EPM.mavenproject1.Mavenproject1</exec.mainClass>
     </properties>
     
-    <name>EPM</name>
+    <name>EPM main</name>
     
     <repositories>
         <repository>

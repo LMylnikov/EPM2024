@@ -3,6 +3,7 @@ package figure;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -48,6 +49,7 @@ public class NV extends figures{
         this.absoluteY = this.y;
         this.s=s;
         this.nameF = "NV" + this.id;
+        
     }
     Font font = new Font("Arial", Font.BOLD, 24);
     @Override
@@ -62,7 +64,12 @@ public class NV extends figures{
         g2.setColor(TextColor);
         g2.setStroke(new BasicStroke(2));
         g2.draw(shape);
-        g2.drawString("NV", x-15*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
+        
+        FontMetrics fm = g.getFontMetrics();
+        int width = fm.stringWidth(nameF);
+        g2.drawString(nameF, x - width/2, y+9*s/100);
+        
+//        g2.drawString(nameF, x-15*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
         rec=shape.getBounds2D();
     } 
 }

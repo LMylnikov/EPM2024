@@ -25,10 +25,10 @@ public class Line_s {
     private String id22;
 
     @JsonProperty("ID1")
-    private String ID1; //откуда
+    private String ID1;
 
     @JsonProperty("ID2")
-    private String ID2; //куда
+    private String ID2;
 
     
     public void SetC1(Point2D c1) {
