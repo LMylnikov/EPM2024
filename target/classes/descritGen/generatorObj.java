@@ -61,10 +61,14 @@ public class generatorObj {
                             subOb.AddToS(startFig.getName());
                             continue;
                         }
-                        if (startFig.getShape().equals("NV")){ //если фигура NV
+                        if (startFig.getShape().equals("NV") | startFig.getShape().equals("R")){ //если фигура NV
                             subOb.AddToNV(startFig.getName());
                             continue;
-                        }                    
+                        }    
+                        if (startFig.getShape().equals("O")){ //если фигура O
+                            subOb.AddToO(startFig.getName());
+                            continue;
+                        }
                     }
                 }
             }                  
