@@ -5,10 +5,14 @@ package jMDIForm;
 //import line.LineStraight;
 //import line.Line;
 //import properties.PropertiesDialog;
+
+import java.awt.Toolkit;//для буфера обмена
+import java.awt.datatransfer.Clipboard;//для буфера обмена
+import java.awt.datatransfer.StringSelection;//для буфера обмена
+
 import converter.Figure_s;
 import converter.Line_s;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import EPM.mdi;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -19,7 +23,6 @@ import figure.*;
 import java.awt.Cursor;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
-import static java.lang.Math.abs;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -66,6 +69,7 @@ public class jMDIFrame extends JInternalFrame {
     boolean lined = false;//есть линии или нет
     int id11, id22;// индексы расположения точек, соединенных линиями
     String ID1, ID2;
+    int countp=0;
 
     boolean change_idx = false; //Индикатор который показывает были или нет изменения в схеме
     boolean draw_idx = true; //Показывает можно рисовать или нет
@@ -97,18 +101,16 @@ public class jMDIFrame extends JInternalFrame {
         jMenuItemClear = new javax.swing.JMenuItem();
         jMenuItemGenDesc = new javax.swing.JMenuItem();
         canvas1 = new java.awt.Canvas();
-        
         descrShowDialog = new javax.swing.JDialog();
         scrollPane = new javax.swing.JScrollPane();
         textDescription = new javax.swing.JTextArea();
-        updateBut = new javax.swing.JButton();
-
+        closeDescrBut = new javax.swing.JButton();
+        copyDescrBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         zminus = new javax.swing.JButton();
         jSize = new javax.swing.JTextField();
         zplus = new javax.swing.JButton();
-
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
@@ -132,7 +134,7 @@ public class jMDIFrame extends JInternalFrame {
         });
         rcMenu.add(jMenuItemClear);
 
-         jMenuItemGenDesc.setText("Generate code");
+        jMenuItemGenDesc.setText("Generate code");
         jMenuItemGenDesc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemGenDescActionPerformed(evt);
@@ -147,10 +149,17 @@ public class jMDIFrame extends JInternalFrame {
         textDescription.setRows(5);
         scrollPane.setViewportView(textDescription);
 
-        updateBut.setText("Обновить");
-        updateBut.addActionListener(new java.awt.event.ActionListener() {
+        closeDescrBut.setText("Закрыть");
+        closeDescrBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateButActionPerformed(evt);
+                closeDescrButActionPerformed(evt);
+            }
+        });
+
+        copyDescrBut.setText("Скопировать в буфер обмена");
+        copyDescrBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyDescrButActionPerformed(evt);
             }
         });
 
@@ -162,9 +171,10 @@ public class jMDIFrame extends JInternalFrame {
                 .addContainerGap()
                 .addGroup(descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, descrShowDialogLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(updateBut)))
+                    .addGroup(descrShowDialogLayout.createSequentialGroup()
+                        .addComponent(copyDescrBut, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(closeDescrBut)))
                 .addContainerGap())
         );
         descrShowDialogLayout.setVerticalGroup(
@@ -172,9 +182,11 @@ public class jMDIFrame extends JInternalFrame {
             .addGroup(descrShowDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(updateBut)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(closeDescrBut)
+                    .addComponent(copyDescrBut))
+                .addContainerGap())
         );
 
         setMaximizable(true);
@@ -222,14 +234,8 @@ public class jMDIFrame extends JInternalFrame {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 moveobj(evt);
             }
-        });
-
-
-
-
-        jPanel1.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
-            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
-                Resizing(evt);
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel1MouseMoved(evt);
             }
         });
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -277,7 +283,6 @@ public class jMDIFrame extends JInternalFrame {
                 zplusActionPerformed(evt);
             }
         });
-
 
         jInternalFrame1.setMaximizable(true);
         jInternalFrame1.setResizable(true);
@@ -420,7 +425,7 @@ public class jMDIFrame extends JInternalFrame {
                         .addComponent(zplus, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addGap(14, 14, 14))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -435,7 +440,7 @@ public class jMDIFrame extends JInternalFrame {
                     .addComponent(zplus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(zminus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSize, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -652,47 +657,48 @@ public class jMDIFrame extends JInternalFrame {
         id11 = 0;//индекс по точкам
         id22 = 0;
         int countf = 0;//счет нерасмотренных фигур
-        int countp = 0;//счет нерассмотренных точек//на них не попал курсор
+        countp = 0;//счет нерассмотренных точек//на них не попал курсор
         addPoints();
+        
         for (figures currentFigure : all) {
             ss = currentFigure.getShape();
             if (ss.contains(p) == true) {
 
-                if (evt.getClickCount() == 2) { //если двойной клик
+                //если двойной клик открываем окно со свойствами фгуры
+                if (evt.getClickCount() == 2) { 
                     PropertiesDialog pDialog = new PropertiesDialog(null, true, currentFigure);
                     pDialog.setVisible(true);
                     evt.consume();
-
-                } else { //Иначе ничего
-
-                } //Далее код для переноса фигуры, не относ к двойному клику
+                }
+                
+                //Далее код для переноса фигуры, не относ к двойному клику
                 evt.consume();          
                 all.remove(currentFigure);
                 all.add(0, currentFigure);
-                addPoints();
+                //addPoints();
+                
                 //установить новые координты для x и y, прибавить к координате значение положения скроллера
                 jPanel1.removeAll();
                 for (JComponent c : all) {
                     jPanel1.add(c);
                 }
 
-                if (pointed == false) {//если нет, то добавление точек на фигуру
-                    jPanel1.removeAll();
-                    jPanel1.add(points.get(0));
-                    if (lined) {
-                        for (Line ln : lines) {
-                            jPanel1.add(ln);
-                        }
-                    }
-                    for (JComponent c : all) {
-                        jPanel1.add(c);
-                    }
-                    jPanel1.add(grid);
-                    jPanel1.revalidate();
-                    jPanel1.repaint();
-                    pointed = true;
+                //if (!pointed) {//если нет, то добавление точек на фигуру
+                //    
+                //    pointed = true;
+                //    jPanel1.removeAll();
+                //    jPanel1.add(points.get(0));
+                //    if (lined) {
+                //        for (Line ln : lines) jPanel1.add(ln);
+                //    }
+                //    for (JComponent c : all) jPanel1.add(c);
+                //    //jPanel1.add(grid);
+                //    //jPanel1.revalidate();
+                //    //jPanel1.repaint();
+                    
 
-                } else {//если да, то проверка попадания на фигуру или точку
+                //} else {//если да, то проверка попадания на фигуру или точку
+                    
                     oneShapePoints(0);
                     for (Shape l : pointShape) {
                         if (l.contains(p)) {
@@ -708,39 +714,29 @@ public class jMDIFrame extends JInternalFrame {
                                 }
                                 jPanel1.add(all.get(points.indexOf(a)));
                             }
-                            LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
-                                    (Point2D) evt.getPoint(), currentFigure.getNameF(), id11, currentFigure.getNameF(), id11);
+                            LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11), (Point2D) evt.getPoint(), currentFigure.getNameF(), id11, currentFigure.getNameF(), id11);
                             ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
                             ls.setVisible(true);
                             jPanel1.add(ls);
                             lines.add(0, ls);
                             checkLine = true;
-                            jPanel1.add(grid);
-                            jPanel1.revalidate();
-                            jPanel1.repaint();
+                            //jPanel1.add(grid);
+                            //jPanel1.revalidate();
+                            //jPanel1.repaint();
                         } else {
                             countp++;
                         }
                     }
 
-                }
-
-                jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
+                //}
 
                 // Нажате правой кнопки
                 if (evt.isPopupTrigger()) {
                     // create a popup menu
-                    //JPopupMenu pm = new JPopupMenu("Message");
-                    // create a label
-                    //JLabel l = new JLabel("this is the popup menu");
-                    // add the label to the popup
-                    //pm.add(l);
-                    //JFrame f = new JFrame("Popup");
-                    // set the size of the frame
-                    //f.setSize(400, 400);
-                    // add the popup to the frame
                     rcMenu.show(this, oldX, oldY);
                 }
+                
+                jPanel1.add(grid); // Добавляем сетку перед добавлением фигур
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 ButtonActivated();
@@ -749,77 +745,68 @@ public class jMDIFrame extends JInternalFrame {
                 countf++;
             }
         }
-        if ((countp == pointShape.size()) && (countf == all.size())) {
+        
+        if ((countp == pointShape.size())){ //Не попали в точку соединения
             jPanel1.removeAll();
+
             if (lined) {
-                for (Line ln : lines) {
-                    jPanel1.add(ln);
-                }
+                for (Line ln : lines)  jPanel1.add(ln);
             }
-            for (JComponent c : all) {
-                jPanel1.add(c);
+
+            if (countf != all.size()) {
+                jPanel1.add(points.get(0));
+                pointed = true;
+            } else {
+                pointed = false;               
             }
-            pointed = false;
+            
+            for (JComponent c : all) jPanel1.add(c);
+            
             jPanel1.add(grid);
             jPanel1.revalidate();
             jPanel1.repaint();
+            
         }
-        if ((countp == pointShape.size()) && (countf != all.size())) {
-            jPanel1.removeAll();
-            jPanel1.add(points.get(0));
-            if (lined) {
-                for (Line ln : lines) {
-                    jPanel1.add(ln);
-                }
-            }
-            for (JComponent c : all) {
-                jPanel1.add(c);
-            }
-            pointed = true;
-            jPanel1.add(grid);
-            jPanel1.revalidate();
-            jPanel1.repaint();
-        }
+ 
+        
         countp = 0;
-        if (countf == all.size()) {//не попадает ни на фигуру
-            if (pointed) {
+        
+        if (countf == all.size()) {//при нажатии не попали в фигуру??
+            //if (pointed) {
                 // pointShape = points.get(0).getShape();//!
                 oneShapePoints(0);
-                for (Shape l : pointShape) {
-                    if (l.contains(p)) {
-                        //выделение всех точек и соединение
-                        id11 = pointShape.indexOf(l);
-                        jPanel1.removeAll();
-                        for (points a : points) {
-                            jPanel1.add(a);
-                            if (lined) {
-                                for (Line ln : lines) {
-                                    jPanel1.add(ln);
-                                }
-                            }
-                            //id1=all.get(0).getId();
-                            jPanel1.add(all.get(points.indexOf(a)));
-                        }
-                        LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
-                                (Point2D) evt.getPoint(), ID1, id11, ID1, id11);
-                        ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
-                        ls.setVisible(true);
-                        jPanel1.add(ls);
-                        lines.add(0, ls);
-                        checkLine = true;
-                        //jPanel1.add(grid);
-                        jPanel1.revalidate();
-                        jPanel1.repaint();
-
-                        jPanel1.add(grid);
-                        jPanel1.revalidate();
-                        jPanel1.repaint();
-                        break;
-                    } else {
-                        countp++;
-                    }
-                }
-                if (countp == 4) {
+                //for (Shape l : pointShape) {
+                //    if (l.contains(p)) {
+                //        //выделение всех точек и соединение
+                //        id11 = pointShape.indexOf(l);
+                //        jPanel1.removeAll();
+                //        for (points a : points) {
+                //            jPanel1.add(a);
+                //            if (lined) {
+                //                for (Line ln : lines) {
+                //                    jPanel1.add(ln);
+                //                }
+                //            }
+                //            //id1=all.get(0).getId();
+                //            jPanel1.add(all.get(points.indexOf(a)));
+                //        }
+                //       LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
+                //                (Point2D) evt.getPoint(), ID1, id11, ID1, id11);
+                //        ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
+                //        ls.setVisible(true);
+                //        jPanel1.add(ls);
+                //        lines.add(0, ls);
+                //        checkLine = true;
+                //
+                //        jPanel1.add(grid);
+                //        jPanel1.revalidate();
+                //        jPanel1.repaint();
+                //        break;
+                //    } else {
+                //        countp++;
+                //    }
+                //}
+                //if (countp == 4) {
                     jPanel1.removeAll();
                     if (lined) {
                         for (Line ln : lines) {
@@ -832,29 +819,26 @@ public class jMDIFrame extends JInternalFrame {
                     jPanel1.add(grid);
                     jPanel1.revalidate();
                     jPanel1.repaint();
-                    //jPanel1.repaint();
                     pointed = false;
-                }
-            }
+                //}
+            //}
         }
 
         touch = ss.contains(p) == true;
 
     }//GEN-LAST:event_jPanel1MousePressed
-
-    private void Resizing(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_Resizing
-        //if (evt.getWheelRotation() < 0) {
-        //    this.zplus();
-        //} else {
-        //    this.zminus();
-        //}
-
-    }//GEN-LAST:event_Resizing
+    
+    
     private void chcord(figures b) {
         b.setXX(newX);
         b.setYY(newY);
     }
+
+
+    //Перемещение мышки с нажатой кнопкой
     private void moveobj(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveobj
+        
+
         figures b = all.get(0);
         ss = b.getShape();
 
@@ -862,7 +846,6 @@ public class jMDIFrame extends JInternalFrame {
             jPanel1.remove(points.get(0));
             jPanel1.add(new GridPanel((int) (GridPanel.GetBaseCellSize() * zoom / 100))); // Добавляем сетку перед добавлением фигур
             jPanel1.revalidate();
-            //jPanel1.repaint();
             jPanel1.repaint();
             pointed = false;
         }
@@ -870,12 +853,10 @@ public class jMDIFrame extends JInternalFrame {
         if (touch == true && checkLine == false) {
 
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
             dx = -oldX + b.getXX();
             dy = -oldY + b.getYY();
             newX = evt.getX() + dx;
             newY = evt.getY() + dy;
-
             this.OutOfBounds();
 
             if (lined) {
@@ -948,14 +929,33 @@ public class jMDIFrame extends JInternalFrame {
             ButtonActivated();
         }
 
+        //Перерисовка стрелки
         if (checkLine == true) {
             Line l = lines.get(0);
-            this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            
+            // 1. Проверяем попадание в площадку для соединения целевой фигуры и если попадаем то меняем курсор на крестик
+            boolean targetPoint=false;
+            for (points ps : points) {
+                ArrayList<Shape> pointShape1 = new ArrayList();
+                pointShape1 = points.get(points.indexOf(ps)).getShape();
+                for (Shape l1 :pointShape1) {
+                    if (l1.contains(evt.getPoint())) {         
+                        this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                        targetPoint=true;
+                    } else {
+                        this.setCursor(new Cursor(Cursor.HAND_CURSOR));                   
+                    }           
+                    if (targetPoint) break;
+                }
+                if (targetPoint) break;
+            }
+           // 1. Конец
+            
+            //this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             l.setC2((Point2D) evt.getPoint());//обновление второй точки
             l.arrow.x2 = l.getC2().getX();
             l.arrow.y2 = l.getC2().getY();
             l.arrow.repaint();
-            //jPanel1.repaint();
             jPanel1.add(grid);
             jPanel1.revalidate();
             jPanel1.repaint();
@@ -1203,89 +1203,72 @@ public class jMDIFrame extends JInternalFrame {
     //Отпускание нажатой кнопки мыши
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
       
-        evt.consume();
+        //evt.consume();
 
-        // Когда закончили перетаскивать объект и отпкстили мышку снова делаем курсор-стрелочку
-        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
-        touch = false;
-        int countp = 0;
-        if (checkLine) {//прорисовка линий
+        // Когда закончили перетаскивать объект и отпкстили мышку снова делаем курсор-стрелочку (по умолчанию)
+        if (touch == true){ //&& checkLine == false) {
+            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            touch = false;
+        }    
+         
+        countp = 0;
+        if (checkLine) {//при нажатии уже начали отрисовку линий
             for (points ps : points) {
                 oneShapePoints(points.indexOf(ps));
                 for (Shape l : pointShape) {
-                    if (l.contains(evt.getPoint()) /*&& !(all.get(points.indexOf(ps)).getNameF().equals(lines.get(0).getID1()))*/) { //курсор находится на точке соединения и имена соединяемых объектов различаются
+                    if (l.contains(evt.getPoint())) { //курсор находится на точке соединения 
 //                        id22 = pointShape.indexOf(l);
 //                        id2 = all.get(points.indexOf(ps)).getId();
-                        jPanel1.removeAll();
+                        //jPanel1.removeAll();
                         lines.get(0).setC2((Point2D) ps.getPoint().get(pointShape.indexOf(l)));
                         lines.get(0).setID2(all.get(points.indexOf(ps)).getNameF());
+                        
                         Class first = null, second = null;
                         for (figures currentFigure : all) {
-                            if (currentFigure.getNameF().equals(lines.get(0).getID1())) {
-                                first = currentFigure.getClass();
-                            } else if (currentFigure.getNameF().equals(lines.get(0).getID2())) {
-                                second = currentFigure.getClass();
-                            }
+                            if (currentFigure.getNameF().equals(lines.get(0).getID1())) first = currentFigure.getClass();
+                            if (currentFigure.getNameF().equals(lines.get(0).getID2())) second = currentFigure.getClass();
                         }
-                        if (!(first.equals(NV.class) && second.equals(V.class)) && //первая фигура - NV, вторая фигура - V ИЛИ
-                            !(first.equals(S1.class) && second.equals(V.class)) && //первая фигура - S, вторая фигура - V ИЛИ
-                            !(first.equals(V.class) && second.equals(R.class)) && //первая фигура - V, вторая фигура - R ИЛИ
-                            !(first.equals(R.class) && second.equals(NV.class)) && //первая фигура - R, вторая фигура - NV ИЛИ
-                            !(first.equals(R.class) && second.equals(V.class)) && //первая фигура - R, вторая фигура - V ИЛИ
-                            !(first.equals(R.class) && second.equals(d.class)) && //первая фигура - R, вторая фигура - IF ИЛИ
-                            !(first.equals(O.class) && second.equals(V.class)) &&//первая фигура - O, вторая фигура - V ИЛИ
-                            !(first.equals(d.class))) { //первая фигура - IF
-                            
-                            jPanel1.removeAll();
-                            lines.remove(0);
-                            
-                            if (lined) {
-                                for (Line ln : lines) {
-                                    jPanel1.add(ln);
-                                }
-                            }
-                            for (JComponent c : all) {
-                                jPanel1.add(c);
-                            }
-                            jPanel1.add(grid);
-                            jPanel1.repaint();
-                        }
-//                        lines.get(0).setID22(id22);
-                        if (lined) {
-                            for (Line ln : lines) {
-                                jPanel1.add(ln);
-                            }
-                            jPanel1.repaint();
+                        
+                        //Если выполняется одно из условий то добавляем соединительную линию
+                        if ((first.equals(NV.class) && second.equals(V.class)) || //первая фигура - NV, вторая фигура - V ИЛИ
+                            (first.equals(S1.class) && second.equals(V.class)) || //первая фигура - S, вторая фигура - V ИЛИ
+                            (first.equals(V.class)  && second.equals(R.class)) || //первая фигура - V, вторая фигура - R ИЛИ
+                            (first.equals(R.class)  && second.equals(NV.class))|| //первая фигура - R, вторая фигура - NV ИЛИ
+                            (first.equals(R.class)  && second.equals(V.class)) || //первая фигура - R, вторая фигура - V ИЛИ
+                            (first.equals(R.class)  && second.equals(d.class)) || //первая фигура - R, вторая фигура - IF ИЛИ
+                            (first.equals(O.class)  && second.equals(V.class)) ||//первая фигура - O, вторая фигура - V ИЛИ
+                            (first.equals(d.class)) //первая фигура - IF
+                           ) { 
+                            if (!lined) jPanel1.add(lines.get(0));
+                            this.drawObjects();
+                            lined = true;
+                            checkLine = false;
+                            //break;
                         } else {
-                            jPanel1.add(lines.get(0));
+                            lines.remove(0); //Если соединение не из обобренного списка то линию не создаем (бахаем заготовку)
                         }
 
-                        this.drawObjects();
-                        lined = true;
-                        break;
                     }
-                    /*else {
-                        countp++;
-                    }*/
+                    if (!checkLine) break; //Если сделали соединение то заканчиваем поиск точек для соединения                  
                 }
+                if (!checkLine) break; //Если сделали соединение то заканчиваем поиск точек для соединения          
             }
-            if (lines.get(0).getID1().equals(lines.get(0).getID2())) {
-                jPanel1.removeAll();
-                lines.remove(0);
-                if (lined) {
-                    for (Line ln : lines) {
-                        jPanel1.add(ln);
-                    }
-                }
-                for (JComponent c : all) {
-                    jPanel1.add(c);
-                }
-                jPanel1.add(grid);
-                jPanel1.repaint();
+            
+            if (lines.get(0).getID1().equals(lines.get(0).getID2())) lines.remove(0); //Если не попали в конечный элемент то линию не создаем, а бахаем заготовку
+            
+            //Перерисовываем
+            jPanel1.removeAll();
+            if (lined) {
+                for (Line ln : lines) jPanel1.add(ln);                    
             }
+            for (JComponent c : all) jPanel1.add(c);    
+            jPanel1.add(grid);
+            jPanel1.revalidate();
+            jPanel1.repaint();
+            checkLine = false; //устанавливаем флаг окончания рисования
+            countp = 0;
         }
-        checkLine = false;
+               
     }//GEN-LAST:event_jPanel1MouseReleased
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
@@ -1558,7 +1541,7 @@ public class jMDIFrame extends JInternalFrame {
     }//GEN-LAST:event_jSizeMouseEntered
 
     private void jSizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSizeMouseExited
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        //setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_jSizeMouseExited
 
     private void DeletteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletteActionPerformed
@@ -1637,10 +1620,34 @@ public class jMDIFrame extends JInternalFrame {
         GenerateDescription();
     }//GEN-LAST:event_jMenuItemGenDescActionPerformed
 
-    private void updateButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButActionPerformed
-        generatorObj genOb = new generatorObj(CreatorConvertObject());
-        textDescription.setText(genOb.generateString());
-    }//GEN-LAST:event_updateButActionPerformed
+    private void closeDescrButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeDescrButActionPerformed
+        descrShowDialog.dispose();
+    }//GEN-LAST:event_closeDescrButActionPerformed
+
+    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+
+        // 1. --- Если при выделении объекта попадаем в площадку для соединения то меняем курсор на крестик ---
+        for (Shape l : pointShape) {
+            if (l.contains(evt.getPoint())) {         
+                this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                break;
+            } else {
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));                   
+            }            
+        }    
+        // 1. --- конец ---
+    }//GEN-LAST:event_jPanel1MouseMoved
+
+    public static void copyToClipboard(String text) { //сохранение в буфер обмена
+        StringSelection stringSelection = new StringSelection(text);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+    
+    private void copyDescrButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyDescrButActionPerformed
+        copyToClipboard(textDescription.getText());
+    }//GEN-LAST:event_copyDescrButActionPerformed
+    
     private void GenerateDescription(){
         generatorObj genOb = new generatorObj(CreatorConvertObject());
         textDescription.setText(genOb.generateString());
@@ -1736,11 +1743,13 @@ public class jMDIFrame extends JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
-        private javax.swing.JDialog descrShowDialog;
+    private javax.swing.JButton closeDescrBut;
+    private javax.swing.JButton copyDescrBut;
+    private javax.swing.JDialog descrShowDialog;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenuItem jMenuItemClear;
     private javax.swing.JMenuItem jMenuItemDelette;
-     private javax.swing.JMenuItem jMenuItemGenDesc;
+    private javax.swing.JMenuItem jMenuItemGenDesc;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1750,9 +1759,8 @@ public class jMDIFrame extends JInternalFrame {
     private javax.swing.JPopupMenu rcMenu;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTextArea textDescription;
-    private javax.swing.JButton updateBut;
     private javax.swing.JButton zminus;
-     private javax.swing.JButton zminus1;
+    private javax.swing.JButton zminus1;
     private javax.swing.JButton zplus;
     private javax.swing.JButton zplus1;
     // End of variables declaration//GEN-END:variables

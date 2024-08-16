@@ -79,6 +79,8 @@ public class PropertiesDialog extends javax.swing.JDialog {
         removeFromInList = new javax.swing.JButton();
         addInOutList = new javax.swing.JButton();
         removeFromOutList = new javax.swing.JButton();
+        savePropBut = new javax.swing.JButton();
+        cancelPropBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -132,8 +134,9 @@ public class PropertiesDialog extends javax.swing.JDialog {
                     .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                    .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                    .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,9 +149,10 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 183, Short.MAX_VALUE))
-                    .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(201, 201, 201))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         mainBodyTabbedPanel.addTab("Основные", mainPanel);
@@ -165,15 +169,15 @@ public class PropertiesDialog extends javax.swing.JDialog {
             codeTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(codeTPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         codeTPanelLayout.setVerticalGroup(
             codeTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(codeTPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         codePanel.setViewportView(codeTPanel);
@@ -284,10 +288,24 @@ public class PropertiesDialog extends javax.swing.JDialog {
                     .addComponent(removeFromOutList)
                     .addComponent(addInInList)
                     .addComponent(removeFromInList))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         mainBodyTabbedPanel.addTab("Переменные", variablePanel);
+
+        savePropBut.setText("Сохранить");
+        savePropBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savePropButActionPerformed(evt);
+            }
+        });
+
+        cancelPropBut.setText("Отмена");
+        cancelPropBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelPropButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -295,14 +313,24 @@ public class PropertiesDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cancelPropBut, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(savePropBut, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(savePropBut)
+                    .addComponent(cancelPropBut))
                 .addContainerGap())
         );
 
@@ -326,7 +354,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_nameTextFieldKeyPressed
 
     private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
-        this.setTitle(nameTextField.getText()); //Устанавливаем тайтлу окна название фигуры после изменения поля фигуры
+       
     }//GEN-LAST:event_nameTextFieldKeyReleased
 
     private void nameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyTyped
@@ -424,10 +452,22 @@ public class PropertiesDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_removeFromOutListActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+//        figOnWork.setNameF(nameTextField.getText());
+//        figOnWork.setDescriptionF(descriptionTextField.getText());
+//        figOnWork.setCodeF(codeTextField.getText()); //Раньше при закрытии окна сохранялись параметры фигуры, теперь при нажатии на кнопку
+// РАСКОМЕНТИРОВАТЬ ЕСЛИ НУЖНО СОХРАНЕНЕ АВТОМАТИЧЕСКОЕ ПОСЛЕ ЗАКРЫТИЯ ОКНА!
+    }//GEN-LAST:event_formWindowClosing
+
+    private void savePropButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePropButActionPerformed
+        //Сохранение параметров фигуры на кнопку
         figOnWork.setNameF(nameTextField.getText());
         figOnWork.setDescriptionF(descriptionTextField.getText());
         figOnWork.setCodeF(codeTextField.getText());
-    }//GEN-LAST:event_formWindowClosing
+    }//GEN-LAST:event_savePropButActionPerformed
+
+    private void cancelPropButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelPropButActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelPropButActionPerformed
  
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -447,6 +487,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addInInList;
     private javax.swing.JButton addInOutList;
+    private javax.swing.JButton cancelPropBut;
     private javax.swing.JScrollPane codePanel;
     private javax.swing.JPanel codeTPanel;
     private java.awt.TextField codeTextField;
@@ -464,6 +505,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane outVariableList;
     private javax.swing.JButton removeFromInList;
     private javax.swing.JButton removeFromOutList;
+    private javax.swing.JButton savePropBut;
     private javax.swing.JPanel variablePanel;
     // End of variables declaration//GEN-END:variables
 }

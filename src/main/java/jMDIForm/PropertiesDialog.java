@@ -79,6 +79,8 @@ public class PropertiesDialog extends javax.swing.JDialog {
         removeFromInList = new javax.swing.JButton();
         addInOutList = new javax.swing.JButton();
         removeFromOutList = new javax.swing.JButton();
+        cancelPropBut = new javax.swing.JButton();
+        savePropBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -146,7 +148,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 183, Short.MAX_VALUE))
+                        .addGap(0, 179, Short.MAX_VALUE))
                     .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -284,10 +286,24 @@ public class PropertiesDialog extends javax.swing.JDialog {
                     .addComponent(removeFromOutList)
                     .addComponent(addInInList)
                     .addComponent(removeFromInList))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         mainBodyTabbedPanel.addTab("Переменные", variablePanel);
+
+        cancelPropBut.setText("Отмена");
+        cancelPropBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelPropButActionPerformed(evt);
+            }
+        });
+
+        savePropBut.setText("Сохранить");
+        savePropBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savePropButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,109 +313,43 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cancelPropBut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(savePropBut))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(savePropBut)
+                    .addComponent(cancelPropBut))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void descriptionTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_descriptionTextFieldActionPerformed
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+//        figOnWork.setNameF(nameTextField.getText());
+//        figOnWork.setDescriptionF(descriptionTextField.getText());
+//        figOnWork.setCodeF(codeTextField.getText()); //Раньше при закрытии окна сохранялись параметры фигуры, теперь при нажатии на кнопку
+// РАСКОМЕНТИРОВАТЬ ЕСЛИ НУЖНО СОХРАНЕНЕ АВТОМАТИЧЕСКОЕ ПОСЛЕ ЗАКРЫТИЯ ОКНА!
+    }//GEN-LAST:event_formWindowClosing
 
-    private void nameTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_nameTextFieldInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldInputMethodTextChanged
-
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
-    private void nameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldKeyPressed
-
-    private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
-        this.setTitle(nameTextField.getText()); //Устанавливаем тайтлу окна название фигуры после изменения поля фигуры
-    }//GEN-LAST:event_nameTextFieldKeyReleased
-
-    private void nameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldKeyTyped
-
-    private void codeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_codeTextFieldActionPerformed
-
-    private void inItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inItemsMouseClicked
-
-    }//GEN-LAST:event_inItemsMouseClicked
-
-    private void inItemsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inItemsMousePressed
-        //Выюор элеимента для удаления в списке вход. пер
-        p = evt.getPoint();
-        if (inItems.contains((Point) p) == true){
-            delIndIn = inItems.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
-            if (delIndIn != -1){
-                removeFromInList.setEnabled(true);
-            }
-            else{
-                removeFromInList.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_inItemsMousePressed
-
-    private void outItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outItemsMouseClicked
-
-    }//GEN-LAST:event_outItemsMouseClicked
-
-    private void outItemsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outItemsMousePressed
-        //Выюор элеимента для удаления в списке выход. пер
-        p = evt.getPoint();
-        if (outItems.contains((Point) p) == true){
-            delIndOut = outItems.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
-            if (delIndOut != -1){
-                removeFromOutList.setEnabled(true);
-            }
-            else{
-                removeFromOutList.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_outItemsMousePressed
-
-    private void addInInListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInInListActionPerformed
-        String initialValue = "X"+ (saveInVariable.size()+1);     
-        //Показываем окно ввода и деактивируем остальные окна
-        String varName = (String) JOptionPane.showInputDialog(null, "Введите название переменной:", "Создание входной переменной", JOptionPane.PLAIN_MESSAGE, null, null, initialValue);
-        // Проверяем, было ли что-то введено
-        if (!(varName.isEmpty() || varName.length()>=20)) {
-            if (saveInVariable.contains(varName)){
-                JOptionPane.showMessageDialog(null, "Переменная с таким названием уже существует!");
-            }
-            else{
-                listModelInn.addElement(varName); //добавялем элемент с введённым названием в список вход
-                saveInVariable.add(varName); //добавялем элемент с введённым названием в фигуру
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Данная длина переменной недоступна.","Ошибка",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_addInInListActionPerformed
-
-    private void removeFromInListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromInListActionPerformed
-        saveInVariable.remove(delIndIn); //Удаляем элемент с выбранным индексом в фигуре
-        listModelInn.remove(delIndIn); //Удаляем элемент с выбранным индексом в списке
-        delIndIn = -1; //обнуляем индекс
-        removeFromInList.setEnabled(false); //Выключкаем кнопку удаления
-    }//GEN-LAST:event_removeFromInListActionPerformed
+    private void removeFromOutListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromOutListActionPerformed
+        saveOutVariable.remove(delIndOut); //Удаляем элемент с выбранным индексом в фигуре
+        listModelOut.remove(delIndOut); //Удаляем элемент с выбранным индексом в списке
+        delIndOut = -1; //обнуляем индекс
+        removeFromOutList.setEnabled(false);
+    }//GEN-LAST:event_removeFromOutListActionPerformed
 
     private void addInOutListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInOutListActionPerformed
-         String initialValue = "Y"+ (saveOutVariable.size()+1);     
+        String initialValue = "Y"+ (saveOutVariable.size()+1);
         //Показываем окно ввода и деактивируем остальные окна
         String varName = (String) JOptionPane.showInputDialog(null, "Введите название переменной:", "Создание выходной переменной", JOptionPane.PLAIN_MESSAGE, null, null, initialValue);
         // Проверяем, было ли что-то введено
@@ -416,18 +366,106 @@ public class PropertiesDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_addInOutListActionPerformed
 
-    private void removeFromOutListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromOutListActionPerformed
-        saveOutVariable.remove(delIndOut); //Удаляем элемент с выбранным индексом в фигуре
-        listModelOut.remove(delIndOut); //Удаляем элемент с выбранным индексом в списке
-        delIndOut = -1; //обнуляем индекс
-        removeFromOutList.setEnabled(false);
-    }//GEN-LAST:event_removeFromOutListActionPerformed
+    private void removeFromInListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromInListActionPerformed
+        saveInVariable.remove(delIndIn); //Удаляем элемент с выбранным индексом в фигуре
+        listModelInn.remove(delIndIn); //Удаляем элемент с выбранным индексом в списке
+        delIndIn = -1; //обнуляем индекс
+        removeFromInList.setEnabled(false); //Выключкаем кнопку удаления
+    }//GEN-LAST:event_removeFromInListActionPerformed
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    private void addInInListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInInListActionPerformed
+        String initialValue = "X"+ (saveInVariable.size()+1);
+        //Показываем окно ввода и деактивируем остальные окна
+        String varName = (String) JOptionPane.showInputDialog(null, "Введите название переменной:", "Создание входной переменной", JOptionPane.PLAIN_MESSAGE, null, null, initialValue);
+        // Проверяем, было ли что-то введено
+        if (!(varName.isEmpty() || varName.length()>=20)) {
+            if (saveInVariable.contains(varName)){
+                JOptionPane.showMessageDialog(null, "Переменная с таким названием уже существует!");
+            }
+            else{
+                listModelInn.addElement(varName); //добавялем элемент с введённым названием в список вход
+                saveInVariable.add(varName); //добавялем элемент с введённым названием в фигуру
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Данная длина переменной недоступна.","Ошибка",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addInInListActionPerformed
+
+    private void outItemsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outItemsMousePressed
+        //Выюор элеимента для удаления в списке выход. пер
+        p = evt.getPoint();
+        if (outItems.contains((Point) p) == true){
+            delIndOut = outItems.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
+            if (delIndOut != -1){
+                removeFromOutList.setEnabled(true);
+            }
+            else{
+                removeFromOutList.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_outItemsMousePressed
+
+    private void outItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outItemsMouseClicked
+
+    }//GEN-LAST:event_outItemsMouseClicked
+
+    private void inItemsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inItemsMousePressed
+        //Выюор элеимента для удаления в списке вход. пер
+        p = evt.getPoint();
+        if (inItems.contains((Point) p) == true){
+            delIndIn = inItems.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
+            if (delIndIn != -1){
+                removeFromInList.setEnabled(true);
+            }
+            else{
+                removeFromInList.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_inItemsMousePressed
+
+    private void inItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inItemsMouseClicked
+
+    }//GEN-LAST:event_inItemsMouseClicked
+
+    private void codeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codeTextFieldActionPerformed
+
+    private void nameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTextFieldKeyTyped
+
+    private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
+        this.setTitle(nameTextField.getText()); //Устанавливаем тайтлу окна название фигуры после изменения поля фигуры
+    }//GEN-LAST:event_nameTextFieldKeyReleased
+
+    private void nameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTextFieldKeyPressed
+
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
+
+    }//GEN-LAST:event_nameTextFieldActionPerformed
+
+    private void nameTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_nameTextFieldInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTextFieldInputMethodTextChanged
+
+    private void descriptionTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_descriptionTextFieldActionPerformed
+
+    private void savePropButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePropButActionPerformed
+        //Сохранение параметров фигуры на кнопку
         figOnWork.setNameF(nameTextField.getText());
         figOnWork.setDescriptionF(descriptionTextField.getText());
         figOnWork.setCodeF(codeTextField.getText());
-    }//GEN-LAST:event_formWindowClosing
+        this.dispose();
+    }//GEN-LAST:event_savePropButActionPerformed
+
+    private void cancelPropButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelPropButActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelPropButActionPerformed
  
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -447,23 +485,37 @@ public class PropertiesDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addInInList;
     private javax.swing.JButton addInOutList;
+    private javax.swing.JButton cancelPropBut;
     private javax.swing.JScrollPane codePanel;
     private javax.swing.JPanel codeTPanel;
     private java.awt.TextField codeTextField;
     private java.awt.TextField descriptionTextField;
+    private java.awt.TextField descriptionTextField1;
+    private java.awt.TextField descriptionTextField2;
     private javax.swing.JList<String> inItems;
     private java.awt.Label inVariableLabel;
     private javax.swing.JScrollPane inVariableList;
     private java.awt.Label label6;
+    private java.awt.Label label7;
+    private java.awt.Label label8;
     private javax.swing.JTabbedPane mainBodyTabbedPanel;
+    private javax.swing.JTabbedPane mainBodyTabbedPanel1;
+    private javax.swing.JTabbedPane mainBodyTabbedPanel2;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel mainPanel1;
+    private javax.swing.JPanel mainPanel2;
     private java.awt.Label nameLabel;
+    private java.awt.Label nameLabel1;
+    private java.awt.Label nameLabel2;
     private java.awt.TextField nameTextField;
+    private java.awt.TextField nameTextField1;
+    private java.awt.TextField nameTextField2;
     private javax.swing.JList<String> outItems;
     private java.awt.Label outVariableLabel;
     private javax.swing.JScrollPane outVariableList;
     private javax.swing.JButton removeFromInList;
     private javax.swing.JButton removeFromOutList;
+    private javax.swing.JButton savePropBut;
     private javax.swing.JPanel variablePanel;
     // End of variables declaration//GEN-END:variables
 }
