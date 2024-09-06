@@ -1,7 +1,19 @@
 package descritGen;
 
-//Нужен для хранения одной связи фигур
 
+
+
+
+//НЕ используется и код не актуален!
+
+
+
+
+
+
+
+//Нужен для хранения одной связи фигур
+/*
 import java.util.ArrayList;
 
 public class genSubObj {
@@ -28,52 +40,6 @@ public class genSubObj {
     public void AddToO(String toO){
         figAsO.add(toO);
     }
-//    public String getDescriptionAsString(){
-//        String finalString;
-//        if (figAsNV.size() == 0 & figAsS.size() == 0 & figAsO.size() == 0){
-//            return "ERORR! Connection didnt exist";
-//        }
-//        finalString = resultFigName + " = " + vFigName + "(";
-//        boolean isFirst = true;
-//        
-//        for (String sFig : figAsS){ //Записываем все S
-//            if (isFirst){
-//                finalString += sFig;
-//                isFirst = false;
-//                continue;
-//            }
-//            finalString += " + " + sFig;
-//        }
-//        
-//        if (isFirst == false){ //Проверка на наилчие S в записи
-//            finalString += ", ";
-//        }
-//        
-//        isFirst = true;
-//        for (String nvFig : figAsNV){  //Записываем все NV
-//            if (isFirst){
-//                finalString += nvFig;
-//                isFirst = false;
-//                continue;
-//            }
-//            finalString += " + " + nvFig;
-//        }
-//        if (isFirst == false){ //Проверка на наилчие NV в записи
-//            finalString += ", "; 
-//        }
-//        isFirst = true;
-//        for (String oFig : figAsO){  //Записываем все O
-//            if (isFirst){
-//                finalString += oFig;
-//                isFirst = false;
-//                continue;
-//            }
-//            finalString += " + " + oFig;
-//        }
-//        finalString += ")";
-//        
-//        return finalString;
-//    } //не совсем работает, ставит фиктивную запятую после S
     
      public String getDescriptionAsString(){
         String finalString;
@@ -147,3 +113,4 @@ public class genSubObj {
         figAsNV = newList;
     }
 }
+*/

@@ -27,6 +27,19 @@ public class Figure_s {
     private ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
     @JsonProperty("code")
     private String code; // Код фигуры
+    
+    @JsonProperty("likelihood")
+    private String likelihood;//вероятность для S
+    @JsonProperty("period")
+    private String period;//период для S
+    @JsonProperty("coef")
+    private String coef;//коэффициент эффективности для О
+    @JsonProperty("SWorkIndex")
+    private String SWorkIndex;//отметка выбора вида работы для S
+    @JsonProperty("vSelected")
+    private String vSelected;
+//    @JsonProperty("likelihood")
+//    отметка выбора сложности для V
 
     public void setX_pos(String x_pos) {
         this.x_pos = x_pos;
@@ -106,5 +119,44 @@ public class Figure_s {
 
     public ArrayList<String> getOutVariable() {
         return outVariable;
+    }
+    
+    public void setCoef(String coef) {
+        this.coef = coef;
+    }
+
+    public String getCoef() {
+        return coef;
+    }
+    
+    public void setLikelihood(String likelihood) {
+        this.likelihood = likelihood;
+    }
+
+    public String getLikelihood() {
+        return likelihood;
+    }
+    
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+    
+    public void setSwork(String SWorkIndex) {
+        this.SWorkIndex = SWorkIndex;
+    }
+
+    public String getSwork() {
+        return SWorkIndex;
+    }
+    public void setVSelected(String vSelected) {
+        this.vSelected = vSelected;
+    }
+
+    public String getVSelected() {
+        return vSelected;
     }
 }

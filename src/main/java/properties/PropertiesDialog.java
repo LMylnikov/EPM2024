@@ -59,6 +59,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        properties = new javax.swing.ButtonGroup();
         mainBodyTabbedPanel = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         descriptionTextField = new java.awt.TextField();
@@ -79,6 +80,23 @@ public class PropertiesDialog extends javax.swing.JDialog {
         removeFromInList = new javax.swing.JButton();
         addInOutList = new javax.swing.JButton();
         removeFromOutList = new javax.swing.JButton();
+        SpropertiesPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        Swork = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        Slikelihood = new javax.swing.JFormattedTextField();
+        Speriod = new javax.swing.JFormattedTextField();
+        VpropertiesPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        expButton = new javax.swing.JRadioButton();
+        xButton = new javax.swing.JRadioButton();
+        stepButton = new javax.swing.JRadioButton();
+        logButton = new javax.swing.JRadioButton();
+        xlogButton = new javax.swing.JRadioButton();
+        OpropertiesPanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        Ocoef = new javax.swing.JFormattedTextField();
         savePropBut = new javax.swing.JButton();
         cancelPropBut = new javax.swing.JButton();
 
@@ -293,6 +311,203 @@ public class PropertiesDialog extends javax.swing.JDialog {
 
         mainBodyTabbedPanel.addTab("Переменные", variablePanel);
 
+        SpropertiesPanel.setEnabled(false);
+
+        jLabel2.setText("Работа элемента");
+
+        Swork.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Поток Пуассона", "Периодическая" }));
+
+        jLabel3.setText("Вероятность:");
+        jLabel3.setEnabled(false);
+
+        jLabel4.setText("Период:");
+        jLabel4.setEnabled(false);
+
+        Slikelihood.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.###"))));
+        Slikelihood.setToolTipText("0,1 - 10");
+        Slikelihood.setEnabled(false);
+        Slikelihood.setMaximumSize(new java.awt.Dimension(133, 23));
+        Slikelihood.setMinimumSize(new java.awt.Dimension(70, 23));
+        Slikelihood.setName(""); // NOI18N
+        Slikelihood.setPreferredSize(new java.awt.Dimension(70, 23));
+        Slikelihood.setSize(new java.awt.Dimension(70, 23));
+        Slikelihood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SlikelihoodActionPerformed(evt);
+            }
+        });
+        Slikelihood.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                SlikelihoodKeyTyped(evt);
+            }
+        });
+
+        Speriod.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        Speriod.setToolTipText("1-1000");
+        Speriod.setEnabled(false);
+        Speriod.setMaximumSize(new java.awt.Dimension(133, 23));
+        Speriod.setMinimumSize(new java.awt.Dimension(70, 23));
+        Speriod.setPreferredSize(new java.awt.Dimension(70, 23));
+        Speriod.setSize(new java.awt.Dimension(70, 23));
+        Speriod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SperiodActionPerformed(evt);
+            }
+        });
+        Speriod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                SperiodKeyTyped(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SpropertiesPanelLayout = new javax.swing.GroupLayout(SpropertiesPanel);
+        SpropertiesPanel.setLayout(SpropertiesPanelLayout);
+        SpropertiesPanelLayout.setHorizontalGroup(
+            SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SpropertiesPanelLayout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addGroup(SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SpropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(Swork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(SpropertiesPanelLayout.createSequentialGroup()
+                        .addGroup(SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Speriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Slikelihood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(173, Short.MAX_VALUE))
+        );
+        SpropertiesPanelLayout.setVerticalGroup(
+            SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SpropertiesPanelLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(Swork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(Slikelihood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(SpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(Speriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(108, Short.MAX_VALUE))
+        );
+
+        mainBodyTabbedPanel.addTab("Свойства", SpropertiesPanel);
+
+        VpropertiesPanel.setEnabled(false);
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jLabel1.setText("Сложность алгоритма");
+
+        properties.add(expButton);
+        expButton.setText("Экспонента (exp(x))");
+
+        properties.add(xButton);
+        xButton.setText("Элемент (х)");
+        xButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xButtonActionPerformed(evt);
+            }
+        });
+
+        properties.add(stepButton);
+        stepButton.setText("1 шаг (1)");
+
+        properties.add(logButton);
+        logButton.setText("Логарифм (log(x))");
+
+        properties.add(xlogButton);
+        xlogButton.setText("xlog(x)");
+
+        javax.swing.GroupLayout VpropertiesPanelLayout = new javax.swing.GroupLayout(VpropertiesPanel);
+        VpropertiesPanel.setLayout(VpropertiesPanelLayout);
+        VpropertiesPanelLayout.setHorizontalGroup(
+            VpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VpropertiesPanelLayout.createSequentialGroup()
+                .addGroup(VpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(VpropertiesPanelLayout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addGroup(VpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(xlogButton)
+                            .addComponent(logButton)
+                            .addComponent(stepButton)
+                            .addComponent(xButton)
+                            .addComponent(expButton)))
+                    .addGroup(VpropertiesPanelLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
+        VpropertiesPanelLayout.setVerticalGroup(
+            VpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VpropertiesPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(expButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(xButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stepButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(xlogButton)
+                .addContainerGap(79, Short.MAX_VALUE))
+        );
+
+        mainBodyTabbedPanel.addTab("Свойства", VpropertiesPanel);
+
+        OpropertiesPanel.setVerifyInputWhenFocusTarget(false);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Коэффициент эффективности:");
+
+        Ocoef.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.#"))));
+        Ocoef.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        Ocoef.setToolTipText("0,1-10");
+        Ocoef.setActionCommand("<Not Set>");
+        Ocoef.setDoubleBuffered(true);
+        Ocoef.setMaximumSize(new java.awt.Dimension(133, 23));
+        Ocoef.setMinimumSize(new java.awt.Dimension(70, 23));
+        Ocoef.setPreferredSize(new java.awt.Dimension(70, 23));
+        Ocoef.setSize(new java.awt.Dimension(70, 23));
+        Ocoef.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                OcoefKeyTyped(evt);
+            }
+        });
+
+        javax.swing.GroupLayout OpropertiesPanelLayout = new javax.swing.GroupLayout(OpropertiesPanel);
+        OpropertiesPanel.setLayout(OpropertiesPanelLayout);
+        OpropertiesPanelLayout.setHorizontalGroup(
+            OpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OpropertiesPanelLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(Ocoef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(179, Short.MAX_VALUE))
+        );
+        OpropertiesPanelLayout.setVerticalGroup(
+            OpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(OpropertiesPanelLayout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addGroup(OpropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(Ocoef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(131, Short.MAX_VALUE))
+        );
+
+        mainBodyTabbedPanel.addTab("Свойства", null, OpropertiesPanel, "");
+
         savePropBut.setText("Сохранить");
         savePropBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -468,6 +683,36 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private void cancelPropButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelPropButActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelPropButActionPerformed
+
+    private void SlikelihoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SlikelihoodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SlikelihoodActionPerformed
+
+    private void SlikelihoodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SlikelihoodKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_SlikelihoodKeyTyped
+
+    private void SperiodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SperiodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SperiodActionPerformed
+
+    private void SperiodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SperiodKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_SperiodKeyTyped
+
+    private void xButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_xButtonActionPerformed
+
+    private void OcoefKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_OcoefKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_OcoefKeyTyped
  
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -485,6 +730,13 @@ public class PropertiesDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField Ocoef;
+    private javax.swing.JPanel OpropertiesPanel;
+    private javax.swing.JFormattedTextField Slikelihood;
+    private javax.swing.JFormattedTextField Speriod;
+    private javax.swing.JPanel SpropertiesPanel;
+    private javax.swing.JComboBox<String> Swork;
+    private javax.swing.JPanel VpropertiesPanel;
     private javax.swing.JButton addInInList;
     private javax.swing.JButton addInOutList;
     private javax.swing.JButton cancelPropBut;
@@ -492,10 +744,17 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JPanel codeTPanel;
     private java.awt.TextField codeTextField;
     private java.awt.TextField descriptionTextField;
+    private javax.swing.JRadioButton expButton;
     private javax.swing.JList<String> inItems;
     private java.awt.Label inVariableLabel;
     private javax.swing.JScrollPane inVariableList;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private java.awt.Label label6;
+    private javax.swing.JRadioButton logButton;
     private javax.swing.JTabbedPane mainBodyTabbedPanel;
     private javax.swing.JPanel mainPanel;
     private java.awt.Label nameLabel;
@@ -503,9 +762,13 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JList<String> outItems;
     private java.awt.Label outVariableLabel;
     private javax.swing.JScrollPane outVariableList;
+    private javax.swing.ButtonGroup properties;
     private javax.swing.JButton removeFromInList;
     private javax.swing.JButton removeFromOutList;
     private javax.swing.JButton savePropBut;
+    private javax.swing.JRadioButton stepButton;
     private javax.swing.JPanel variablePanel;
+    private javax.swing.JRadioButton xButton;
+    private javax.swing.JRadioButton xlogButton;
     // End of variables declaration//GEN-END:variables
 }

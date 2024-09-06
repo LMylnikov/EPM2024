@@ -5,15 +5,16 @@ import java.util.ArrayList;
 public class subObjIF {
     private String linkedInR; //в теории только по одной фигуре на вход и выход да/нет, так что просто сттроки
     private String linkedOutTrueR;
+    private String linkedOutFalseNV;
     private String linkedOutFalseV;
-    
+   
     private String nameIF;
     
     public subObjIF(String name){ //стандартный генератор с прикреплением имени
         nameIF = name;
     }
     public boolean isCorrect(){ // если нет одного из элементов if не имеет смысла
-        if (linkedOutFalseV == null || linkedOutTrueR == null || linkedInR == null){
+        if ((linkedOutFalseV == null && linkedOutFalseNV == null) || linkedOutTrueR == null || linkedInR == null){
             return false;
         }
         return true;
@@ -23,6 +24,12 @@ public class subObjIF {
     }
     public void setLinkedOutTrueR(String rLink){
         linkedOutTrueR = rLink;
+    }
+     public void setLinkedOutFalseNV(String nvLink){
+        linkedOutFalseNV = nvLink;
+    }
+    public String getLinkedOutFalseNV(){
+        return linkedOutFalseNV;
     }
     public void setLinkedOutFalseV(String vLink){
         linkedOutFalseV = vLink;

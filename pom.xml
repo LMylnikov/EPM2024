@@ -9,10 +9,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
-        <exec.mainClass>EPM.mavenproject1.Mavenproject1</exec.mainClass>
+        <exec.mainClass>MDI</exec.mainClass>
     </properties>
     
-    <name>EPM main</name>
+    <name>EdPM</name>
+
     
     <repositories>
         <repository>
@@ -45,6 +46,49 @@
             <directory>src/main/java</directory>
         </resource>
      </resources>
+     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>mdi</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>mdi</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+                
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+
+      
+      
+    </plugins>
     </build>
 
 </project>

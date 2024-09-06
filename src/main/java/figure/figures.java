@@ -21,6 +21,14 @@ public class figures extends JComponent {
     ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
     ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
     String codeF; // Код фигуры
+    
+    String likelihood = "0,5";//вероятность для S
+    String period = "5";//период для S
+    int SWorkIndex;//отметка выбора вида работы для S
+    
+    String coef;//коэффициент эффективности для О
+    
+    String vSelected;//отметка выбора сложности для V
 
     static AtomicInteger nextId = new AtomicInteger();
     static int id;
@@ -141,5 +149,43 @@ public class figures extends JComponent {
 
     public void idChange() {
         id = nextId.getAndAdd(-nextId.get());
+    }
+    
+    public void setCoef(String coef) {
+        this.coef = coef;
+    }
+
+    public String getCoef() {
+        return coef;
+    }
+    
+    public void setLikelihood(String likelihood) {
+        this.likelihood = likelihood;
+    }
+
+    public String getLikelihood() {
+        return likelihood;
+    }
+    
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+    
+    public void setSwork(int SWorkIndex) {
+        this.SWorkIndex = SWorkIndex;
+    }
+
+    public int getSwork() {
+        return SWorkIndex;
+    }
+    public void setVSelected(String newSel){
+        vSelected = newSel;
+    }
+    public String getVSelected(){
+        return vSelected;
     }
 }

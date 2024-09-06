@@ -21,30 +21,46 @@ public class generatorObj {
         curLines = curObj.getCurrentLine();
     }
 
+    //Функции для генерации строк каждого элемента
+    public String nVStringGenerator(subObjNV objNV){
+        String subString = objNV.getName() + " = ";
+        subString += generateStringFromSubArray(objNV.getArrayLinkedR());
+        return subString;
+    }
+    public String rStringGenerator(subObjR objR){
+        String subString = objR.getName() + " = ";
+        boolean isEmpty = true; //для проверки наличия записи в R, иначе не будем добавлять в общую запись
+        for (String connectedV: objR.getArrayLinkedV()){
+            subObjV objV = findVObjByName(connectedV);
+            if (objV == null){
+                return "FATALERROR";
+            }
+            if (objV.isEmpty()){
+                return "FATALERROR";
+            }
+            isEmpty = false;
+            subString+=generateVFunction(objV);
+        }          
+        if (isEmpty){
+            return "FATALERROR";
+        }
+        return subString;
+    }
+    
+    
+    
+    
     public String generateString(){
         linkHandler();
         String globalResult = "";
         for (subObjNV objNV:arrayNVs){ //Обработка всех NV объектов и их связей
-            String subString = objNV.getName() + " = ";
-            subString += generateStringFromSubArray(objNV.getArrayLinkedR());
+            String subString = nVStringGenerator(objNV);
             globalResult+=subString+"\n";
         }
         
         for (subObjR objR:arrayRs){ //обработка всех R связей
-            String subString = objR.getName() + " = ";
-            boolean isEmpty = true; //для проверки наличия записи в R, иначе не будем добавлять в общую запись
-            for (String connectedV: objR.getArrayLinkedV()){
-                subObjV objV = findVObjByName(connectedV);
-                if (objV == null){
-                    continue;
-                }
-                if (objV.isEmpty()){
-                    continue;
-                }
-                isEmpty = false;
-                subString+=generateVFunction(objV);
-            }          
-            if (isEmpty){
+            String subString =  rStringGenerator(objR);
+            if (subString.equals("FATALERROR")){
                 continue;
             }
             globalResult+=subString+"\n";
@@ -54,19 +70,70 @@ public class generatorObj {
                 continue;
             } 
             // do IF(R1) then R2 = R1 else R1 = 
-            String subString = "do " + objIF.getName() + "(" + objIF.getLinkedInR()+") then " 
+            String subString = "do " + objIF.getName() + "(i) then \n i = i + 1"; 
+            ArrayList<String> beforest =findStartOfLine(objIF.getLinkedOutFalseV(),objIF.getName()); // всё что входит в фигуру V
+            subString += createExFigureCode(beforest,"");
+            for (subObjR objR: arrayRs){
+                if (objR.getArrayLinkedV().getFirst().equals(objIF.getLinkedOutFalseV())){ //ищем связанный с V r для уникального обозначения
+                    subObjV objV = findVObjByName(objIF.getLinkedOutFalseV());
+                    objV.AddToSList(objR.getName()); //добавляем в список S наш R. Далее необходимо делать это в другом(склонированном)  V
+                    //убрал лишние проверки
+                    subString+= "\n"+objR.getName() + " = " + generateVFunction(objV);
+                }
+            }
+            subString+="\nelse "+ objIF.getLinkedOutTrueR()+" = "+objIF.getLinkedInR()+" (i)/" +objIF.getLinkedInR() +" (i-1);";
+            
+                    /*    
             + objIF.getLinkedOutTrueR() + " = " + objIF.getLinkedInR() + " else " + objIF.getLinkedInR() + " = " ; 
-            subObjV objV = findVObjByName(objIF.getLinkedOutFalseV());
-            if (objV == null){
+            subObjV objV = findVObjByName(objIF.getLinkedOutFalseV());*/
+            /*if (objV == null){
                 continue;
             }
             if (objV.isEmpty()){
                 continue;
             }
-            subString+=generateVFunction(objV);
+            subString+=generateVFunction(objV);*/
             globalResult+=subString+"\n";
         }
         return globalResult;
+    }
+    private String createExFigureCode( ArrayList<String> startLineNames, String exFiguresString){
+        for (String figName: startLineNames){
+            Figure_s exFindedFig = findFigByName(figName);
+            if (exFindedFig == null){
+                return exFiguresString;
+            }
+            String cShape = exFindedFig.getShape();
+            switch(cShape){
+                case("S1"):
+                    exFiguresString+="\n"+ figName +" = Prob()";
+                    continue;
+                case("R"):
+                    subObjR r = findRObjByName(figName);
+                    if (r == null){
+                        continue;
+                    }
+                    exFiguresString+="\n"+ rStringGenerator(r);
+                    break;
+                case("NV"):
+                    exFiguresString+="\n"+ nVStringGenerator(findNVObjByName(figName));
+                    break;
+            }
+            createExFigureCode(findStartOfLine(figName,""),exFiguresString);        
+        }
+        return exFiguresString;
+    }
+    private ArrayList<String> findStartOfLine(String endOfLine,String iskluchenia){
+        ArrayList<String> allLinks = new ArrayList<String>();
+        for (Line_s line: curLines){
+            if (line.GetID2().equals(endOfLine)){
+                if (line.GetID1().equals(iskluchenia)){
+                    continue;
+                }
+                allLinks.add(line.GetID1());
+            }
+        }
+        return allLinks;
     }
     
     //Сосздание суммы любой фигуры, типа R + R1 ,  O + O1 для удобства
