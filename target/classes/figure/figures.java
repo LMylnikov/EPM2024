@@ -1,5 +1,6 @@
 package figure;
 
+import jMDIForm.jMDIFrame;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -146,7 +147,7 @@ public class figures extends JComponent {
     public void setRec(Rectangle2D rec) {
         this.rec = rec;
     }
-
+    
     public void idChange() {
         id = nextId.getAndAdd(-nextId.get());
     }

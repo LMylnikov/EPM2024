@@ -85,6 +85,7 @@ jMDIForm\jMDIFrame$5.class
 properties\PropertiesDialog$4.class
 properties\PropertiesDialog$20.class
 EPM\mdi$27.class
+EPM\mdi$47.class
 EPM\mdi$35.class
 JGraphFrame\Panelka.class
 EPM\mdi$15.class
@@ -111,6 +112,8 @@ EPM\mdi$42.class
 jMDIForm\PropertiesDialog$19.class
 jMDIForm\PropertiesDialog$7.class
 properties\PropertiesDialog$5.class
+EPM\mdi$48.class
+EPM\mdi$46.class
 properties\PropertiesDialog$3.class
 jMDIForm\FigurePropertiesDialog$1.class
 EPM\mdi$16.class
@@ -128,6 +131,7 @@ jMDIForm\PropertiesDialog$22$1.class
 jMDIForm\readSaveData.class
 figure\points.class
 EPM\mdi$3.class
+EPM\mdi$43.class
 line\Line.class
 jMDIForm\PropertiesDialog$2.class
 EPM\mdi$23.class
@@ -138,11 +142,12 @@ converter\Line_s.class
 EPM\mdi$21.class
 properties\PropertiesDialog.class
 jMDIForm\PropertiesDialog$10.class
-figure\V.class
 line\LineStraight.class
 properties\PropertiesDialog$1.class
 jMDIForm\jMDIFrame$10.class
+EPM\mdi$44.class
 descritGen\subObjR.class
+EPM\mdi$45.class
 properties\PropertiesDialog$17.class
 EPM\mdi$17.class
 EPM\mdi$22.class

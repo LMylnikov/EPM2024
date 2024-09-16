@@ -30,6 +30,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     int SWorkIndex;//выбранный тип работы 0-поток пуассона, 1- периодическая
     int VProperties; // выбранный пункт в V фигуре 0-экспонента, 1-элеиент, 2-1шаг, 3-логарифм, 4-xlog
     
+    
     public PropertiesDialog(java.awt.Frame parent, boolean modal,  figures fig) {
         super(parent, modal);
         initComponents();

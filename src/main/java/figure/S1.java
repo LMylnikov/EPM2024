@@ -1,6 +1,6 @@
 package figure;
 
-import static figure.figures.id;
+import figure.figures;
 import static figure.figures.nextId;
 import java.awt.BasicStroke;
 import java.awt.Color;

@@ -77,7 +77,7 @@ public class jMDIFrame extends JInternalFrame {
     public boolean cleaned = false;//индикатор проведена была очистка или нет
 
     public String fileName = ""; // Имя файла в котором храниться схема
-
+    public int dificult = 0; //Сложность проекта указывается в настройках
     //long thisTimeFirstClick;//начальный замер времени
     GridPanel grid;
 

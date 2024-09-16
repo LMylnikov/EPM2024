@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import javax.accessibility.AccessibleValue;
 //import java.awt.event.MouseEvent;
 //import java.awt.event.MouseMotionListener;
@@ -45,6 +46,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.prefs.Preferences; //для хранения n и i
 
 //import java.sql.Connection;
 //import java.sql.DriverManager;
@@ -64,6 +66,8 @@ public class mdi extends javax.swing.JFrame {
     private static final int FRAME_OFFSET = 20;
     private int c=0; // номер нового создаваемого mdi для вычисления смещения
     private PopupMenu jMDIFrame;
+    public static Preferences prefsMdi = Preferences.userNodeForPackage(mdi.class);
+
     public mdi() {
          try { 
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); 
@@ -126,6 +130,14 @@ public class mdi extends javax.swing.JFrame {
         jColorChooser1 = new javax.swing.JColorChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        SetConstantDialog = new javax.swing.JDialog();
+        OkIBut = new javax.swing.JButton();
+        CancelIBut = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        IValueField = new javax.swing.JFormattedTextField();
+        NValueField = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
         jDesktopPane = new javax.swing.JDesktopPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButtonNew = new javax.swing.JButton();
@@ -161,6 +173,8 @@ public class mdi extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuOptions = new javax.swing.JMenu();
         jMenuItemColorSettings = new javax.swing.JMenuItem();
+        jMenuItemSetI = new javax.swing.JMenuItem();
+        jMenuItemGenerateDesc = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         Cascade = new javax.swing.JMenuItem();
         Tile = new javax.swing.JMenuItem();
@@ -182,7 +196,6 @@ public class mdi extends javax.swing.JFrame {
         jSTextColor.setMaximumSize(new java.awt.Dimension(10, 10));
         jSTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
         jSTextColor.setRequestFocusEnabled(false);
-        jSTextColor.setSize(new java.awt.Dimension(10, 10));
 
         javax.swing.GroupLayout jSTextColorLayout = new javax.swing.GroupLayout(jSTextColor);
         jSTextColor.setLayout(jSTextColorLayout);
@@ -197,7 +210,6 @@ public class mdi extends javax.swing.JFrame {
 
         jVTextColor.setBackground(V.TextColor);
         jVTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jVTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jVTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
         javax.swing.GroupLayout jVTextColorLayout = new javax.swing.GroupLayout(jVTextColor);
@@ -213,7 +225,6 @@ public class mdi extends javax.swing.JFrame {
 
         jNVTextColor.setBackground(NV.TextColor);
         jNVTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jNVTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jNVTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
         javax.swing.GroupLayout jNVTextColorLayout = new javax.swing.GroupLayout(jNVTextColor);
@@ -229,7 +240,6 @@ public class mdi extends javax.swing.JFrame {
 
         jRTextColor.setBackground(R.TextColor);
         jRTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jRTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jRTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
         javax.swing.GroupLayout jRTextColorLayout = new javax.swing.GroupLayout(jRTextColor);
@@ -245,7 +255,6 @@ public class mdi extends javax.swing.JFrame {
 
         jIFTextColor.setBackground(d.TextColor);
         jIFTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jIFTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jIFTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
         javax.swing.GroupLayout jIFTextColorLayout = new javax.swing.GroupLayout(jIFTextColor);
@@ -261,7 +270,6 @@ public class mdi extends javax.swing.JFrame {
 
         jOTextColor.setBackground(O.TextColor);
         jOTextColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jOTextColor.setBounds(new java.awt.Rectangle(0, 0, 10, 10));
         jOTextColor.setPreferredSize(new java.awt.Dimension(25, 25));
 
         javax.swing.GroupLayout jOTextColorLayout = new javax.swing.GroupLayout(jOTextColor);
@@ -353,7 +361,7 @@ public class mdi extends javax.swing.JFrame {
                             .addComponent(jVTextColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jChangeTextColorV, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,7 +390,7 @@ public class mdi extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jOTextColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jChangeTextColorO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Shape filling"));
@@ -682,7 +690,7 @@ public class mdi extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -711,6 +719,88 @@ public class mdi extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
+
+        SetConstantDialog.setMinimumSize(new java.awt.Dimension(180, 150));
+        SetConstantDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        SetConstantDialog.setResizable(false);
+
+        OkIBut.setText("Ok");
+        OkIBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OkIButActionPerformed(evt);
+            }
+        });
+
+        CancelIBut.setText("Cancel");
+        CancelIBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelIButActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("i =");
+
+        jLabel2.setText("Введите значения");
+
+        IValueField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        IValueField.setText("1");
+        IValueField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IValueFieldActionPerformed(evt);
+            }
+        });
+
+        NValueField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        NValueField.setText("1");
+        NValueField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NValueFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("n =");
+
+        javax.swing.GroupLayout SetConstantDialogLayout = new javax.swing.GroupLayout(SetConstantDialog.getContentPane());
+        SetConstantDialog.getContentPane().setLayout(SetConstantDialogLayout);
+        SetConstantDialogLayout.setHorizontalGroup(
+            SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(NValueField)
+                            .addComponent(IValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                        .addComponent(OkIBut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CancelIBut)))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        SetConstantDialogLayout.setVerticalGroup(
+            SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(IValueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NValueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(OkIBut)
+                    .addComponent(CancelIBut))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Times New Roman", 0, 10)); // NOI18N
@@ -1037,6 +1127,22 @@ public class mdi extends javax.swing.JFrame {
             }
         });
         jMenuOptions.add(jMenuItemColorSettings);
+
+        jMenuItemSetI.setText("Option i");
+        jMenuItemSetI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSetIActionPerformed(evt);
+            }
+        });
+        jMenuOptions.add(jMenuItemSetI);
+
+        jMenuItemGenerateDesc.setText("Generate description");
+        jMenuItemGenerateDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGenerateDescActionPerformed(evt);
+            }
+        });
+        jMenuOptions.add(jMenuItemGenerateDesc);
 
         jMenuBar1.add(jMenuOptions);
 
@@ -1476,7 +1582,7 @@ public class mdi extends javax.swing.JFrame {
 
     private void jButtonVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVActionPerformed
         // TODO add your handling code here:
-         JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
+        JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
         try {
             java.lang.reflect.Method method = iFrame.getClass().getDeclaredMethod("VActionPerformed", java.awt.event.ActionEvent.class);
             method.setAccessible(true);
@@ -1701,6 +1807,72 @@ public class mdi extends javax.swing.JFrame {
  
     }//GEN-LAST:event_jChangeColorOActionPerformed
 
+    private void jMenuItemSetIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSetIActionPerformed
+        
+        SetConstantDialog.setVisible(true);
+        SetConstantDialog.setModal(true);
+        SetConstantDialog.setSize(185, 150);
+        SetConstantDialog.setTitle("Set constant value");
+        SetConstantDialog.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
+        String base = "5";
+        try {
+            if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                mdi.prefsMdi.put("IValue", "1");
+            }
+            else{
+                // Узел  существует
+                IValueField.setText( (mdi.prefsMdi.get("IValue", base)));
+            }
+        } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
+            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+            IValueField.setText( "1");
+        }
+        try {
+            if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                mdi.prefsMdi.put("NValue", "1");
+            }
+            else{
+                // Узел  существует
+                NValueField.setText( (mdi.prefsMdi.get("NValue", base)));
+            }
+        } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
+            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+            NValueField.setText( "1");
+        }
+        
+    }//GEN-LAST:event_jMenuItemSetIActionPerformed
+
+    private void jMenuItemGenerateDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGenerateDescActionPerformed
+        JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
+        try {
+            java.lang.reflect.Method method = iFrame.getClass().getDeclaredMethod("GenerateDescription");
+            method.setAccessible(true);
+            method.invoke(iFrame);
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
+            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+    }//GEN-LAST:event_jMenuItemGenerateDescActionPerformed
+
+    private void OkIButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkIButActionPerformed
+        SetConstantDialog.setVisible(false);
+        mdi.prefsMdi.put("IValue",  IValueField.getText());
+        mdi.prefsMdi.put("NValue",  NValueField.getText());
+    }//GEN-LAST:event_OkIButActionPerformed
+
+    private void CancelIButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelIButActionPerformed
+        SetConstantDialog.setVisible(false);        
+    }//GEN-LAST:event_CancelIButActionPerformed
+
+    private void IValueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IValueFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IValueFieldActionPerformed
+
+    private void NValueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NValueFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NValueFieldActionPerformed
+
 //Конец работы Иванова А.А.
     public static void main(String args[]) throws Exception{
         java.awt.EventQueue.invokeLater(new RunnableImpl());
@@ -1708,14 +1880,19 @@ public class mdi extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
+    private javax.swing.JButton CancelIBut;
     private javax.swing.JMenuItem Cascade;
+    private javax.swing.JFormattedTextField IValueField;
     private javax.swing.JOptionPane Info;
+    private javax.swing.JFormattedTextField NValueField;
     private javax.swing.JMenuItem New;
+    private javax.swing.JButton OkIBut;
     private javax.swing.JMenuItem Open;
     private javax.swing.JFileChooser OpenChooser;
     public static javax.swing.JMenuItem Save;
     private javax.swing.JFileChooser SaveChooser;
     public static javax.swing.JMenuItem Saveas;
+    private javax.swing.JDialog SetConstantDialog;
     private javax.swing.JMenuItem Tile;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -1752,6 +1929,9 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JPanel jGridColor;
     private javax.swing.JPanel jIFColor;
     private javax.swing.JPanel jIFTextColor;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -1760,11 +1940,13 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuEdit;
     public static javax.swing.JMenuItem jMenuItemClear;
     public static javax.swing.JMenuItem jMenuItemColorSettings;
+    public static javax.swing.JMenuItem jMenuItemGenerateDesc;
     public static javax.swing.JMenuItem jMenuItemIF;
     public static javax.swing.JMenuItem jMenuItemNV;
     public static javax.swing.JMenuItem jMenuItemO;
     public static javax.swing.JMenuItem jMenuItemR;
     public static javax.swing.JMenuItem jMenuItemS;
+    public static javax.swing.JMenuItem jMenuItemSetI;
     public static javax.swing.JMenuItem jMenuItemV;
     private javax.swing.JMenu jMenuOptions;
     private javax.swing.JPanel jNVColor;

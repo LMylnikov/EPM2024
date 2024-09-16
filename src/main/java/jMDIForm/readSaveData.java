@@ -21,7 +21,7 @@ public class readSaveData {
                 currentFigure.setVSelected(curFigF.getVSelected());
                 break;
             case("R"):
-                currentFigure = new R(x-s/2, y-s/4, s);            
+                currentFigure = new R(x-s/4, y-s/4, s);            
                 break;
             case("S1"):
                 currentFigure = new S1(x, y, s); 
