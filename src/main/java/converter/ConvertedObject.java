@@ -1,7 +1,6 @@
 package converter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import java.util.List;
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

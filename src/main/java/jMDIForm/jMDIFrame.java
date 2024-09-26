@@ -668,7 +668,7 @@ public class jMDIFrame extends JInternalFrame {
                 //если двойной клик открываем окно со свойствами фгуры
                 if (evt.getClickCount() == 2) {
                     String oldName = currentFigure.getNameF();
-                    PropertiesDialog pDialog = new PropertiesDialog(null, true, currentFigure);
+                    PropertiesDialog pDialog = new PropertiesDialog(null, true, currentFigure,all);
                     pDialog.setVisible(true);
                     //изменение названия фигуры в линиях для корректной привязки линий к фигурам
                     for (Line line: lines){
@@ -975,58 +975,11 @@ public class jMDIFrame extends JInternalFrame {
 
     }//GEN-LAST:event_moveobj
 
-    //  private void SaveInDb(ArrayList<figures> all, String saveName) {
-    //      //// код для сохранения всех элементов
-    //
-    //       //с тем же названием нет, пока такой случай не обработан.
-    //       System.out.println("start saving");
-    //       for (figures f : all) { //Перебираем все фигуры и заносим данные в функцию
-    //           Figure_s fig = new Figure_s();
-//
-    //          String gType = f.getClass().toString();
-    //          gType = gType.replace("class figure.", "");
-    //          fig.setX_pos(Integer.toString(f.getXX()));
-    //          fig.setY_pos(Integer.toString(f.getYY()));
-    //          fig.setShape(gType);
-    //          fig.setSize(Integer.toString(f.getSises()));
-    //          fig.setId(Integer.toString(f.getId()));
-//
-    //           //System.out.println(f.getClass().toString() + " ;" + f.getSises() + " , " + f.getXX() + " , " + f.getYY() );
-    //           //        String gX_pos = Integer.toString(f.getXX());
-    //           //        String gY_pos = Integer.toString(f.getYY());
-    //           //        String gSize = Integer.toString(f.getSises());
-    //           //        String gId = Integer.toString(f.getId());
-    //           dbHandler.addFig(saveName, fig/*gX_pos,gY_pos,gType,gSize,gId*/);
-    //       }
-    //       System.out.println("end saving");
-    //   }
-//    private ArrayList<figures> LoadFromDb(ArrayList<figures> all, String saveName) {
-//        DatabaseHandler dbHandler = new DatabaseHandler();
-//        ResultSet resSet = dbHandler.getFigure(saveName);
-//        try {
-//            while (resSet.next()) { //Пробегаемся по всем найденым фигурам
-//                Figure_s fig = new Figure_s();
-//                fig.setX_pos(resSet.getNString(3));
-//                fig.setY_pos(resSet.getNString(4));
-//                fig.setShape(resSet.getNString(5));
-//                fig.setSize(resSet.getNString(6));
-//                readSaveData rs = new readSaveData();
-//                all = rs.getElement(all, fig.getShape(), fig.getX_pos(), fig.getY_pos(), fig.getSize()/*Sshape,Sx,Sy,Ss*/); //Заносим фигуру в список используемых в проекте фигур
-//            }
-//        } catch (SQLException error) {
-//            error.printStackTrace();
-//        }
-//        return all;
-//    }
     public ConvertedObject CreatorConvertObject() {
         // Создаем список для хранения объектов Figure_s
         ArrayList<Figure_s> figuresList = new ArrayList<>();
 
         //Сохранение файла
-        //public void SaveInJSON(String fn) {
-        //   try {
-        // Создаем список для хранения объектов Figure_s
-        //       List<Figure_s> figuresList = new ArrayList<>();
         for (figures f : all) {
             Figure_s fig = new Figure_s();
             String gType = f.getClass().toString();
@@ -1040,16 +993,21 @@ public class jMDIFrame extends JInternalFrame {
             fig.setName(f.getNameF());
             fig.setDescription(f.getDescriptionF());
             fig.setCode(f.getCodeF());
-            fig.setInVariable(f.getInVariable());
-            fig.setOutVariable(f.getOutVariable());
+            fig.setNameNvElement(f.getNameNvElement());
+            fig.setVarNvElement(f.getVarNvElement());
             fig.setSwork(String.valueOf(f.getSwork()));
             fig.setLikelihood(f.getLikelihood());
             fig.setPeriod(f.getPeriod());
             fig.setCoef(f.getCoef());
             fig.setVSelected(f.getVSelected());
+            fig.setIfSelected(f.getIfSelected());
+            fig.setIfNvElement(f.getIfNvElement());
+            fig.setSignIfSelected(f.getSignIfSelected());
+            fig.setCompareNumber(f.getCompareNumber());
             // Добавляем объект Figure_s в список
             figuresList.add(fig);
         }
+        //сохраняем линии
         ArrayList<Line_s> linesList = new ArrayList<>();
         for (Line currentLine : lines) {
             Line_s ln = new Line_s();

@@ -1223,7 +1223,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSetI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Option i"/>
+                <Property name="text" type="java.lang.String" value="Set i and n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemSetIActionPerformed"/>

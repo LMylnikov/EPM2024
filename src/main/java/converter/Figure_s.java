@@ -21,10 +21,10 @@ public class Figure_s {
     private String name; // Имя фигуры
     @JsonProperty("description")
     private String description; // Подробное описание объекта
-    @JsonProperty("inVariable")
-    private ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
-    @JsonProperty("outVariable")
-    private ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
+    @JsonProperty("nameNvElement")
+    private ArrayList<String> nameNvElement = new ArrayList(); // Лист со входными переменными
+    @JsonProperty("varNvElement")
+    private ArrayList<String> varNvElement = new ArrayList(); // Лист с выходными переменными
     @JsonProperty("code")
     private String code; // Код фигуры
     
@@ -38,6 +38,16 @@ public class Figure_s {
     private String SWorkIndex;//отметка выбора вида работы для S
     @JsonProperty("vSelected")
     private String vSelected;
+    @JsonProperty("ifSelected")
+    private int ifSelected; //0-i, 1-nv
+    @JsonProperty("ifNvElement")
+    private String ifNvElement; //выбранная переменная из NV для сравнения
+    @JsonProperty("signIfSelected")
+    private int signIfSelected; //0-< 1-<= 2-= 3->= 4-> 
+    @JsonProperty("compareNumber")
+    private int compareNumber; // Число с которым сравниваем в IF
+
+
 //    @JsonProperty("likelihood")
 //    отметка выбора сложности для V
 
@@ -105,20 +115,20 @@ public class Figure_s {
         return code;
     }
 
-    public void setInVariable(ArrayList<String> inVar) {
-        this.inVariable = inVar;
+    public void setNameNvElement(ArrayList<String> inVar) {
+        this.nameNvElement = inVar;
     }
 
-    public ArrayList<String> getInVariable() {
-        return inVariable;
+    public ArrayList<String> getNameNvElement() {
+        return nameNvElement;
     }
 
-    public void setOutVariable(ArrayList<String> outVar) {
-        this.outVariable = outVar;
+    public void setVarNvElement(ArrayList<String> outVar) {
+        this.varNvElement = outVar;
     }
 
-    public ArrayList<String> getOutVariable() {
-        return outVariable;
+    public ArrayList<String> getVarNvElement() {
+        return varNvElement;
     }
     
     public void setCoef(String coef) {
@@ -158,5 +168,29 @@ public class Figure_s {
 
     public String getVSelected() {
         return vSelected;
+    }
+    public void setSignIfSelected(int var){
+        signIfSelected = var;
+    }
+    public void setIfNvElement(String var){
+        ifNvElement = var;
+    }
+    public void setIfSelected(int var){
+        ifSelected = var;
+    }  
+    public int getSignIfSelected(){
+        return signIfSelected;
+    }
+    public String getIfNvElement(){
+        return ifNvElement;
+    }
+    public int getIfSelected(){
+        return ifSelected;
+    }
+    public int getCompareNumber(){
+        return compareNumber;
+    }
+    public void setCompareNumber(int var){
+        compareNumber = var;
     }
 }

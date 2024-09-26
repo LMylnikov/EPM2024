@@ -690,7 +690,7 @@ public class mdi extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1128,7 +1128,7 @@ public class mdi extends javax.swing.JFrame {
         });
         jMenuOptions.add(jMenuItemColorSettings);
 
-        jMenuItemSetI.setText("Option i");
+        jMenuItemSetI.setText("Set i and n");
         jMenuItemSetI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemSetIActionPerformed(evt);
@@ -1204,8 +1204,6 @@ public class mdi extends javax.swing.JFrame {
         iFrame.setResizable(true);
         iFrame.pack();
         iFrame.setLocation(20*c, 20*c);
-     
-        
         
         jDesktopPane.add(iFrame);
 

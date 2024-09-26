@@ -19,8 +19,8 @@ public class figures extends JComponent {
 
     String nameF; // Имя фигуры
     String descriptionF; // Подробное описание объекта
-    ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
-    ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
+    ArrayList<String> nameNvElement = new ArrayList(); // Лист со входными переменными
+    ArrayList<String> varNvElement = new ArrayList(); // Лист с выходными переменными
     String codeF; // Код фигуры
     
     String likelihood = "0,5";//вероятность для S
@@ -31,8 +31,15 @@ public class figures extends JComponent {
     
     String vSelected;//отметка выбора сложности для V
 
+    int ifSelected = 0; //0-i, 1-nv
+    String ifNvElement; //выбранная переменная из NV для сравнения
+    int signIfSelected = 0; //0-< 1-<= 2-= 3->= 4-> 
+    int compareNumber = 0; // Число с которым сравниваем в IF
+    
     static AtomicInteger nextId = new AtomicInteger();
     static int id;
+    
+    
 
     //static public boolean doubleCl = false;    
     public figures() {
@@ -116,20 +123,20 @@ public class figures extends JComponent {
         return descriptionF;
     }
 
-    public void setInVariable(ArrayList<String> inVariable) {
-        this.inVariable = inVariable;
+    public void setNameNvElement(ArrayList<String> nameNvElement) {
+        this.nameNvElement = nameNvElement;
     }
 
-    public ArrayList<String> getInVariable() {
-        return inVariable;
+    public ArrayList<String> getNameNvElement() {
+        return nameNvElement;
     }
 
-    public void setOutVariable(ArrayList<String> outVariable) {
-        this.outVariable = outVariable;
+    public void setVarNvElement(ArrayList<String> varNvElement) {
+        this.varNvElement = varNvElement;
     }
 
-    public ArrayList<String> getOutVariable() {
-        return outVariable;
+    public ArrayList<String> getVarNvElement() {
+        return varNvElement;
     }
 
     public void setCodeF(String codeF) {
@@ -188,5 +195,29 @@ public class figures extends JComponent {
     }
     public String getVSelected(){
         return vSelected;
+    }
+    public void setSignIfSelected(int var){
+        signIfSelected = var;
+    }
+    public void setIfNvElement(String var){
+        ifNvElement = var;
+    }
+    public void setIfSelected(int var){
+        ifSelected = var;
+    }  
+    public int getSignIfSelected(){
+        return signIfSelected;
+    }
+    public String getIfNvElement(){
+        return ifNvElement;
+    }
+    public int getIfSelected(){
+        return ifSelected;
+    }
+    public int getCompareNumber(){
+        return compareNumber;
+    }
+    public void setCompareNumber(int var){
+        compareNumber = var;
     }
 }

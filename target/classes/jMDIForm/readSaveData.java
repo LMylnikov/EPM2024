@@ -15,6 +15,10 @@ public class readSaveData {
         switch(curFigF.getShape()){
             case("d"):
                 currentFigure = new d(x-s/2, y-s/4, s); 
+                currentFigure.setIfNvElement(curFigF.getIfNvElement());
+                currentFigure.setIfSelected(curFigF.getIfSelected());
+                currentFigure.setSignIfSelected(curFigF.getSignIfSelected());
+                currentFigure.setCompareNumber(curFigF.getCompareNumber());
                 break;
             case("V"):
                 currentFigure = new V(x-s/4, y-s/4, s); 
@@ -46,8 +50,8 @@ public class readSaveData {
         currentFigure.setVisible(true);
         currentFigure.setNameF(curFigF.getName());
         currentFigure.setDescriptionF(curFigF.getDescription());
-        currentFigure.setInVariable(curFigF.getInVariable());
-        currentFigure.setOutVariable(curFigF.getOutVariable());
+        currentFigure.setNameNvElement(curFigF.getNameNvElement());
+        currentFigure.setVarNvElement(curFigF.getVarNvElement());
         currentFigure.setCodeF(curFigF.getCode());
         return currentFigure;
 //        list.add(currentFigure);

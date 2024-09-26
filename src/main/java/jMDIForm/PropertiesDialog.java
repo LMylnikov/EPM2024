@@ -5,53 +5,59 @@ import java.awt.Dialog;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import org.w3c.dom.NameList;
 
 public class PropertiesDialog extends javax.swing.JDialog {
 
-    private DefaultListModel<String> listModelInn; //для отображения списка входных переменных
-    private DefaultListModel<String> listModelOut; //для отображения списка входных переменных
+    private DefaultListModel<String> listModelName = new DefaultListModel<>(); //для отображения списка Имен переменных NV
+    private DefaultListModel<String> listModelNumber = new DefaultListModel<>(); //для отображения списка Занчений переменныъх NV
     int delIndIn = -1; //Индекс для удаления
     int delIndOut = -1; //Индекс для удаления
     Point2D p; //текущая точка
     String typeAdd; //in или out;
     figures figOnWork; //текущая фигура
-    public ArrayList<String> saveInVariable = new ArrayList(); // Лист со входными переменными для сохранения
-    public ArrayList<String> saveOutVariable = new ArrayList(); // Лист с выходными переменными для сохранения
-    
+    String curShape;//текущий тип фигуры
+    public ArrayList<String> nameNvEl = new ArrayList(); // Лист со входными переменными для сохранения
+    public ArrayList<String> varNvEl = new ArrayList(); // Лист с выходными переменными для сохранения
+    private ArrayList<figures> curFig;
     int SWorkIndex;//выбранный тип работы 0-поток пуассона, 1- периодическая
     int VProperties; // выбранный пункт в V фигуре 0-экспонента, 1-элеиент, 2-1шаг, 3-логарифм, 4-xlog
     
     
-    public PropertiesDialog(java.awt.Frame parent, boolean modal,  figures fig) {
+    public PropertiesDialog(java.awt.Frame parent, boolean modal,  figures fig, ArrayList<figures> allFigures) {
         super(parent, modal);
         initComponents();
-        listModelInn = new DefaultListModel<>(); //лист модел для вход переменных
-        inItems.setModel(listModelInn); //привязываем лист входных эл и лист модел
         
-        listModelOut = new DefaultListModel<>(); //лист модел для выход переменных
-        outItems.setModel(listModelOut); //привязываем лист выходных эл и лист модел
-        
+        curFig = allFigures;
+        nameListOfEl.setModel(listModelName); //привязываем лист имен переменных NV и лист модел      
+        varListOfEl.setModel(listModelNumber); //привязываем лист Занчений переменныъх NV и лист модел
         figOnWork = fig; //Связываем оригинальную и вспомогательную фигуру-копию
-        saveInVariable = figOnWork.getInVariable();
-        saveOutVariable = figOnWork.getOutVariable();
+        curShape = fig.getClass().toString().replace("class figure.", "");
+        nameNvEl = getArray(figOnWork.getNameNvElement());
+        varNvEl = getArray(figOnWork.getVarNvElement());
         // Заполняем поля от фигуры
         this.setTitle(fig.getNameF()); // Устанавливаем заголовок как имя объекта
         nameTextField.setText(fig.getNameF()); //устанавливаем имя фигуры
         descriptionTextField.setText(fig.getDescriptionF());   //устанавливаем описание фигуры
         
+        //установка s параметров
         Swork.setSelectedIndex(fig.getSwork());
         SWorkIndex = Swork.getSelectedIndex();
+        
         mainBodyTabbedPanel.addTab("Основные",mainPanel); // добавление нужных окон делаем через этот метод
-        switch (fig.getClass().toString().replace("class figure.", "")) {//устанавливаем спец свойства
+        switch (curShape) {//устанавливаем спец свойства
             case "S1":
                 mainBodyTabbedPanel.addTab("Свойства S",SpropertiesPanel); // добавление нужных окон делаем через этот метод
                 if (SWorkIndex == 0) {
@@ -78,20 +84,51 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 mainBodyTabbedPanel.addTab("Свойства O",OpropertiesPanel); // добавление нужных окон делаем через этот метод
                 Ocoef.setText(fig.getCoef());//утсанавливаем значение коэффициента эффективности
                 break;
+            case "d":
+                ArrayList<String> newAr = new ArrayList<String>(); //Обновление выпадающего списка с названиями переменных NV для IF
+                for (figures s : curFig){
+                    if (s.getNameNvElement().size()!=0){
+                        for (String el:s.getNameNvElement()){
+                            newAr.add(el) ;
+                        }
+                    }
+                }
+                nvComboBox.setModel(new DefaultComboBoxModel<>(newAr.toArray(new String[0])));
+                
+                mainBodyTabbedPanel.addTab("Свойства IF", IfPropertiesPanel);
+                if (fig.getIfSelected() == 0){
+                    selectI.setSelected(true);
+                }else{
+                    selectNV.setSelected(true);
+                }
+                compareNumberField.setText(String.valueOf(fig.getCompareNumber()));
+                signComboBox.setSelectedIndex(fig.getSignIfSelected());
+                
+                nvComboBox.setSelectedItem(figOnWork.getIfNvElement());
+                break;
+            case "NV":
+                mainBodyTabbedPanel.addTab("Свойства NV",nvPropertiesPanel);
+                break;
         }
         
         
         codeTextField.setText(fig.getCodeF()); // Установка текста кода фигуры
         // Заполняем списки переменными фигуры
-        for (String inVar : saveInVariable){ 
-            listModelInn.addElement(inVar);
+        for (String inVar : nameNvEl){ 
+            listModelName.addElement(inVar);
         }
-        for (String outVar : saveOutVariable){
-            listModelOut.addElement(outVar);
+        for (String outVar : varNvEl){
+            listModelNumber.addElement(outVar);
         }   
-        addInInList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "none");
+        addNvButton.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "none"); //что это?
     }
-
+    private ArrayList<String> getArray(ArrayList<String> mas){
+        ArrayList<String> newAr = new ArrayList<String>();
+        for (String el : mas){
+            newAr.add(el);
+        }
+        return newAr;
+    }
     private PropertiesDialog(JFrame jFrame, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -100,6 +137,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         properties = new javax.swing.ButtonGroup();
+        ifProp = new javax.swing.ButtonGroup();
         SpropertiesPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         Swork = new javax.swing.JComboBox<>();
@@ -115,17 +153,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
         codePanel = new javax.swing.JScrollPane();
         codeTPanel = new javax.swing.JPanel();
         codeTextField = new java.awt.TextField();
-        variablePanel = new javax.swing.JPanel();
-        outVariableLabel = new java.awt.Label();
-        inVariableLabel = new java.awt.Label();
-        inVariableList = new javax.swing.JScrollPane();
-        inItems = new javax.swing.JList<>();
-        outVariableList = new javax.swing.JScrollPane();
-        outItems = new javax.swing.JList<>();
-        addInInList = new javax.swing.JButton();
-        removeFromInList = new javax.swing.JButton();
-        addInOutList = new javax.swing.JButton();
-        removeFromOutList = new javax.swing.JButton();
         VpropertiesPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         expButton = new javax.swing.JRadioButton();
@@ -136,6 +163,32 @@ public class PropertiesDialog extends javax.swing.JDialog {
         OpropertiesPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         Ocoef = new javax.swing.JFormattedTextField();
+        IfPropertiesPanel = new javax.swing.JPanel();
+        selectI = new javax.swing.JRadioButton();
+        selectNV = new javax.swing.JRadioButton();
+        nvComboBox = new javax.swing.JComboBox<>();
+        signComboBox = new javax.swing.JComboBox<>();
+        compareNumberField = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        nvPropertiesPanel = new javax.swing.JPanel();
+        nameOfEl = new javax.swing.JScrollPane();
+        nameListOfEl = new javax.swing.JList<>();
+        varOfEl = new javax.swing.JScrollPane();
+        varListOfEl = new javax.swing.JList<>();
+        addNvButton = new javax.swing.JButton();
+        deleteNvButton = new javax.swing.JButton();
+        editNvButton = new javax.swing.JButton();
+        changeNvelement = new javax.swing.JDialog();
+        labelStandart = new javax.swing.JLabel();
+        varField = new javax.swing.JFormattedTextField();
+        nameField = new javax.swing.JTextField();
+        nameOfElDefault = new javax.swing.JLabel();
+        SaveNv = new javax.swing.JButton();
+        BackNv = new javax.swing.JButton();
+        labelStandart1 = new javax.swing.JLabel();
         mainBodyTabbedPanel = new javax.swing.JTabbedPane();
         cancelPropBut = new javax.swing.JButton();
         savePropBut = new javax.swing.JButton();
@@ -320,113 +373,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
 
         codePanel.setViewportView(codeTPanel);
 
-        outVariableLabel.setText("Выходные");
-
-        inVariableLabel.setText("Входные");
-
-        inItems.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inItemsMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                inItemsMousePressed(evt);
-            }
-        });
-        inVariableList.setViewportView(inItems);
-
-        outItems.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                outItemsMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                outItemsMousePressed(evt);
-            }
-        });
-        outVariableList.setViewportView(outItems);
-
-        addInInList.setBackground(new java.awt.Color(204, 255, 204));
-        addInInList.setText("Add");
-        addInInList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addInInListActionPerformed(evt);
-            }
-        });
-
-        removeFromInList.setBackground(new java.awt.Color(255, 204, 204));
-        removeFromInList.setText("Del");
-        removeFromInList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeFromInListActionPerformed(evt);
-            }
-        });
-
-        addInOutList.setBackground(new java.awt.Color(204, 255, 204));
-        addInOutList.setText("Add");
-        addInOutList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addInOutListActionPerformed(evt);
-            }
-        });
-
-        removeFromOutList.setBackground(new java.awt.Color(255, 204, 204));
-        removeFromOutList.setText("Del");
-        removeFromOutList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeFromOutListActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout variablePanelLayout = new javax.swing.GroupLayout(variablePanel);
-        variablePanel.setLayout(variablePanelLayout);
-        variablePanelLayout.setHorizontalGroup(
-            variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(variablePanelLayout.createSequentialGroup()
-                .addGroup(variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(variablePanelLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(removeFromInList, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(addInInList, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(variablePanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inVariableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inVariableList, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(variablePanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(variablePanelLayout.createSequentialGroup()
-                                .addComponent(outVariableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(outVariableList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, variablePanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(removeFromOutList, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(addInOutList, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))))
-        );
-        variablePanelLayout.setVerticalGroup(
-            variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(variablePanelLayout.createSequentialGroup()
-                .addGroup(variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(outVariableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inVariableLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(inVariableList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(outVariableList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(variablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addInOutList)
-                    .addComponent(removeFromOutList)
-                    .addComponent(addInInList)
-                    .addComponent(removeFromInList))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
         VpropertiesPanel.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
@@ -529,6 +475,293 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 .addContainerGap(136, Short.MAX_VALUE))
         );
 
+        ifProp.add(selectI);
+        selectI.setSelected(true);
+        selectI.setText("i");
+
+        ifProp.add(selectNV);
+        selectNV.setText("NV");
+        selectNV.setToolTipText("");
+        selectNV.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                selectNVStateChanged(evt);
+            }
+        });
+        selectNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectNVActionPerformed(evt);
+            }
+        });
+
+        nvComboBox.setEnabled(false);
+        nvComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                nvComboBoxItemStateChanged(evt);
+            }
+        });
+        nvComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nvComboBoxActionPerformed(evt);
+            }
+        });
+
+        signComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<", "<=", "=", ">=", ">" }));
+        signComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signComboBoxActionPerformed(evt);
+            }
+        });
+
+        compareNumberField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        compareNumberField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compareNumberFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Условие");
+
+        jLabel4.setText("переменная");
+
+        jLabel6.setText("знак");
+
+        jLabel7.setText("число");
+
+        javax.swing.GroupLayout IfPropertiesPanelLayout = new javax.swing.GroupLayout(IfPropertiesPanel);
+        IfPropertiesPanel.setLayout(IfPropertiesPanelLayout);
+        IfPropertiesPanelLayout.setHorizontalGroup(
+            IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                        .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(selectI)
+                            .addComponent(jLabel4)
+                            .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                                .addComponent(selectNV)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nvComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(jLabel6)
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel7)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(signComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(compareNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
+        );
+        IfPropertiesPanelLayout.setVerticalGroup(
+            IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(selectI)
+                            .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(signComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(compareNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(selectNV)
+                            .addComponent(nvComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(IfPropertiesPanelLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        nameOfEl.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                nameOfElHierarchyChanged(evt);
+            }
+        });
+
+        nameListOfEl.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        nameListOfEl.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        nameListOfEl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                nameListOfElMousePressed(evt);
+            }
+        });
+        nameListOfEl.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                nameListOfElPropertyChange(evt);
+            }
+        });
+        nameListOfEl.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                nameListOfElValueChanged(evt);
+            }
+        });
+        nameOfEl.setViewportView(nameListOfEl);
+
+        varListOfEl.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        varListOfEl.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        varListOfEl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                varListOfElMousePressed(evt);
+            }
+        });
+        varListOfEl.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                varListOfElValueChanged(evt);
+            }
+        });
+        varOfEl.setViewportView(varListOfEl);
+
+        addNvButton.setText("Add");
+        addNvButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNvButtonActionPerformed(evt);
+            }
+        });
+
+        deleteNvButton.setText("Delete");
+        deleteNvButton.setEnabled(false);
+        deleteNvButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteNvButtonActionPerformed(evt);
+            }
+        });
+
+        editNvButton.setText("Edit");
+        editNvButton.setEnabled(false);
+        editNvButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editNvButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout nvPropertiesPanelLayout = new javax.swing.GroupLayout(nvPropertiesPanel);
+        nvPropertiesPanel.setLayout(nvPropertiesPanelLayout);
+        nvPropertiesPanelLayout.setHorizontalGroup(
+            nvPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nvPropertiesPanelLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(nvPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(nvPropertiesPanelLayout.createSequentialGroup()
+                        .addComponent(addNvButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteNvButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nameOfEl, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(nvPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(varOfEl, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                    .addComponent(editNvButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        nvPropertiesPanelLayout.setVerticalGroup(
+            nvPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(nvPropertiesPanelLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(nvPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(varOfEl, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                    .addComponent(nameOfEl))
+                .addGap(18, 18, 18)
+                .addGroup(nvPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addNvButton)
+                    .addComponent(deleteNvButton)
+                    .addComponent(editNvButton))
+                .addContainerGap())
+        );
+
+        labelStandart.setText("Имя переменной");
+
+        varField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        varField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                varFieldActionPerformed(evt);
+            }
+        });
+
+        nameField.setText("jTextField1");
+
+        nameOfElDefault.setText("var_nv1231");
+
+        SaveNv.setText("Сохранить");
+        SaveNv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveNvActionPerformed(evt);
+            }
+        });
+
+        BackNv.setText("Отмена");
+
+        labelStandart1.setText("Значение переменной");
+
+        javax.swing.GroupLayout changeNvelementLayout = new javax.swing.GroupLayout(changeNvelement.getContentPane());
+        changeNvelement.getContentPane().setLayout(changeNvelementLayout);
+        changeNvelementLayout.setHorizontalGroup(
+            changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(changeNvelementLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(changeNvelementLayout.createSequentialGroup()
+                        .addGroup(changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(changeNvelementLayout.createSequentialGroup()
+                                .addComponent(labelStandart)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nameOfElDefault))
+                            .addGroup(changeNvelementLayout.createSequentialGroup()
+                                .addComponent(labelStandart1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(varField)
+                            .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, changeNvelementLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(SaveNv)))
+                .addContainerGap())
+            .addGroup(changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(changeNvelementLayout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(BackNv)
+                    .addContainerGap(311, Short.MAX_VALUE)))
+        );
+        changeNvelementLayout.setVerticalGroup(
+            changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(changeNvelementLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelStandart)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameOfElDefault))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(varField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelStandart1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(SaveNv)
+                .addContainerGap())
+            .addGroup(changeNvelementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, changeNvelementLayout.createSequentialGroup()
+                    .addContainerGap(74, Short.MAX_VALUE)
+                    .addComponent(BackNv)
+                    .addContainerGap()))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -556,7 +789,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                .addComponent(mainBodyTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -585,92 +818,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
 //        figOnWork.setCodeF(codeTextField.getText()); //Раньше при закрытии окна сохранялись параметры фигуры, теперь при нажатии на кнопку
 // РАСКОМЕНТИРОВАТЬ ЕСЛИ НУЖНО СОХРАНЕНЕ АВТОМАТИЧЕСКОЕ ПОСЛЕ ЗАКРЫТИЯ ОКНА!
     }//GEN-LAST:event_formWindowClosing
-
-    private void removeFromOutListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromOutListActionPerformed
-        saveOutVariable.remove(delIndOut); //Удаляем элемент с выбранным индексом в фигуре
-        listModelOut.remove(delIndOut); //Удаляем элемент с выбранным индексом в списке
-        delIndOut = -1; //обнуляем индекс
-        removeFromOutList.setEnabled(false);
-    }//GEN-LAST:event_removeFromOutListActionPerformed
-
-    private void addInOutListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInOutListActionPerformed
-        String initialValue = "Y"+ (saveOutVariable.size()+1);
-        //Показываем окно ввода и деактивируем остальные окна
-        String varName = (String) JOptionPane.showInputDialog(null, "Введите название переменной:", "Создание выходной переменной", JOptionPane.PLAIN_MESSAGE, null, null, initialValue);
-        // Проверяем, было ли что-то введено
-        if (!(varName.isEmpty() || varName.length()>=20)) {
-            if (saveOutVariable.contains(varName)){
-                JOptionPane.showMessageDialog(null, "Переменная с таким названием уже существует!");
-            }
-            else{
-                listModelOut.addElement(varName); //добавялем элемент с введённым названием в список вход
-                saveOutVariable.add(varName); //добавялем элемент с введённым названием в фигуру
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Данная длина переменной недоступна.","Ошибка",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_addInOutListActionPerformed
-
-    private void removeFromInListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromInListActionPerformed
-        saveInVariable.remove(delIndIn); //Удаляем элемент с выбранным индексом в фигуре
-        listModelInn.remove(delIndIn); //Удаляем элемент с выбранным индексом в списке
-        delIndIn = -1; //обнуляем индекс
-        removeFromInList.setEnabled(false); //Выключкаем кнопку удаления
-    }//GEN-LAST:event_removeFromInListActionPerformed
-
-    private void addInInListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInInListActionPerformed
-        String initialValue = "X"+ (saveInVariable.size()+1);
-        //Показываем окно ввода и деактивируем остальные окна
-        String varName = (String) JOptionPane.showInputDialog(null, "Введите название переменной:", "Создание входной переменной", JOptionPane.PLAIN_MESSAGE, null, null, initialValue);
-        // Проверяем, было ли что-то введено
-        if (!(varName.isEmpty() || varName.length()>=20)) {
-            if (saveInVariable.contains(varName)){
-                JOptionPane.showMessageDialog(null, "Переменная с таким названием уже существует!");
-            }
-            else{
-                listModelInn.addElement(varName); //добавялем элемент с введённым названием в список вход
-                saveInVariable.add(varName); //добавялем элемент с введённым названием в фигуру
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Данная длина переменной недоступна.","Ошибка",JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_addInInListActionPerformed
-
-    private void outItemsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outItemsMousePressed
-        //Выюор элеимента для удаления в списке выход. пер
-        p = evt.getPoint();
-        if (outItems.contains((Point) p) == true){
-            delIndOut = outItems.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
-            if (delIndOut != -1){
-                removeFromOutList.setEnabled(true);
-            }
-            else{
-                removeFromOutList.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_outItemsMousePressed
-
-    private void outItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outItemsMouseClicked
-
-    }//GEN-LAST:event_outItemsMouseClicked
-
-    private void inItemsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inItemsMousePressed
-        //Выюор элеимента для удаления в списке вход. пер
-        p = evt.getPoint();
-        if (inItems.contains((Point) p) == true){
-            delIndIn = inItems.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
-            if (delIndIn != -1){
-                removeFromInList.setEnabled(true);
-            }
-            else{
-                removeFromInList.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_inItemsMousePressed
-
-    private void inItemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inItemsMouseClicked
-
-    }//GEN-LAST:event_inItemsMouseClicked
 
     private void codeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeTextFieldActionPerformed
         // TODO add your handling code here:
@@ -702,24 +849,53 @@ public class PropertiesDialog extends javax.swing.JDialog {
 
     private void savePropButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePropButActionPerformed
         //Сохранение параметров фигуры на кнопку
+        String oldName = figOnWork.getNameF();
         figOnWork.setNameF(nameTextField.getText());
-        figOnWork.setDescriptionF(descriptionTextField.getText());
-        
-        figOnWork.setCodeF(codeTextField.getText());
-        
-        figOnWork.setCoef(Ocoef.getText());
-        
-        figOnWork.setLikelihood(Slikelihood.getText());
-        figOnWork.setPeriod(Speriod.getText());
-        figOnWork.setSwork(Swork.getSelectedIndex());
-        
-        for (Enumeration<AbstractButton> buttons = properties.getElements(); buttons.hasMoreElements();) {
-            AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) {
-                figOnWork.setVSelected(button.getText());
-            }
-        }
 
+        figOnWork.setDescriptionF(descriptionTextField.getText());
+        figOnWork.setCodeF(codeTextField.getText());
+        switch (curShape){
+            case "S1":
+                figOnWork.setLikelihood(Slikelihood.getText());
+                figOnWork.setPeriod(Speriod.getText());
+                figOnWork.setSwork(Swork.getSelectedIndex());
+                break;
+            case "V":
+                for (Enumeration<AbstractButton> buttons = properties.getElements(); buttons.hasMoreElements();) {
+                    AbstractButton button = buttons.nextElement();
+                    if (button.isSelected()) {
+                        figOnWork.setVSelected(button.getText());
+                    }
+                }
+                break;
+            case "O":
+                figOnWork.setCoef(Ocoef.getText());
+                break;
+            case "d":
+                if (selectI.isSelected() == true){ //если выбрана i
+                    figOnWork.setIfSelected(0);
+                }else{ //если выбрана n
+                    figOnWork.setIfSelected(1);
+                    figOnWork.setIfNvElement(nvComboBox.getSelectedItem().toString());
+                }
+                figOnWork.setSignIfSelected(signComboBox.getSelectedIndex());
+                figOnWork.setCompareNumber(Integer.valueOf(compareNumberField.getText()));
+                
+                break;
+            case "NV":
+                if (!oldName.equals(figOnWork.getNameF())){ //меняем имя у всех переменных нв при смене его имени
+                    ArrayList<String> newAr = new ArrayList<String>();
+                    for (String el: nameNvEl){
+                        newAr.add(el.replace("var_"+oldName+"_","var_"+nameTextField.getText()+"_"));
+                    }
+                    figOnWork.setNameNvElement(newAr);
+                }else{
+                    figOnWork.setNameNvElement(nameNvEl);
+                }
+                figOnWork.setVarNvElement(varNvEl);
+                break;
+        }
+        
         this.dispose();
     }//GEN-LAST:event_savePropButActionPerformed
 
@@ -775,6 +951,143 @@ public class PropertiesDialog extends javax.swing.JDialog {
             Speriod.setText("5");
         }
     }//GEN-LAST:event_SworkActionPerformed
+
+    private void signComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signComboBoxActionPerformed
+
+    private void compareNumberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareNumberFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_compareNumberFieldActionPerformed
+
+    private void selectNVStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_selectNVStateChanged
+        if (selectNV.isSelected() == true){
+            nvComboBox.setEnabled(true);
+        } else{
+            nvComboBox.setEnabled(false);
+            nvComboBox.setSelectedIndex(-1);
+        }
+    }//GEN-LAST:event_selectNVStateChanged
+
+    private void nvComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nvComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nvComboBoxActionPerformed
+
+    private void nameListOfElPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_nameListOfElPropertyChange
+        
+    }//GEN-LAST:event_nameListOfElPropertyChange
+    
+    int currentIndex; //Выбранный элемент в элементах NV
+    private void nameListOfElValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_nameListOfElValueChanged
+        currentIndex = nameListOfEl.getSelectedIndex();
+        varListOfEl.setSelectedIndex(currentIndex);
+        deleteNvButton.setText("Delete "+nameListOfEl.getSelectedValue());
+        editNvButton.setText("Edit "+nameListOfEl.getSelectedValue());
+    }//GEN-LAST:event_nameListOfElValueChanged
+
+    private void varListOfElValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_varListOfElValueChanged
+        currentIndex = varListOfEl.getSelectedIndex();
+        nameListOfEl.setSelectedIndex(currentIndex);
+        deleteNvButton.setText("Delete "+nameListOfEl.getSelectedValue());
+        editNvButton.setText("Edit "+nameListOfEl.getSelectedValue());
+    }//GEN-LAST:event_varListOfElValueChanged
+      
+    private void addNvButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNvButtonActionPerformed
+        String initialValue = "var_"+figOnWork.getNameF()+"_";
+        //Показываем окно ввода и деактивируем остальные окна
+        String varName = initialValue + (String) JOptionPane.showInputDialog(null, "Введите название переменной:", "Создание входной переменной", JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(nameNvEl.size()+1));
+        // Проверяем, было ли что-то введено
+        if (!(varName.isEmpty() || varName.length()>=20)) {
+            if (nameNvEl.contains(varName)){
+                JOptionPane.showMessageDialog(null, "Переменная с таким названием уже существует!");
+            }
+            else{
+                listModelName.addElement(varName); //добавялем элемент с введённым названием в список вход
+                nameNvEl.add(varName); //добавялем элемент с введённым названием в фигуру
+                listModelNumber.addElement(String.valueOf("0"));
+                varNvEl.add(String.valueOf("0")); //добавялем элемент с введённым названием в фигуру
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Данная длина переменной недоступна.","Ошибка",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_addNvButtonActionPerformed
+
+    private void deleteNvButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteNvButtonActionPerformed
+        nameNvEl.remove(delIndIn); //Удаляем элемент с выбранным индексом в фигуре
+        listModelName.remove(delIndIn); //Удаляем элемент с выбранным индексом в списке
+        varNvEl.remove(delIndIn); //Удаляем элемент с выбранным индексом в фигуре
+        listModelNumber.remove(delIndIn); //Удаляем элемент с выбранным индексом в списке
+        delIndIn = -1; //обнуляем индекс
+        deleteNvButton.setEnabled(false); //Выключкаем кнопку удаления
+        editNvButton.setEnabled(false); //Выключкаем кнопку удаления
+        deleteNvButton.setText("Delete");
+        editNvButton.setText("Edit");
+    }//GEN-LAST:event_deleteNvButtonActionPerformed
+
+    private void nameListOfElMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameListOfElMousePressed
+        p = evt.getPoint();
+        if (nameListOfEl.contains((Point) p) == true){
+            delIndIn = nameListOfEl.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
+            if (delIndIn != -1){
+                deleteNvButton.setEnabled(true);
+                editNvButton.setEnabled(true);
+            }
+            else{
+                deleteNvButton.setEnabled(false);
+                editNvButton.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_nameListOfElMousePressed
+    
+    private void nameOfElHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_nameOfElHierarchyChanged
+    }//GEN-LAST:event_nameOfElHierarchyChanged
+
+    private void varListOfElMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_varListOfElMousePressed
+        p = evt.getPoint();
+        if (varListOfEl.contains((Point) p) == true){
+            delIndIn = varListOfEl.locationToIndex((Point) p); //проверяем индекс на котором произошло нажатие (можно изменить на клик)
+            if (delIndIn != -1){
+                deleteNvButton.setEnabled(true);
+                editNvButton.setEnabled(true);
+            }
+            else{
+                deleteNvButton.setEnabled(false);
+                editNvButton.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_varListOfElMousePressed
+
+    private void editNvButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editNvButtonActionPerformed
+        String figName = figOnWork.getNameF();
+        nameOfElDefault.setText("var_"+figName+"_");
+        nameField.setText(nameListOfEl.getSelectedValue().replace("var_"+figName+"_",""));
+        varField.setText(varListOfEl.getSelectedValue());
+        changeNvelement.setDefaultCloseOperation(changeNvelement.DISPOSE_ON_CLOSE);
+        changeNvelement.pack();
+        changeNvelement.setModal(true);
+        changeNvelement.setLocationRelativeTo(this);
+        changeNvelement.setVisible(true);
+    }//GEN-LAST:event_editNvButtonActionPerformed
+
+    private void varFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_varFieldActionPerformed
+
+    private void SaveNvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveNvActionPerformed
+        listModelName.set(nameListOfEl.getSelectedIndex(),nameOfElDefault.getText()+nameField.getText());
+        listModelNumber.set(nameListOfEl.getSelectedIndex(),varField.getText());
+        nameNvEl.set(nameListOfEl.getSelectedIndex(),nameOfElDefault.getText()+nameField.getText());
+        varNvEl.set(nameListOfEl.getSelectedIndex(),varField.getText());
+        changeNvelement.dispose();
+    }//GEN-LAST:event_SaveNvActionPerformed
+
+    private void selectNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectNVActionPerformed
+       
+    }//GEN-LAST:event_selectNVActionPerformed
+
+    private void nvComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_nvComboBoxItemStateChanged
+        
+    }//GEN-LAST:event_nvComboBoxItemStateChanged
  
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -792,44 +1105,60 @@ public class PropertiesDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackNv;
+    private javax.swing.JPanel IfPropertiesPanel;
     private javax.swing.JFormattedTextField Ocoef;
     private javax.swing.JPanel OpropertiesPanel;
+    private javax.swing.JButton SaveNv;
     private javax.swing.JFormattedTextField Slikelihood;
     private javax.swing.JFormattedTextField Speriod;
     private javax.swing.JPanel SpropertiesPanel;
     private javax.swing.JComboBox<String> Swork;
     private javax.swing.JPanel VpropertiesPanel;
-    private javax.swing.JButton addInInList;
-    private javax.swing.JButton addInOutList;
+    private javax.swing.JButton addNvButton;
     private javax.swing.JButton cancelPropBut;
+    private javax.swing.JDialog changeNvelement;
     private javax.swing.JScrollPane codePanel;
     private javax.swing.JPanel codeTPanel;
     private java.awt.TextField codeTextField;
+    private javax.swing.JFormattedTextField compareNumberField;
+    private javax.swing.JButton deleteNvButton;
     private java.awt.TextField descriptionTextField;
+    private javax.swing.JButton editNvButton;
     private javax.swing.JRadioButton expButton;
-    private javax.swing.JList<String> inItems;
-    private java.awt.Label inVariableLabel;
-    private javax.swing.JScrollPane inVariableList;
+    private javax.swing.ButtonGroup ifProp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private java.awt.Label label6;
+    private javax.swing.JLabel labelStandart;
+    private javax.swing.JLabel labelStandart1;
     private javax.swing.JRadioButton logButton;
     private javax.swing.JTabbedPane mainBodyTabbedPanel;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTextField nameField;
     private java.awt.Label nameLabel;
+    private javax.swing.JList<String> nameListOfEl;
+    private javax.swing.JScrollPane nameOfEl;
+    private javax.swing.JLabel nameOfElDefault;
     private java.awt.TextField nameTextField;
-    private javax.swing.JList<String> outItems;
-    private java.awt.Label outVariableLabel;
-    private javax.swing.JScrollPane outVariableList;
+    private javax.swing.JComboBox<String> nvComboBox;
+    private javax.swing.JPanel nvPropertiesPanel;
     private javax.swing.JLabel periodLabel;
     private javax.swing.JLabel probabilityLabel;
     private javax.swing.ButtonGroup properties;
-    private javax.swing.JButton removeFromInList;
-    private javax.swing.JButton removeFromOutList;
     private javax.swing.JButton savePropBut;
+    private javax.swing.JRadioButton selectI;
+    private javax.swing.JRadioButton selectNV;
+    private javax.swing.JComboBox<String> signComboBox;
     private javax.swing.JRadioButton stepButton;
-    private javax.swing.JPanel variablePanel;
+    private javax.swing.JFormattedTextField varField;
+    private javax.swing.JList<String> varListOfEl;
+    private javax.swing.JScrollPane varOfEl;
     private javax.swing.JRadioButton xButton;
     private javax.swing.JRadioButton xlogButton;
     // End of variables declaration//GEN-END:variables
