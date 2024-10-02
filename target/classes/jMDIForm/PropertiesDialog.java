@@ -45,20 +45,28 @@ public class PropertiesDialog extends javax.swing.JDialog {
         varListOfEl.setModel(listModelNumber); //привязываем лист Занчений переменныъх NV и лист модел
         figOnWork = fig; //Связываем оригинальную и вспомогательную фигуру-копию
         curShape = fig.getClass().toString().replace("class figure.", "");
+        if (curShape.equals("S1")){
+            curShape = "S";
+        }
+        if(curShape.equals("d")){
+            curShape = "IF";
+        }
+
         nameNvEl = getArray(figOnWork.getNameNvElement());
         varNvEl = getArray(figOnWork.getVarNvElement());
         // Заполняем поля от фигуры
         this.setTitle(fig.getNameF()); // Устанавливаем заголовок как имя объекта
-        nameTextField.setText(fig.getNameF()); //устанавливаем имя фигуры
+        shapeName.setText(curShape); //устанавливаем тип фигуры
+        figuresNimberField.setText(fig.getNameF().replace(curShape,"")); //устанавливаем номер фигуры
+       
         descriptionTextField.setText(fig.getDescriptionF());   //устанавливаем описание фигуры
-        
         //установка s параметров
         Swork.setSelectedIndex(fig.getSwork());
         SWorkIndex = Swork.getSelectedIndex();
         
         mainBodyTabbedPanel.addTab("Основные",mainPanel); // добавление нужных окон делаем через этот метод
         switch (curShape) {//устанавливаем спец свойства
-            case "S1":
+            case "S":
                 mainBodyTabbedPanel.addTab("Свойства S",SpropertiesPanel); // добавление нужных окон делаем через этот метод
                 if (SWorkIndex == 0) {
                     probabilityLabel.setEnabled(true);
@@ -84,7 +92,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 mainBodyTabbedPanel.addTab("Свойства O",OpropertiesPanel); // добавление нужных окон делаем через этот метод
                 Ocoef.setText(fig.getCoef());//утсанавливаем значение коэффициента эффективности
                 break;
-            case "d":
+            case "IF":
                 ArrayList<String> newAr = new ArrayList<String>(); //Обновление выпадающего списка с названиями переменных NV для IF
                 for (figures s : curFig){
                     if (s.getNameNvElement().size()!=0){
@@ -147,9 +155,10 @@ public class PropertiesDialog extends javax.swing.JDialog {
         Speriod = new javax.swing.JFormattedTextField();
         mainPanel = new javax.swing.JPanel();
         descriptionTextField = new java.awt.TextField();
-        nameTextField = new java.awt.TextField();
         nameLabel = new java.awt.Label();
         label6 = new java.awt.Label();
+        figuresNimberField = new javax.swing.JFormattedTextField();
+        shapeName = new javax.swing.JLabel();
         codePanel = new javax.swing.JScrollPane();
         codeTPanel = new javax.swing.JPanel();
         codeTextField = new java.awt.TextField();
@@ -290,33 +299,18 @@ public class PropertiesDialog extends javax.swing.JDialog {
             }
         });
 
-        nameTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                nameTextFieldInputMethodTextChanged(evt);
-            }
-        });
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextFieldActionPerformed(evt);
-            }
-        });
-        nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                nameTextFieldKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                nameTextFieldKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                nameTextFieldKeyTyped(evt);
-            }
-        });
-
         nameLabel.setText("Имя");
 
         label6.setText("Описание");
+
+        figuresNimberField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        figuresNimberField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                figuresNimberFieldActionPerformed(evt);
+            }
+        });
+
+        shapeName.setText("jLabel8");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -327,23 +321,31 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(label6, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                     .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                    .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(shapeName)
+                        .addGap(18, 18, 18)
+                        .addComponent(figuresNimberField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(figuresNimberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(shapeName)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 195, Short.MAX_VALUE))
+                        .addGap(0, 193, Short.MAX_VALUE))
                     .addComponent(descriptionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -566,11 +568,13 @@ public class PropertiesDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(selectI)
-                            .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(signComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(compareNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(compareNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(selectI)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(IfPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(selectNV)
@@ -823,26 +827,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_codeTextFieldActionPerformed
 
-    private void nameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldKeyTyped
-
-    private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
-        this.setTitle(nameTextField.getText()); //Устанавливаем тайтлу окна название фигуры после изменения поля фигуры
-    }//GEN-LAST:event_nameTextFieldKeyReleased
-
-    private void nameTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldKeyPressed
-
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
-    private void nameTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_nameTextFieldInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldInputMethodTextChanged
-
     private void descriptionTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_descriptionTextFieldActionPerformed
@@ -850,12 +834,12 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private void savePropButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePropButActionPerformed
         //Сохранение параметров фигуры на кнопку
         String oldName = figOnWork.getNameF();
-        figOnWork.setNameF(nameTextField.getText());
+        figOnWork.setNameF(curShape+figuresNimberField.getText());
 
         figOnWork.setDescriptionF(descriptionTextField.getText());
         figOnWork.setCodeF(codeTextField.getText());
         switch (curShape){
-            case "S1":
+            case "S":
                 figOnWork.setLikelihood(Slikelihood.getText());
                 figOnWork.setPeriod(Speriod.getText());
                 figOnWork.setSwork(Swork.getSelectedIndex());
@@ -871,22 +855,22 @@ public class PropertiesDialog extends javax.swing.JDialog {
             case "O":
                 figOnWork.setCoef(Ocoef.getText());
                 break;
-            case "d":
+            case "IF": //сохраняем поля IF
                 if (selectI.isSelected() == true){ //если выбрана i
                     figOnWork.setIfSelected(0);
                 }else{ //если выбрана n
                     figOnWork.setIfSelected(1);
                     figOnWork.setIfNvElement(nvComboBox.getSelectedItem().toString());
                 }
-                figOnWork.setSignIfSelected(signComboBox.getSelectedIndex());
-                figOnWork.setCompareNumber(Integer.valueOf(compareNumberField.getText()));
+                figOnWork.setSignIfSelected(signComboBox.getSelectedIndex()); //Выбранный знак сравнения
+                figOnWork.setCompareNumber(Integer.valueOf(compareNumberField.getText())); //Выбранное число для сравнения
                 
                 break;
             case "NV":
                 if (!oldName.equals(figOnWork.getNameF())){ //меняем имя у всех переменных нв при смене его имени
                     ArrayList<String> newAr = new ArrayList<String>();
                     for (String el: nameNvEl){
-                        newAr.add(el.replace("var_"+oldName+"_","var_"+nameTextField.getText()+"_"));
+                        newAr.add(el.replace("var_"+oldName+"_","var_"+curShape+figuresNimberField.getText()+"_"));
                     }
                     figOnWork.setNameNvElement(newAr);
                 }else{
@@ -1088,6 +1072,10 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private void nvComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_nvComboBoxItemStateChanged
         
     }//GEN-LAST:event_nvComboBoxItemStateChanged
+
+    private void figuresNimberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_figuresNimberFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_figuresNimberFieldActionPerformed
  
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1126,6 +1114,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private java.awt.TextField descriptionTextField;
     private javax.swing.JButton editNvButton;
     private javax.swing.JRadioButton expButton;
+    private javax.swing.JFormattedTextField figuresNimberField;
     private javax.swing.ButtonGroup ifProp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -1145,7 +1134,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JList<String> nameListOfEl;
     private javax.swing.JScrollPane nameOfEl;
     private javax.swing.JLabel nameOfElDefault;
-    private java.awt.TextField nameTextField;
     private javax.swing.JComboBox<String> nvComboBox;
     private javax.swing.JPanel nvPropertiesPanel;
     private javax.swing.JLabel periodLabel;
@@ -1154,6 +1142,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JButton savePropBut;
     private javax.swing.JRadioButton selectI;
     private javax.swing.JRadioButton selectNV;
+    private javax.swing.JLabel shapeName;
     private javax.swing.JComboBox<String> signComboBox;
     private javax.swing.JRadioButton stepButton;
     private javax.swing.JFormattedTextField varField;

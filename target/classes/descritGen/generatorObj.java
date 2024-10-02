@@ -87,6 +87,7 @@ public class generatorObj {
            figVtoR = beforeName;
         }
         ArrayList<String> beforest =findStartOfLine(figVtoR,iskluchenia); // всё что входит в фигуру V
+        exFiguresString = "";
         createExFigureCode(beforest);
         subString += exFiguresString;
         for (subObjR objR: arrayRs){
@@ -113,7 +114,7 @@ public class generatorObj {
         if (!withNvType){
            subString += "/" +objIF.getLinkedInR() +" (i-1);";
         }
-        globalResult+=subString+"\n";
+        globalResult+=subString;
         return globalResult;
     }
     
