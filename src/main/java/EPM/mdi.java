@@ -138,6 +138,8 @@ public class mdi extends javax.swing.JFrame {
         IValueField = new javax.swing.JFormattedTextField();
         NValueField = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
+        getGraphics = new javax.swing.JRadioButton();
+        getXESFiles = new javax.swing.JRadioButton();
         jDesktopPane = new javax.swing.JDesktopPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButtonNew = new javax.swing.JButton();
@@ -690,7 +692,7 @@ public class mdi extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -720,7 +722,7 @@ public class mdi extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        SetConstantDialog.setMinimumSize(new java.awt.Dimension(180, 150));
+        SetConstantDialog.setMinimumSize(new java.awt.Dimension(220, 182));
         SetConstantDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         SetConstantDialog.setResizable(false);
 
@@ -760,6 +762,10 @@ public class mdi extends javax.swing.JFrame {
 
         jLabel3.setText("n =");
 
+        getGraphics.setText("Выводить графики");
+
+        getXESFiles.setText("Выгружать результатыв XES");
+
         javax.swing.GroupLayout SetConstantDialogLayout = new javax.swing.GroupLayout(SetConstantDialog.getContentPane());
         SetConstantDialog.getContentPane().setLayout(SetConstantDialogLayout);
         SetConstantDialogLayout.setHorizontalGroup(
@@ -767,20 +773,28 @@ public class mdi extends javax.swing.JFrame {
             .addGroup(SetConstantDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(NValueField)
-                            .addComponent(IValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(NValueField)
+                                    .addComponent(IValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
                         .addComponent(OkIBut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CancelIBut)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CancelIBut)
+                        .addGap(17, 17, 17))
+                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(getXESFiles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(getGraphics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 35, Short.MAX_VALUE))))
         );
         SetConstantDialogLayout.setVerticalGroup(
             SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -796,10 +810,14 @@ public class mdi extends javax.swing.JFrame {
                     .addComponent(NValueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(getGraphics)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(getXESFiles)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(OkIBut)
-                    .addComponent(CancelIBut))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(CancelIBut)
+                    .addComponent(OkIBut))
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1708,8 +1726,8 @@ public class mdi extends javax.swing.JFrame {
         figures.prefs.putInt("NVTextColor", NV.TextColor.getRGB());
         figures.prefs.putInt("RBackgroundColor", R.BackgroundColor.getRGB());
         figures.prefs.putInt("RTextColor", R.TextColor.getRGB());
-        figures.prefs.putInt("RBackgroundColor", O.BackgroundColor.getRGB());
-        figures.prefs.putInt("RTextColor", O.TextColor.getRGB());
+        figures.prefs.putInt("OBackgroundColor", O.BackgroundColor.getRGB());
+        figures.prefs.putInt("OTextColor", O.TextColor.getRGB());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1806,21 +1824,15 @@ public class mdi extends javax.swing.JFrame {
     }//GEN-LAST:event_jChangeColorOActionPerformed
 
     private void jMenuItemSetIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSetIActionPerformed
-        
-        SetConstantDialog.setVisible(true);
-        SetConstantDialog.setModal(true);
-        SetConstantDialog.setSize(185, 150);
-        SetConstantDialog.setTitle("Set constant value");
-        SetConstantDialog.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
         String base = "5";
         try {
             if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
                 // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
-                mdi.prefsMdi.put("IValue", "1");
+                mdi.prefsMdi.put("IValue", "13");
             }
             else{
                 // Узел  существует
-                IValueField.setText( (mdi.prefsMdi.get("IValue", base)));
+                IValueField.setText((mdi.prefsMdi.get("IValue", base)));
             }
         } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
@@ -1829,7 +1841,7 @@ public class mdi extends javax.swing.JFrame {
         try {
             if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
                 // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
-                mdi.prefsMdi.put("NValue", "1");
+                mdi.prefsMdi.put("NValue", "44");
             }
             else{
                 // Узел  существует
@@ -1839,7 +1851,39 @@ public class mdi extends javax.swing.JFrame {
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             NValueField.setText( "1");
         }
+        boolean bs = true;
+        try {
+            if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                mdi.prefsMdi.putBoolean("graphState", false); 
+            }
+            else{
+                // Узел  существует
+                getGraphics.setSelected((mdi.prefsMdi.getBoolean("graphState", bs)));
+            }
+        } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
+            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+            getGraphics.setSelected(false);
+        }
+        try {
+            if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                mdi.prefsMdi.putBoolean("xseState", false);
+            }
+            else{
+                // Узел  существует
+                getXESFiles.setSelected((mdi.prefsMdi.getBoolean("xseState", bs)));
+            }
+        } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
+            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+            getXESFiles.setSelected(false);
+        }
         
+        SetConstantDialog.setVisible(true);
+        SetConstantDialog.setModal(true);
+        SetConstantDialog.setSize(185, 150);
+        SetConstantDialog.setTitle("Set constant value");
+        SetConstantDialog.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
     }//GEN-LAST:event_jMenuItemSetIActionPerformed
 
     private void jMenuItemGenerateDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGenerateDescActionPerformed
@@ -1857,6 +1901,8 @@ public class mdi extends javax.swing.JFrame {
         SetConstantDialog.setVisible(false);
         mdi.prefsMdi.put("IValue",  IValueField.getText());
         mdi.prefsMdi.put("NValue",  NValueField.getText());
+        mdi.prefsMdi.putBoolean("graphState",  getGraphics.isSelected());
+        mdi.prefsMdi.putBoolean("xseState",  getXESFiles.isSelected());
     }//GEN-LAST:event_OkIButActionPerformed
 
     private void CancelIButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelIButActionPerformed
@@ -1892,6 +1938,8 @@ public class mdi extends javax.swing.JFrame {
     public static javax.swing.JMenuItem Saveas;
     private javax.swing.JDialog SetConstantDialog;
     private javax.swing.JMenuItem Tile;
+    private javax.swing.JRadioButton getGraphics;
+    private javax.swing.JRadioButton getXESFiles;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;

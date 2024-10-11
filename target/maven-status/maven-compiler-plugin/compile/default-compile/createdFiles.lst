@@ -65,6 +65,7 @@ jMDIForm\jMDIFrame$17.class
 jMDIForm\jMDIFrame$18.class
 EPM\mdi$34.class
 jMDIForm\jMDIFrame$3.class
+jMDIForm\jMDIFrame$23.class
 EPM\mdi$33.class
 jMDIForm\PropertiesDialog$33$1.class
 jMDIForm\PropertiesDialog$21.class
@@ -76,6 +77,7 @@ jMDIForm\PropertiesDialog$6.class
 EPM\mdi$4.class
 EPM\mdi$RunnableImpl.class
 jMDIForm\FileUtils.class
+rtranslator\RTranslatorClass.class
 jMDIForm\PropertiesDialog$14.class
 jMDIForm\Figure_s.class
 jMDIForm\jMDIFrame$5.class
@@ -118,6 +120,7 @@ jMDIForm\PropertiesDialog$32.class
 EPM\S.class
 jMDIForm\PropertiesDialog$5.class
 EPM\mdi$20.class
+rtranslator\BasicFunctionCode.class
 jMDIForm\readSaveData.class
 figure\points.class
 EPM\mdi$3.class
@@ -144,3 +147,4 @@ point\Arrow.class
 jMDIForm\PropertiesDialog$4.class
 EPM\mdi$5.class
 jMDIForm\jMDIFrame$11.class
+rtranslator\SaveCodeInFileR.class

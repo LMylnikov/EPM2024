@@ -11,6 +11,19 @@ public class subObjV {
     public subObjV(String name){ //стандартный генератор с прикреплением имени
         nameV = name;
     }
+    //генератор для клонирования объекта
+    public subObjV(String name,  ArrayList<String> oldS,  ArrayList<String> oldNvR,  ArrayList<String> oldO){ //стандартный генератор с прикреплением имени
+        nameV = name;
+        for (String el: oldO){
+            arrayLinkedO.add(el);
+        }
+        for (String el: oldS){
+            arrayLinkedS.add(el);
+        }
+        for (String el: oldNvR){
+            arrayLinkedNvR.add(el);
+        }
+    }
     public void AddToNvRList(String vName){
         arrayLinkedNvR.add(vName);
     }

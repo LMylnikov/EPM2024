@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.Collections;
+import rtranslator.RTranslatorClass;
 
 public class jMDIFrame extends JInternalFrame {
 
@@ -107,6 +108,7 @@ public class jMDIFrame extends JInternalFrame {
         textDescription = new javax.swing.JTextArea();
         closeDescrBut = new javax.swing.JButton();
         copyDescrBut = new javax.swing.JButton();
+        rCodeActivatorBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         zminus = new javax.swing.JButton();
@@ -164,6 +166,13 @@ public class jMDIFrame extends JInternalFrame {
             }
         });
 
+        rCodeActivatorBut.setText("Выполнить в R");
+        rCodeActivatorBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rCodeActivatorButActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout descrShowDialogLayout = new javax.swing.GroupLayout(descrShowDialog.getContentPane());
         descrShowDialog.getContentPane().setLayout(descrShowDialogLayout);
         descrShowDialogLayout.setHorizontalGroup(
@@ -171,22 +180,25 @@ public class jMDIFrame extends JInternalFrame {
             .addGroup(descrShowDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                     .addGroup(descrShowDialogLayout.createSequentialGroup()
-                        .addComponent(copyDescrBut, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(closeDescrBut)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(closeDescrBut)))
+                        .addComponent(copyDescrBut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rCodeActivatorBut)))
                 .addContainerGap())
         );
         descrShowDialogLayout.setVerticalGroup(
             descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(descrShowDialogLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(closeDescrBut)
-                    .addComponent(copyDescrBut))
+                    .addComponent(copyDescrBut)
+                    .addComponent(rCodeActivatorBut))
                 .addContainerGap())
         );
 
@@ -1083,7 +1095,6 @@ public class jMDIFrame extends JInternalFrame {
             }
             //if (lines.isEmpty() == false)
             lined = !lines.isEmpty();
-
             jPanel1.add(new GridPanel(GridPanel.GetBaseCellSize()));
             jPanel1.revalidate();
             jPanel1.repaint();
@@ -1652,6 +1663,12 @@ public class jMDIFrame extends JInternalFrame {
         copyToClipboard(textDescription.getText());
     }//GEN-LAST:event_copyDescrButActionPerformed
 
+    private void rCodeActivatorButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rCodeActivatorButActionPerformed
+        //Создание R кода по нашему псевдокоду
+        RTranslatorClass newRTC = new RTranslatorClass();
+        newRTC.addString(textDescription.getText());
+    }//GEN-LAST:event_rCodeActivatorButActionPerformed
+
     private void GenerateDescription() {
         generatorObj genOb = new generatorObj(CreatorConvertObject());
         textDescription.setText(genOb.generateString());
@@ -1760,6 +1777,7 @@ public class jMDIFrame extends JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jSize;
     private javax.swing.JTextField jSize1;
+    private javax.swing.JButton rCodeActivatorBut;
     private javax.swing.JPopupMenu rcMenu;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTextArea textDescription;

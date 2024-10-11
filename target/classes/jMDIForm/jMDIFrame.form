@@ -47,11 +47,13 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="scrollPane" pref="392" max="32767" attributes="0"/>
+                      <Component id="scrollPane" pref="510" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="copyDescrBut" min="-2" pref="211" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="closeDescrBut" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="copyDescrBut" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="rCodeActivatorBut" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -62,11 +64,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="scrollPane" min="-2" pref="265" max="-2" attributes="0"/>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <Component id="scrollPane" pref="257" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="closeDescrBut" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="copyDescrBut" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rCodeActivatorBut" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -104,6 +107,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="copyDescrButActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="rCodeActivatorBut">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x43f;&#x43e;&#x43b;&#x43d;&#x438;&#x442;&#x44c; &#x432; R"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rCodeActivatorButActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

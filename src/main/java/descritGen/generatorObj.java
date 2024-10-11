@@ -76,7 +76,7 @@ public class generatorObj {
         }
         String beforeName = ""; //Имя фигуры,первой выходящей из if
         String figVtoR = ""; //Имя V входяхую в пред IF фигуру R
-        String subString = "do " + objIF.getName() + "(i) then\n"+"    ".repeat(curSpace)+"i = i + 1";
+        String subString = "do " + objIF.getName() + "(i) then\n"+"    ".repeat(curSpace)+"i = i + 1"+ "\n";
         String iskluchenia = objIF.getName(); //имя фигуры входящей в V
         if (withNvType){ //через NV
            beforeName = objIF.getLinkedOutFalseNV();
@@ -94,32 +94,27 @@ public class generatorObj {
             if (objR.getArrayLinkedV().getFirst().equals(figVtoR)){ //ищем связанный с V r для уникального обозначения
                 //клонирование V
                 subObjV originV = findVObjByName(figVtoR); //оригинальная V, которую нельзя менять
-                subObjV objV = new subObjV(figVtoR); //новая фантомная V только для вывода в IF
-                objV.setArrayLinkedS(originV.getArrayLinkedS());
-                objV.setArrayLinkedNvR(originV.getArrayLinkedNvR());
-                objV.setArrayLinkedO(originV.getArrayLinkedO());
-
+                //Клонирование V
+                subObjV objV = new subObjV(figVtoR, originV.getArrayLinkedS(), originV.getArrayLinkedNvR(), originV.getArrayLinkedO()); //новая фантомная V только для вывода в IF
                 if (withNvType){
-                    subString += "\n" + "    ".repeat(curSpace) + beforeName + " = " + objR.getName();
+                    subString +="    ".repeat(curSpace) + beforeName + " = " + objR.getName()+ "\n";
                 }
                 else{
                     objV.AddToSList(objR.getName()); //добавляем в список S наш R. Далее необходимо делать это в другом(склонированном) V
                 }
                 //убрал лишние проверки
-                subString+= "\n"+"    ".repeat(curSpace)+objR.getName() + " = " + generateVFunction(objV);
+                subString+= "    ".repeat(curSpace)+objR.getName() + " = " + generateVFunction(objV)+ "\n";
             }
         }
         curSpace -= 1;
-        subString+="\n"+"    ".repeat(curSpace)+"else "+ objIF.getLinkedOutTrueR()+" = "+objIF.getLinkedInR()+" (i)";
+        subString+="    ".repeat(curSpace)+"else "+ objIF.getLinkedOutTrueR()+" = "+objIF.getLinkedInR()+" (i)";
         if (!withNvType){
            subString += "/" +objIF.getLinkedInR() +" (i-1);";
         }
-        globalResult+=subString;
+        globalResult+=subString+ "\n";
         return globalResult;
     }
-    
-    
-    
+     
     public String generateString(){
         linkHandler();
         String base = "";
@@ -129,11 +124,6 @@ public class generatorObj {
                 globalResult+=sStringGenerator(curFig)+"\n";
             }
         }
-        for (subObjNV objNV:arrayNVs){ //Обработка всех NV объектов и их связей
-            String subString = nVStringGenerator(objNV);
-            globalResult+=subString+"\n";
-        }
-        
         for (subObjR objR:arrayRs){ //обработка всех R связей
             String subString =  rStringGenerator(objR);
             if (subString.equals("FATALERROR")){
@@ -141,6 +131,12 @@ public class generatorObj {
             }
             globalResult+=subString+"\n";
         }
+        for (subObjNV objNV:arrayNVs){ //Обработка всех NV объектов и их связей
+            String subString = nVStringGenerator(objNV);
+            globalResult+=subString+"\n";
+        }
+        
+        
         for (subObjIF objIF:arrayIFs){ //Обработка всех IF объектов и их связей
             if (objIF.isCorrect() == false){ //Проверяем на наличие всех элементов в объекте if
                 continue;
@@ -160,22 +156,22 @@ public class generatorObj {
             String cShape = exFindedFig.getShape();
             switch(cShape){
                 case("S1"):
-                    exFiguresString+="\n"+ "    ".repeat(curSpace) + sStringGenerator(exFindedFig);
+                    exFiguresString+="    ".repeat(curSpace) + sStringGenerator(exFindedFig) + "\n";
                     continue;
                 case("R"):
                     subObjR r = findRObjByName(figName);
                     if (r != null){
-                        exFiguresString+="\n"+"    ".repeat(curSpace)+ rStringGenerator(r);
+                        exFiguresString+="    ".repeat(curSpace)+ rStringGenerator(r) + "\n";
                     }
                     break;
                 case("NV"):
                     subObjNV nv = findNVObjByName(figName);
                     if (nv != null){
-                        exFiguresString+="\n"+"    ".repeat(curSpace)+ nVStringGenerator(nv);
+                        exFiguresString+="    ".repeat(curSpace)+ nVStringGenerator(nv) + "\n";
                     }
                     break;
                 case("d"):
-                    exFiguresString+="\n"+"    ".repeat(curSpace) + ifStringgenerator(findIFObjByName(figName));
+                    exFiguresString+="    ".repeat(curSpace) + ifStringgenerator(findIFObjByName(figName))+ "\n";
                     return;
             }
             ArrayList<String> startOfLine = findStartOfLine(figName,"");
