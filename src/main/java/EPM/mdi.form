@@ -863,10 +863,13 @@
     <Container class="javax.swing.JDialog" name="SetConstantDialog">
       <Properties>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[220, 182]"/>
+          <Dimension value="[210, 221]"/>
         </Property>
         <Property name="modalityType" type="java.awt.Dialog$ModalityType" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="APPLICATION_MODAL"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[200, 230]"/>
         </Property>
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
@@ -877,35 +880,43 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel2" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="OkIBut" min="-2" pref="60" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="CancelIBut" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="17" pref="17" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel3" min="-2" pref="25" max="-2" attributes="0"/>
                                       <Component id="jLabel1" min="-2" pref="25" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="IValueField" max="32767" attributes="0"/>
                                       <Component id="NValueField" max="32767" attributes="0"/>
-                                      <Component id="IValueField" min="-2" pref="113" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel5" min="-2" pref="59" max="-2" attributes="0"/>
+                                      <Component id="idNumLabel" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="startIdNum" max="32767" attributes="0"/>
+                                      <Component id="stepId" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="boxIsXES" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="boxIsPlot" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="OkIBut" min="-2" pref="60" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="CancelIBut" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="getXESFiles" max="32767" attributes="0"/>
-                              <Component id="getGraphics" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -927,10 +938,20 @@
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="getGraphics" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="startIdNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="idNumLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="getXESFiles" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="stepId" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="boxIsPlot" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="boxIsXES" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="CancelIBut" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="OkIBut" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -994,15 +1015,53 @@
             <Property name="text" type="java.lang.String" value="n ="/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="getGraphics">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x432;&#x43e;&#x434;&#x438;&#x442;&#x44c; &#x433;&#x440;&#x430;&#x444;&#x438;&#x43a;&#x438;"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="getXESFiles">
+        <Component class="javax.swing.JCheckBox" name="boxIsXES">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x433;&#x440;&#x443;&#x436;&#x430;&#x442;&#x44c; &#x440;&#x435;&#x437;&#x443;&#x43b;&#x44c;&#x442;&#x430;&#x442;&#x44b;&#x432; XES"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxIsXESActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="boxIsPlot">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x412;&#x44b;&#x432;&#x43e;&#x434;&#x438;&#x442;&#x44c; &#x433;&#x440;&#x430;&#x444;&#x438;&#x43a;&#x438;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxIsPlotActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="idNumLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="ID &#x43d;&#x430;&#x447; &#x437;&#x43d;&#x430;&#x447; ="/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="startIdNum">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+              <Format format="#0" subtype="-1" type="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="1"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startIdNumActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="ID &#x448;&#x430;&#x433; ="/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="stepId">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+              <Format format="#0" subtype="-1" type="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="1"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stepIdActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -1238,7 +1297,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemColorSettings">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Settings ..."/>
+                <Property name="text" type="java.lang.String" value="Set Color"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemColorSettingsActionPerformed"/>
@@ -1249,7 +1308,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSetI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Set i and n"/>
+                <Property name="text" type="java.lang.String" value="Set code properties"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemSetIActionPerformed"/>

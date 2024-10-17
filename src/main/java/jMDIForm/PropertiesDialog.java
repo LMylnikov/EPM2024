@@ -381,6 +381,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
         jLabel1.setText("Сложность алгоритма");
 
         properties.add(expButton);
+        expButton.setSelected(true);
         expButton.setText("Экспонента (exp(x))");
 
         properties.add(xButton);

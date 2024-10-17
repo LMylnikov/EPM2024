@@ -1,5 +1,6 @@
 figure\NV.class
 jMDIForm\jMDIFrame.class
+EPM\mdi$52.class
 descritGen\subObjV.class
 EPM\mdi$1.class
 jMDIForm\PropertiesDialog$3.class
@@ -45,6 +46,7 @@ jMDIForm\PropertiesDialog$15.class
 EPM\mdi$26.class
 EPM\mdi$36.class
 jMDIForm\Gson.class
+EPM\mdi$49.class
 figure\figures.class
 EPM\mdi$29.class
 jMDIForm\jMDIFrame$22.class
@@ -133,6 +135,7 @@ EPM\mdi$6.class
 jMDIForm\PropertiesDialog$33.class
 converter\Line_s.class
 EPM\mdi$21.class
+EPM\mdi$51.class
 jMDIForm\PropertiesDialog$10.class
 jMDIForm\PropertiesDialog$27.class
 line\LineStraight.class
@@ -140,6 +143,7 @@ jMDIForm\jMDIFrame$10.class
 EPM\mdi$44.class
 descritGen\subObjR.class
 EPM\mdi$45.class
+EPM\mdi$50.class
 EPM\mdi$17.class
 EPM\mdi$22.class
 jMDIForm\g2d.class

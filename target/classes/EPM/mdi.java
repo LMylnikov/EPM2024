@@ -138,8 +138,12 @@ public class mdi extends javax.swing.JFrame {
         IValueField = new javax.swing.JFormattedTextField();
         NValueField = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
-        getGraphics = new javax.swing.JRadioButton();
-        getXESFiles = new javax.swing.JRadioButton();
+        boxIsXES = new javax.swing.JCheckBox();
+        boxIsPlot = new javax.swing.JCheckBox();
+        idNumLabel = new javax.swing.JLabel();
+        startIdNum = new javax.swing.JFormattedTextField();
+        jLabel5 = new javax.swing.JLabel();
+        stepId = new javax.swing.JFormattedTextField();
         jDesktopPane = new javax.swing.JDesktopPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButtonNew = new javax.swing.JButton();
@@ -722,8 +726,9 @@ public class mdi extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        SetConstantDialog.setMinimumSize(new java.awt.Dimension(220, 182));
+        SetConstantDialog.setMinimumSize(new java.awt.Dimension(210, 221));
         SetConstantDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        SetConstantDialog.setPreferredSize(new java.awt.Dimension(200, 230));
         SetConstantDialog.setResizable(false);
 
         OkIBut.setText("Ok");
@@ -762,9 +767,39 @@ public class mdi extends javax.swing.JFrame {
 
         jLabel3.setText("n =");
 
-        getGraphics.setText("Выводить графики");
+        boxIsXES.setText("Выгружать результатыв XES");
+        boxIsXES.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxIsXESActionPerformed(evt);
+            }
+        });
 
-        getXESFiles.setText("Выгружать результатыв XES");
+        boxIsPlot.setText("Выводить графики");
+        boxIsPlot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxIsPlotActionPerformed(evt);
+            }
+        });
+
+        idNumLabel.setText("ID нач знач =");
+
+        startIdNum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        startIdNum.setText("1");
+        startIdNum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startIdNumActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("ID шаг =");
+
+        stepId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        stepId.setText("1");
+        stepId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stepIdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout SetConstantDialogLayout = new javax.swing.GroupLayout(SetConstantDialog.getContentPane());
         SetConstantDialog.getContentPane().setLayout(SetConstantDialogLayout);
@@ -773,28 +808,34 @@ public class mdi extends javax.swing.JFrame {
             .addGroup(SetConstantDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(NValueField)
-                                    .addComponent(IValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
                         .addComponent(OkIBut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(CancelIBut)
                         .addGap(17, 17, 17))
-                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(getXESFiles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(getGraphics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 35, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
+                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SetConstantDialogLayout.createSequentialGroup()
+                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(IValueField)
+                                    .addComponent(NValueField)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SetConstantDialogLayout.createSequentialGroup()
+                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(idNumLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(startIdNum)
+                                    .addComponent(stepId)))
+                            .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(boxIsXES)
+                                .addComponent(boxIsPlot)))
+                        .addGap(16, 16, 16))))
         );
         SetConstantDialogLayout.setVerticalGroup(
             SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -810,10 +851,18 @@ public class mdi extends javax.swing.JFrame {
                     .addComponent(NValueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(getGraphics)
+                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(idNumLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(getXESFiles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stepId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(boxIsPlot)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxIsXES)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CancelIBut)
                     .addComponent(OkIBut))
@@ -1138,7 +1187,7 @@ public class mdi extends javax.swing.JFrame {
 
         jMenuOptions.setText("Options");
 
-        jMenuItemColorSettings.setText("Settings ...");
+        jMenuItemColorSettings.setText("Set Color");
         jMenuItemColorSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemColorSettingsActionPerformed(evt);
@@ -1146,7 +1195,7 @@ public class mdi extends javax.swing.JFrame {
         });
         jMenuOptions.add(jMenuItemColorSettings);
 
-        jMenuItemSetI.setText("Set i and n");
+        jMenuItemSetI.setText("Set code properties");
         jMenuItemSetI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemSetIActionPerformed(evt);
@@ -1810,7 +1859,7 @@ public class mdi extends javax.swing.JFrame {
     private void jChangeTextColorOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorOActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         O.TextColor = selectedColor;
-        jIFTextColor.setBackground(selectedColor);
+        jOTextColor.setBackground(selectedColor);
         //figures.prefs.putInt("IFTextColor", selectedColor.getRGB());
         // jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorOActionPerformed
@@ -1818,13 +1867,41 @@ public class mdi extends javax.swing.JFrame {
     private void jChangeColorOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorOActionPerformed
       Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         O.BackgroundColor = selectedColor;
-        jSColor.setBackground(selectedColor);
+        jOColor.setBackground(selectedColor);
         //figures.prefs.putInt("S1BackgroundColor", selectedColor.getRGB());  
  
     }//GEN-LAST:event_jChangeColorOActionPerformed
 
     private void jMenuItemSetIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSetIActionPerformed
         String base = "5";
+        try {
+            if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                mdi.prefsMdi.put("stepId", "13");
+            }
+            else{
+                // Узел  существует
+                stepId.setText((mdi.prefsMdi.get("stepId", base)));
+            }
+        } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
+            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+            stepId.setText( "1");
+        }
+        
+        try {
+            if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
+                // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
+                mdi.prefsMdi.put("startId", "13");
+            }
+            else{
+                // Узел  существует
+                startIdNum.setText((mdi.prefsMdi.get("startId", base)));
+            }
+        } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
+            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+            startIdNum.setText( "1");
+        }
+        
         try {
             if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
                 // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
@@ -1838,6 +1915,7 @@ public class mdi extends javax.swing.JFrame {
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             IValueField.setText( "1");
         }
+        
         try {
             if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
                 // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
@@ -1851,6 +1929,7 @@ public class mdi extends javax.swing.JFrame {
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             NValueField.setText( "1");
         }
+        
         boolean bs = true;
         try {
             if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
@@ -1859,24 +1938,25 @@ public class mdi extends javax.swing.JFrame {
             }
             else{
                 // Узел  существует
-                getGraphics.setSelected((mdi.prefsMdi.getBoolean("graphState", bs)));
+                boxIsPlot.setSelected((mdi.prefsMdi.getBoolean("graphState", bs)));
             }
         } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
-            getGraphics.setSelected(false);
+            boxIsPlot.setSelected(false);
         }
+        
         try {
             if (!mdi.prefsMdi.nodeExists("")) { //пытаемся найти i в figures
                 // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
-                mdi.prefsMdi.putBoolean("xseState", false);
+                mdi.prefsMdi.putBoolean("xesState", false);
             }
             else{
                 // Узел  существует
-                getXESFiles.setSelected((mdi.prefsMdi.getBoolean("xseState", bs)));
+                boxIsXES.setSelected((mdi.prefsMdi.getBoolean("xesState", bs)));
             }
         } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
-            getXESFiles.setSelected(false);
+            boxIsXES.setSelected(false);
         }
         
         SetConstantDialog.setVisible(true);
@@ -1901,8 +1981,10 @@ public class mdi extends javax.swing.JFrame {
         SetConstantDialog.setVisible(false);
         mdi.prefsMdi.put("IValue",  IValueField.getText());
         mdi.prefsMdi.put("NValue",  NValueField.getText());
-        mdi.prefsMdi.putBoolean("graphState",  getGraphics.isSelected());
-        mdi.prefsMdi.putBoolean("xseState",  getXESFiles.isSelected());
+        mdi.prefsMdi.putBoolean("graphState",  boxIsPlot.isSelected());
+        mdi.prefsMdi.putBoolean("xesState",  boxIsXES.isSelected());
+        mdi.prefsMdi.put("startId",  startIdNum.getText());
+        mdi.prefsMdi.put("stepId",  stepId.getText());
     }//GEN-LAST:event_OkIButActionPerformed
 
     private void CancelIButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelIButActionPerformed
@@ -1916,6 +1998,22 @@ public class mdi extends javax.swing.JFrame {
     private void NValueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NValueFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NValueFieldActionPerformed
+
+    private void boxIsXESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxIsXESActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxIsXESActionPerformed
+
+    private void boxIsPlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxIsPlotActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxIsPlotActionPerformed
+
+    private void startIdNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startIdNumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startIdNumActionPerformed
+
+    private void stepIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stepIdActionPerformed
 
 //Конец работы Иванова А.А.
     public static void main(String args[]) throws Exception{
@@ -1938,8 +2036,9 @@ public class mdi extends javax.swing.JFrame {
     public static javax.swing.JMenuItem Saveas;
     private javax.swing.JDialog SetConstantDialog;
     private javax.swing.JMenuItem Tile;
-    private javax.swing.JRadioButton getGraphics;
-    private javax.swing.JRadioButton getXESFiles;
+    private javax.swing.JCheckBox boxIsPlot;
+    private javax.swing.JCheckBox boxIsXES;
+    private javax.swing.JLabel idNumLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
@@ -1978,6 +2077,7 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -2016,6 +2116,8 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JPanel jVColor;
     private javax.swing.JPanel jVTextColor;
     private javax.swing.JMenuItem quit;
+    private javax.swing.JFormattedTextField startIdNum;
+    private javax.swing.JFormattedTextField stepId;
     // End of variables declaration//GEN-END:variables
     
     private static class RunnableImpl implements Runnable {

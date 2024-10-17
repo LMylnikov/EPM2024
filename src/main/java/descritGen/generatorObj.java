@@ -95,7 +95,7 @@ public class generatorObj {
                 //клонирование V
                 subObjV originV = findVObjByName(figVtoR); //оригинальная V, которую нельзя менять
                 //Клонирование V
-                subObjV objV = new subObjV(figVtoR, originV.getArrayLinkedS(), originV.getArrayLinkedNvR(), originV.getArrayLinkedO()); //новая фантомная V только для вывода в IF
+                subObjV objV = new subObjV(figVtoR,originV.getType() , originV.getArrayLinkedS(), originV.getArrayLinkedNvR(), originV.getArrayLinkedO()); //новая фантомная V только для вывода в IF
                 if (withNvType){
                     subString +="    ".repeat(curSpace) + beforeName + " = " + objR.getName()+ "\n";
                 }
@@ -298,7 +298,7 @@ public class generatorObj {
             if (endOfLink.getShape().equals("V")){ //если связь R->V NV->V O->V S->V
                 subObjV cur = findVObjByName(endOfLink.getName());
                 if (cur == null){ //если элемент не найден
-                    cur = new subObjV(endOfLink.getName());
+                    cur = new subObjV(endOfLink.getName(),endOfLink.getVSelected());
                     arrayVs.add(cur);
                 }
                 String startShape = startOfLink.getShape();
@@ -355,26 +355,26 @@ public class generatorObj {
     
     private String generateVFunction(subObjV objV){    
         String subString="";
-        subString += objV.getName()+"(";
-        boolean isFirstArrayToPrint = true;
+        subString += objV.getName()+"("; //Имя V и скобка
+        subString += objV.getType()+","; //Сложность V
         String help = generateStringFromSubArray(objV.getArrayLinkedS()); //пишем все s
-        subString+=help;
-        if (help != ""){
-            isFirstArrayToPrint = false;
+        if (help == ""){ //если строка с s фигурами пуста
+            help = "NULL";
         }
+        subString+=help;
+        
         help = generateStringFromSubArray(objV.getArrayLinkedNvR()); //пишем все nv и r
-        if (isFirstArrayToPrint == false & help != ""){
-            subString+=", "; //если надо добавляем запятую
+        if (help == ""){ //если строка с nv r фигурами пуста
+            help = "NULL";
         }
-        subString+=help;
-        if (help != ""){
-            isFirstArrayToPrint = false;
-        }
+        subString+=", " + help;
+        
         help = generateStringFromSubArray(objV.getArrayLinkedO()); //пишем все o
-        if (isFirstArrayToPrint == false & help != ""){
-            subString+=", "; //если надо добавляем запятую
+        if (help == ""){ //если строка с o фигурами пуста
+            help = "NULL";
         }
-        subString+=help;
+        subString+=", " + help;
+        
         subString+=") ";
         return subString;
     }

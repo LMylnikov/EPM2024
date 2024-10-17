@@ -1665,8 +1665,16 @@ public class jMDIFrame extends JInternalFrame {
 
     private void rCodeActivatorButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rCodeActivatorButActionPerformed
         //Создание R кода по нашему псевдокоду
-        RTranslatorClass newRTC = new RTranslatorClass();
-        newRTC.addString(textDescription.getText());
+        boolean test = false; //ничего не значит
+        String tst = "1";//ничего не значит
+        boolean isPlot = (mdi.prefsMdi.getBoolean("graphState",test));
+        boolean isXES = (mdi.prefsMdi.getBoolean("xesState",test));
+        int idNumber = Integer.valueOf(mdi.prefsMdi.get("startId",tst));
+        int idStep = Integer.valueOf(mdi.prefsMdi.get( "stepId",tst));
+        
+        
+        RTranslatorClass newRTC = new RTranslatorClass(isPlot,isXES, idNumber,idStep); //Создаем объект для перевода 
+        newRTC.addString(textDescription.getText()); //Передаем текст с псевдокодом
     }//GEN-LAST:event_rCodeActivatorButActionPerformed
 
     private void GenerateDescription() {
