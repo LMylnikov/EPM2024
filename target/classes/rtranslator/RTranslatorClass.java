@@ -6,17 +6,27 @@ import static rtranslator.SaveCodeInFileR.saveToFile;
 public class RTranslatorClass {
 
     ArrayList<String> rows = new ArrayList<>(); //готовые строки
+    String rFileName = "";
+    String xesFileName = "";
+    String rFilePath = "";
     int unicNvNumber = 1; //уникальный id для технических nv
     boolean isPlotActive = false;
-    boolean isXESActime = false;
+    boolean isXESActive = false;
     int idNumber = 66;
     int idStep = 66;
+    int rCount = 0;
 
-    public RTranslatorClass(boolean isPlot, boolean isXES, int idN, int idS) {
+    public RTranslatorClass(boolean isPlot, boolean isXES, int idN, int idS, String rFileName, String xesFileName, String rFilePath) {
         isPlotActive = isPlot;
-        isXESActime = isXES;
+        isXESActive = isXES;
         idNumber = idN;
         idStep = idS;
+        this.rFileName = rFileName;
+        this.xesFileName = xesFileName;
+        this.rFilePath = rFilePath;
+        if (!isPlotActive){ //если не строим графики, то не выгружаем хес
+            isXESActive = false;
+        }
     }
 
     public void addString(String text) {
@@ -25,7 +35,7 @@ public class RTranslatorClass {
             String forAdding = "";
             switch (shape) { //переделываем псевдокод в код R
                 case ('i'): //первая i = 100 например
-                    forAdding = strg;
+                    forAdding = strg.replace("=","<-");
                     break;
                 case ('O'): //O
                     forAdding = strg;
@@ -52,7 +62,10 @@ public class RTranslatorClass {
         for (String strg : rows) {
             System.out.println(strg);
         }
-        saveToFile(rows, "R_Code_Test_Save.R"); //Сохраняем в файл
+        if (isXESActive){
+            rows.add("write.csv(X, file=\""+xesFileName+".csv\")"); //Если выгружаем хес добавляем соотв строку
+        }
+        saveToFile(rows,rFilePath+"/"+rFileName); //Сохраняем в файл
     }
 
     public String generateSCodeR(String exCode) { //Констиурктор кода языка R для фиугры S
@@ -60,8 +73,9 @@ public class RTranslatorClass {
         String name = exCode.split(" = ")[0];//до =
         String type = exCode.split(" = ")[1].split("\\(")[0]; // после = до (
         String typeVar = exCode.split(" = ")[1].split("\\(")[1].replace(")", "");// в ()
+        typeVar = typeVar.replace(',','.'); //Замена запятой на точку, так как конфликт в R. ИСПРАВИТЬ В ОСНОВНОЙ ПРОГЕ ИЛИ УЧЕСТЬ ВЕЗДЕ
         rCodeString = name + "<-S_" + type + "(N, " + typeVar + ", " + idNumber + ")";
-        idNumber -= idStep;
+        idNumber += idStep;
 //        'S<-S_prob(N, 0.9, 1000)';
         if (isPlotActive) { //если нужно строить графики
             rCodeString += "\n"
@@ -93,7 +107,13 @@ public class RTranslatorClass {
         String srElement = srBlockGen(srFig);
 //        String s = rName + " = " + vName + "(" + type + ",NULL, NV5 + NV4, O3) ";
         rCodeString = rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
-
+        rCount+=1;
+        if (rCount == 1){
+            rCodeString+="\nX<-XES(\""+rName+"\")";
+        }else{
+            rCodeString+="\nX"+rCount+"<-XES(\""+rName+"\")"
+                    + "\nX<-rbind(X,X"+rCount+")";
+        }
         return preRCode + rCodeString;
     }
 

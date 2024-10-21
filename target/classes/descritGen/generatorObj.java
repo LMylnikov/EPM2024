@@ -37,9 +37,9 @@ public class generatorObj {
         String subString = "";
         subString += fig.getName() + " = ";
         if (fig.getSwork().equals("0")){
-            subString += "Prob("+fig.getLikelihood()+")";
+            subString += "prob("+fig.getLikelihood()+")";
         }else{
-            subString += "Periodic("+fig.getPeriod()+")";
+            subString += "periodic("+fig.getPeriod()+")";
         }
         return subString;
     }

@@ -1671,9 +1671,11 @@ public class jMDIFrame extends JInternalFrame {
         boolean isXES = (mdi.prefsMdi.getBoolean("xesState",test));
         int idNumber = Integer.valueOf(mdi.prefsMdi.get("startId",tst));
         int idStep = Integer.valueOf(mdi.prefsMdi.get( "stepId",tst));
+        String rName =  mdi.prefsMdi.get("rName", tst);
+        String xesName = mdi.prefsMdi.get("xesName", tst);
+        String rPath = mdi.prefsMdi.get("rPath", tst);
         
-        
-        RTranslatorClass newRTC = new RTranslatorClass(isPlot,isXES, idNumber,idStep); //Создаем объект для перевода 
+        RTranslatorClass newRTC = new RTranslatorClass(isPlot,isXES, idNumber,idStep,rName,xesName,rPath); //Создаем объект для перевода 
         newRTC.addString(textDescription.getText()); //Передаем текст с псевдокодом
     }//GEN-LAST:event_rCodeActivatorButActionPerformed
 

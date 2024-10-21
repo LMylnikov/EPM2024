@@ -185,6 +185,12 @@ Select<-function(A, N1, N2){
 }
 # --- ==== [ Основная программа ] ==== ---
 i = 992189
-S1<-S_Prob(N, 0,5, 10)
-S22<-S_Prob(N, 0,53, 2)
-S3<-S_Prob(N, 0,5, -6)
+S9<-S_Prob(N, 0,5, 5)
+S2<-S_Prob(N, 0,5, 4)
+S3<-S_Prob(N, 0,5, 3)
+S1<-S_Prob(N, 0,5, 2)
+NV1R7<-subset( R7, select=c(R, ID_Out)) colnames( NV1R7 ) <- c('S', 'ID')
+NV2R8<-subset( R8, select=c(R, ID_Out)) colnames( NV2R8 ) <- c('S', 'ID')
+NV3R6<-subset( R6, select=c(R, ID_Out)) colnames( NV3R6 ) <- c('S', 'ID')
+R5<- V(4, Add(NV1R7,Add(NV2R8,Add(S9,Add(NV3R6,Add(S2,S3))))), "V4")
+NV11111<-subset( R6, select=c(R, ID_Out)) colnames( NV11111 ) <- c('S', 'ID')
