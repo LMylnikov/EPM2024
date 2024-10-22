@@ -56,6 +56,7 @@ jMDIForm\jMDIFrame$15.class
 EPM\mdi$40.class
 point\pointStraight.class
 jMDIForm\GridPanel.class
+figure\LineStraight.class
 jMDIForm\PropertiesDialog$18.class
 jMDIForm\PropertiesDialog.class
 EPM\mdi$11.class
@@ -139,6 +140,7 @@ converter\Line_s.class
 EPM\mdi$21.class
 EPM\mdi$51.class
 jMDIForm\PropertiesDialog$10.class
+figure\V.class
 jMDIForm\PropertiesDialog$27.class
 line\LineStraight.class
 jMDIForm\jMDIFrame$10.class

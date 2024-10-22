@@ -62,7 +62,7 @@ public class RTranslatorClass {
         for (String strg : rows) {
             System.out.println(strg);
         }
-        if (isXESActive){
+        if (isXESActive && rCount>0){
             rows.add("write.csv(X, file=\""+xesFileName+".csv\")"); //Если выгружаем хес добавляем соотв строку
         }
         saveToFile(rows,rFilePath+"/"+rFileName+".R"); //Сохраняем в файл
@@ -109,9 +109,9 @@ public class RTranslatorClass {
         rCodeString = rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
         rCount+=1;
         if (rCount == 1){
-            rCodeString+="\nX<-XES(\""+rName+"\")";
+            rCodeString+="\nX<-XES("+rName+")";
         }else{
-            rCodeString+="\nX"+rCount+"<-XES(\""+rName+"\")"
+            rCodeString+="\nX"+rCount+"<-XES("+rName+")"
                     + "\nX<-rbind(X,X"+rCount+")";
         }
         return preRCode + rCodeString;

@@ -2041,7 +2041,8 @@ public class mdi extends javax.swing.JFrame {
     private void boxIsPlotPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_boxIsPlotPropertyChange
         enabledChanger();
     }//GEN-LAST:event_boxIsPlotPropertyChange
-    public void enabledChanger(){
+    
+    public void enabledChanger(){ //Выключение ХЕС настроек при выключении построения диаграмм
         if (boxIsPlot.isSelected()){
             boxIsXES.setEnabled(true);
             xesNameFile.setEnabled(true);

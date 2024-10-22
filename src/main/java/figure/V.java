@@ -46,6 +46,7 @@ public class V extends figures{
         this.absoluteY = this.y;
         this.s=s;
         this.nameF = "V" + this.id;
+        this.vSelected = "Экспонента (exp(x))";
     }
     Font font = new Font("Arial", Font.BOLD, 24);
     @Override
