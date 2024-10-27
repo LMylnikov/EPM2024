@@ -151,6 +151,7 @@ public class mdi extends javax.swing.JFrame {
         rFileSelectWay = new javax.swing.JButton();
         rNameFile = new javax.swing.JTextField();
         xesNameFile = new javax.swing.JTextField();
+        boxLookAtO = new javax.swing.JCheckBox();
         rFileSaveChooser = new javax.swing.JFileChooser();
         jDesktopPane = new javax.swing.JDesktopPane();
         jToolBar1 = new javax.swing.JToolBar();
@@ -734,9 +735,9 @@ public class mdi extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        SetConstantDialog.setMinimumSize(new java.awt.Dimension(285, 370));
-        SetConstantDialog.setModal(false);
-        SetConstantDialog.setPreferredSize(new java.awt.Dimension(285, 370));
+        SetConstantDialog.setMinimumSize(new java.awt.Dimension(300, 380));
+        SetConstantDialog.setModal(true);
+        SetConstantDialog.setPreferredSize(new java.awt.Dimension(300, 380));
         SetConstantDialog.setResizable(false);
 
         OkIBut.setText("Ok");
@@ -830,6 +831,13 @@ public class mdi extends javax.swing.JFrame {
             }
         });
 
+        boxLookAtO.setText("Учитывать О");
+        boxLookAtO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxLookAtOActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SetConstantDialogLayout = new javax.swing.GroupLayout(SetConstantDialog.getContentPane());
         SetConstantDialog.getContentPane().setLayout(SetConstantDialogLayout);
         SetConstantDialogLayout.setHorizontalGroup(
@@ -846,16 +854,6 @@ public class mdi extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                                .addComponent(OkIBut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(142, 142, 142)
-                                .addComponent(CancelIBut))
-                            .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(rNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(xesNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(SetConstantDialogLayout.createSequentialGroup()
                         .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -882,7 +880,18 @@ public class mdi extends javax.swing.JFrame {
                                     .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(startIdNum, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                                         .addComponent(stepId)))))
-                        .addContainerGap(31, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
+                        .addComponent(OkIBut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CancelIBut)
+                        .addContainerGap())
+                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                        .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(xesNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(boxLookAtO))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         SetConstantDialogLayout.setVerticalGroup(
             SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -908,6 +917,8 @@ public class mdi extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boxIsXES, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxLookAtO, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -921,11 +932,11 @@ public class mdi extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(xesNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CancelIBut)
                     .addComponent(OkIBut))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1949,12 +1960,15 @@ public class mdi extends javax.swing.JFrame {
 //            }
 //            else{
                 // Узел  существует
+                
+                //Вместо этих комментариев можно созздать класс, который при запуске прогр. Проверяет наличие данных в них и выставляет все по умолчанию
                 stepId.setText((mdi.prefsMdi.get("stepId", base)));
                 startIdNum.setText((mdi.prefsMdi.get("startId", base)));
                 IValueField.setText((mdi.prefsMdi.get("IValue", base)));
                 NValueField.setText( (mdi.prefsMdi.get("NValue", base)));
                 boxIsPlot.setSelected((mdi.prefsMdi.getBoolean("graphState", bs)));
                 boxIsXES.setSelected((mdi.prefsMdi.getBoolean("xesState", bs)));
+                boxLookAtO.setSelected((mdi.prefsMdi.getBoolean("oActiveState", bs)));
                 xesNameFile.setText((mdi.prefsMdi.get("xesName", base)));
                 rNameFile.setText((mdi.prefsMdi.get("rName", base)));
                 rFileSaveWay.setText((mdi.prefsMdi.get("rPath", base)));
@@ -1996,11 +2010,13 @@ public class mdi extends javax.swing.JFrame {
         mdi.prefsMdi.put("NValue",  NValueField.getText());
         mdi.prefsMdi.putBoolean("graphState",  boxIsPlot.isSelected());
         mdi.prefsMdi.putBoolean("xesState",  boxIsXES.isSelected());
+        mdi.prefsMdi.putBoolean("oActiveState", boxLookAtO.isSelected());
         mdi.prefsMdi.put("startId",  startIdNum.getText());
         mdi.prefsMdi.put("stepId",  stepId.getText());
         mdi.prefsMdi.put("rName", rNameFile.getText());
         mdi.prefsMdi.put("xesName", xesNameFile.getText());
         mdi.prefsMdi.put("rPath", rFileSaveWay.getText());
+        
     }//GEN-LAST:event_OkIButActionPerformed
 
     private void CancelIButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelIButActionPerformed
@@ -2033,7 +2049,7 @@ public class mdi extends javax.swing.JFrame {
 
     private void rFileSelectWayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rFileSelectWayActionPerformed
         rFileSaveChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        rFileSaveChooser.showSaveDialog(null);
+        rFileSaveChooser.showSaveDialog(this);
         rFileSaveWay.setText(rFileSaveChooser.getSelectedFile().toString());
     }//GEN-LAST:event_rFileSelectWayActionPerformed
 //Конец работы Иванова А.А.
@@ -2041,6 +2057,10 @@ public class mdi extends javax.swing.JFrame {
     private void boxIsPlotPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_boxIsPlotPropertyChange
         enabledChanger();
     }//GEN-LAST:event_boxIsPlotPropertyChange
+
+    private void boxLookAtOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxLookAtOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxLookAtOActionPerformed
     
     public void enabledChanger(){ //Выключение ХЕС настроек при выключении построения диаграмм
         if (boxIsPlot.isSelected()){
@@ -2073,6 +2093,7 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JMenuItem Tile;
     private javax.swing.JCheckBox boxIsPlot;
     private javax.swing.JCheckBox boxIsXES;
+    private javax.swing.JCheckBox boxLookAtO;
     private javax.swing.JLabel idNumLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;

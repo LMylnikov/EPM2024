@@ -1,6 +1,9 @@
 package rtranslator;
 
+import EPM.mdi;
+import static EPM.mdi.prefsMdi;
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
 import static rtranslator.SaveCodeInFileR.saveToFile;
 
 public class RTranslatorClass {
@@ -9,27 +12,35 @@ public class RTranslatorClass {
     String rFileName = "";
     String xesFileName = "";
     String rFilePath = "";
+    String startN = "";
     int unicNvNumber = 1; //уникальный id для технических nv
     boolean isPlotActive = false;
     boolean isXESActive = false;
+    boolean isActiveO = false;
     int idNumber = 66;
     int idStep = 66;
     int rCount = 0;
-
-    public RTranslatorClass(boolean isPlot, boolean isXES, int idN, int idS, String rFileName, String xesFileName, String rFilePath) {
-        isPlotActive = isPlot;
-        isXESActive = isXES;
-        idNumber = idN;
-        idStep = idS;
-        this.rFileName = rFileName;
-        this.xesFileName = xesFileName;
-        this.rFilePath = rFilePath;
+    private static Preferences localPrefsMdis = prefsMdi; 
+    
+    public RTranslatorClass() {
+        boolean help = true; String hep = "f";
+        startN = localPrefsMdis.get("NValue", hep);
+        isPlotActive = (localPrefsMdis.getBoolean("graphState",help));
+        isXESActive = (localPrefsMdis.getBoolean("xesState",help));
+        idNumber = Integer.valueOf(localPrefsMdis.get("startId",hep));
+        idStep = Integer.valueOf(localPrefsMdis.get( "stepId",hep));
+        isActiveO = (localPrefsMdis.getBoolean("oActiveState",help));
+        this.rFileName =  localPrefsMdis.get("rName", hep);
+        this.xesFileName = localPrefsMdis.get("xesName", hep);
+        this.rFilePath = localPrefsMdis.get("rPath", hep);
+        
         if (!isPlotActive){ //если не строим графики, то не выгружаем хес
             isXESActive = false;
         }
     }
 
     public void addString(String text) {
+        rows.add("N <- "+startN);
         for (String strg : text.split("\n")) { //перепор каждой строки
             char shape = strg.charAt(0); //выбираем первый символ строки для определения типа фигуры
             String forAdding = "";
@@ -48,6 +59,9 @@ public class RTranslatorClass {
                     break;
                 case ('R'): //R
                     forAdding = generateRCodeR(strg);
+                    if(forAdding.equals("empty")){
+                        continue;
+                    }
                     break;
                 case ('V'): //V
                     forAdding = strg;
@@ -104,9 +118,18 @@ public class RTranslatorClass {
         String[] srFig = allInProp[1].split(" \\+ ");
         String[] nvFig = allInProp[2].split(" \\+ "); //массив всех nv //пока не используем
         String[] oFig = allInProp[3].split(" \\+ "); //массив всех o //пока не используем
+        if (srFig[0].equals("NULL")){
+            return "empty";
+        }
         String srElement = srBlockGen(srFig);
 //        String s = rName + " = " + vName + "(" + type + ",NULL, NV5 + NV4, O3) ";
-        rCodeString = rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
+        if (isActiveO && !(oFig[0].equals("NULL"))){ //если нужно выводить О
+            rCodeString = rName+"_O" + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
+            rCodeString += "\n"+rName+ "<-O("+rName+"_O,"+oFig[0]+")";
+        }
+        else{
+            rCodeString = rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
+        }
         rCount+=1;
         if (rCount == 1){
             rCodeString+="\nX<-XES("+rName+")";
@@ -114,6 +137,7 @@ public class RTranslatorClass {
             rCodeString+="\nX"+rCount+"<-XES("+rName+")"
                     + "\nX<-rbind(X,X"+rCount+")";
         }
+        
         return preRCode + rCodeString;
     }
 
