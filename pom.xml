@@ -54,7 +54,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>mdi</mainClass>
+              <mainClass>EPM.mdi</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -69,7 +69,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>mdi</mainClass>
+              <mainClass>EPM.mdi</mainClass>
             </manifest>
           </archive>
         </configuration>
