@@ -87,6 +87,10 @@ public class PropertiesDialog extends javax.swing.JDialog {
                     }
                 }
                 mainBodyTabbedPanel.addTab("Свойства V",VpropertiesPanel); // добавление нужных окон делаем через этот метод
+                if (fig.getVSelected().equals("Индивидуальная функция сложности")){
+                    addCodeWindowInProp();
+                    codeTextField.setText(fig.getCodeF()); // Установка текста кода фигуры
+                }
                 break;
             case "O":
                 mainBodyTabbedPanel.addTab("Свойства O",OpropertiesPanel); // добавление нужных окон делаем через этот метод
@@ -120,7 +124,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
         }
         
         
-        codeTextField.setText(fig.getCodeF()); // Установка текста кода фигуры
         // Заполняем списки переменными фигуры
         for (String inVar : nameNvEl){ 
             listModelName.addElement(inVar);
@@ -161,7 +164,11 @@ public class PropertiesDialog extends javax.swing.JDialog {
         shapeName = new javax.swing.JLabel();
         codePanel = new javax.swing.JScrollPane();
         codeTPanel = new javax.swing.JPanel();
-        codeTextField = new java.awt.TextField();
+        firstStringCodeField = new javax.swing.JLabel();
+        lastStringCodeField = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        codeTextField = new javax.swing.JTextPane();
+        endString = new javax.swing.JLabel();
         VpropertiesPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         expButton = new javax.swing.JRadioButton();
@@ -169,6 +176,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
         stepButton = new javax.swing.JRadioButton();
         logButton = new javax.swing.JRadioButton();
         xlogButton = new javax.swing.JRadioButton();
+        individCodeButton = new javax.swing.JRadioButton();
         OpropertiesPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         Ocoef = new javax.swing.JFormattedTextField();
@@ -350,11 +358,14 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        codeTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codeTextFieldActionPerformed(evt);
-            }
-        });
+        firstStringCodeField.setText("V1_def (Имя функции) <- function(S, V){");
+
+        lastStringCodeField.setText(" (Имя функции)<-Df ");
+
+        codeTextField.setText(" # расчет для логарифмической сложности\n N<-length(S$S)\n Df<-data.frame(I=1:N,  \n                J=vector(mode = \"numeric\", length = length(N)),  \n                Prj_Flow=S$S,  \n                Prj_File=vector(mode = \"numeric\", length = length(N)),  \n                V_W=vector(mode = \"numeric\", length = length(N)),  \n                V=V,  \n                R=vector(mode = \"numeric\", length = length(N)),  \n                ID_File=vector(mode = \"numeric\", length = length(N)),  \n                ID_Out=vector(mode = \"numeric\", length = length(N)))\n j<-1\n L<-0\n\n for (i in 1:N){\n   Df$Prj_File[i]<-sum(Df$Prj_Flow[i:j])\n   Df$ID_File[i]<-list(unique(list_c(S$ID[i:j])))\n   Df$J[i]<-j\n   if (Df$V_W[i]==0) {\n     nk<-Df$Prj_File[i]\n     L<-1 // Сюда вносить правки\n     k<-min(i+L-1,N)\n     if (k>=i){\n       Df$V_W[i:k]<-L\n       Df$R[k] <- nk\n       Df$ID_Out[k]<-Df$ID_File[i]\n     }\n     j<-i+1\n   }\n }\n\n P1<-Df$R\n P2<-Df$ID_Out\n Df$R[1]<-0\n Df$R[2:N]<-P1[1:(N-1)]\n Df$ID_Out[1]<-0\n Df$ID_Out[2:N]<-P2[1:(N-1)]");
+        jScrollPane1.setViewportView(codeTextField);
+
+        endString.setText(" }");
 
         javax.swing.GroupLayout codeTPanelLayout = new javax.swing.GroupLayout(codeTPanel);
         codeTPanel.setLayout(codeTPanelLayout);
@@ -362,15 +373,30 @@ public class PropertiesDialog extends javax.swing.JDialog {
             codeTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(codeTPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGroup(codeTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(codeTPanelLayout.createSequentialGroup()
+                        .addGroup(codeTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lastStringCodeField)
+                            .addComponent(endString))
+                        .addGap(0, 488, Short.MAX_VALUE))
+                    .addGroup(codeTPanelLayout.createSequentialGroup()
+                        .addGroup(codeTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(firstStringCodeField)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         codeTPanelLayout.setVerticalGroup(
             codeTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(codeTPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(codeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
+                .addComponent(firstStringCodeField)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lastStringCodeField)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(endString, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         codePanel.setViewportView(codeTPanel);
@@ -401,6 +427,14 @@ public class PropertiesDialog extends javax.swing.JDialog {
         properties.add(xlogButton);
         xlogButton.setText("xlog(x)");
 
+        properties.add(individCodeButton);
+        individCodeButton.setText("Индивидуальная функция сложности");
+        individCodeButton.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                individCodeButtonPropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout VpropertiesPanelLayout = new javax.swing.GroupLayout(VpropertiesPanel);
         VpropertiesPanel.setLayout(VpropertiesPanelLayout);
         VpropertiesPanelLayout.setHorizontalGroup(
@@ -414,7 +448,8 @@ public class PropertiesDialog extends javax.swing.JDialog {
                             .addComponent(logButton)
                             .addComponent(stepButton)
                             .addComponent(xButton)
-                            .addComponent(expButton)))
+                            .addComponent(expButton)
+                            .addComponent(individCodeButton)))
                     .addGroup(VpropertiesPanelLayout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -435,7 +470,9 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 .addComponent(logButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(xlogButton)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(individCodeButton)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         OpropertiesPanel.setVerifyInputWhenFocusTarget(false);
@@ -445,12 +482,18 @@ public class PropertiesDialog extends javax.swing.JDialog {
 
         Ocoef.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.#"))));
         Ocoef.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        Ocoef.setText("0");
         Ocoef.setToolTipText("0,1-10");
         Ocoef.setActionCommand("<Not Set>");
         Ocoef.setDoubleBuffered(true);
         Ocoef.setMaximumSize(new java.awt.Dimension(133, 23));
         Ocoef.setMinimumSize(new java.awt.Dimension(70, 23));
         Ocoef.setPreferredSize(new java.awt.Dimension(70, 23));
+        Ocoef.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OcoefActionPerformed(evt);
+            }
+        });
         Ocoef.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 OcoefKeyTyped(evt);
@@ -824,10 +867,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
 // РАСКОМЕНТИРОВАТЬ ЕСЛИ НУЖНО СОХРАНЕНЕ АВТОМАТИЧЕСКОЕ ПОСЛЕ ЗАКРЫТИЯ ОКНА!
     }//GEN-LAST:event_formWindowClosing
 
-    private void codeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_codeTextFieldActionPerformed
-
     private void descriptionTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_descriptionTextFieldActionPerformed
@@ -1077,7 +1116,25 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private void figuresNimberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_figuresNimberFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_figuresNimberFieldActionPerformed
- 
+
+    private void OcoefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OcoefActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_OcoefActionPerformed
+
+    private void individCodeButtonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_individCodeButtonPropertyChange
+        //Включили сложность свой код
+        if (individCodeButton.isSelected()){
+            addCodeWindowInProp();
+        }
+        else{
+            if (mainBodyTabbedPanel.getTabCount()==3){
+                mainBodyTabbedPanel.removeTabAt(2);
+            }
+        }
+    }//GEN-LAST:event_individCodeButtonPropertyChange
+    private void addCodeWindowInProp(){
+        mainBodyTabbedPanel.addTab("Функция",codeTPanel); // добавление нужных окон делаем через этот метод
+    }
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1109,14 +1166,17 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JDialog changeNvelement;
     private javax.swing.JScrollPane codePanel;
     private javax.swing.JPanel codeTPanel;
-    private java.awt.TextField codeTextField;
+    private javax.swing.JTextPane codeTextField;
     private javax.swing.JFormattedTextField compareNumberField;
     private javax.swing.JButton deleteNvButton;
     private java.awt.TextField descriptionTextField;
     private javax.swing.JButton editNvButton;
+    private javax.swing.JLabel endString;
     private javax.swing.JRadioButton expButton;
     private javax.swing.JFormattedTextField figuresNimberField;
+    private javax.swing.JLabel firstStringCodeField;
     private javax.swing.ButtonGroup ifProp;
+    private javax.swing.JRadioButton individCodeButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1124,9 +1184,11 @@ public class PropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label6;
     private javax.swing.JLabel labelStandart;
     private javax.swing.JLabel labelStandart1;
+    private javax.swing.JLabel lastStringCodeField;
     private javax.swing.JRadioButton logButton;
     private javax.swing.JTabbedPane mainBodyTabbedPanel;
     private javax.swing.JPanel mainPanel;

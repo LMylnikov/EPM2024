@@ -52,6 +52,7 @@ public class O extends figures{
         this.absoluteY = this.y;
         this.s=s;
         this.nameF = "O" + this.id;
+        this.coef = "1";
     }
     Font font = new Font("Arial", Font.BOLD, 24);
     @Override

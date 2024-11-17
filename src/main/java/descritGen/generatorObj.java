@@ -95,12 +95,12 @@ public class generatorObj {
                 //клонирование V
                 subObjV originV = findVObjByName(figVtoR); //оригинальная V, которую нельзя менять
                 //Клонирование V
-                subObjV objV = new subObjV(figVtoR,originV.getType() , originV.getArrayLinkedS(), originV.getArrayLinkedNvR(), originV.getArrayLinkedO()); //новая фантомная V только для вывода в IF
+                subObjV objV = new subObjV(figVtoR,originV.getType() , originV.getArrayLinkedSR(), originV.getLinkedNv(), originV.getLinkedO()); //новая фантомная V только для вывода в IF
                 if (withNvType){
                     subString +="    ".repeat(curSpace) + beforeName + " = " + objR.getName()+ "\n";
                 }
                 else{
-                    objV.AddToSList(objR.getName()); //добавляем в список S наш R. Далее необходимо делать это в другом(склонированном) V
+                    objV.AddToSRList(objR.getName()); //добавляем в список S наш R. Далее необходимо делать это в другом(склонированном) V
                 }
                 //убрал лишние проверки
                 subString+= "    ".repeat(curSpace)+objR.getName() + " = " + generateVFunction(objV)+ "\n";
@@ -304,16 +304,17 @@ public class generatorObj {
                 String startShape = startOfLink.getShape();
                 switch(startShape){
                     case "S1": //добавляем имена фигур в соотв массивы по shape фигур
-                        cur.AddToSList(startOfLink.getName());
+                        cur.AddToSRList(startOfLink.getName());
                         break;
                     case "O":
-                        cur.AddToOList(startOfLink.getName());
+                        cur.setLinkedO(startOfLink.getName());
+                        cur.setOValue(startOfLink.getCoef());
                         break;
                     case "NV":
-                        cur.AddToNvRList(startOfLink.getName());
+                        cur.setLinkedNv(startOfLink.getName());
                         break;
                     case "R": 
-                        cur.AddToSList(startOfLink.getName());
+                        cur.AddToSRList(startOfLink.getName());
                         break;
                 }
             }                  
@@ -357,24 +358,26 @@ public class generatorObj {
         String subString="";
         subString += objV.getName()+"("; //Имя V и скобка
         subString += objV.getType()+","; //Сложность V
-        String help = generateStringFromSubArray(objV.getArrayLinkedS()); //пишем все s
+        String help = generateStringFromSubArray(objV.getArrayLinkedSR()); //пишем все s
         if (help == ""){ //если строка с s фигурами пуста
             help = "NULL";
         }
         subString+=help;
         
-        help = generateStringFromSubArray(objV.getArrayLinkedNvR()); //пишем все nv и r
+        help = objV.getLinkedNv(); //пишем nv
         if (help == ""){ //если строка с nv r фигурами пуста
             help = "NULL";
         }
         subString+=", " + help;
         
-        help = generateStringFromSubArray(objV.getArrayLinkedO()); //пишем все o
+        help = objV.getLinkedO(); //пишем  o
         if (help == ""){ //если строка с o фигурами пуста
             help = "NULL";
         }
         subString+=", " + help;
-        
+        if (help!= "NULL"){
+            subString += "("+objV.getOValue()+")";
+        }
         subString+=") ";
         return subString;
     }

@@ -14,9 +14,9 @@ public class RTranslatorClass {
     String rFilePath = "";
     String startN = "";
     int unicNvNumber = 1; //уникальный id для технических nv
-    boolean isPlotActive = false;
-    boolean isXESActive = false;
-    boolean isActiveO = false;
+    boolean isPlotActive = false; //строить графики
+    boolean isXESActive = false; //Выгрузка в ХЕС
+    boolean isActiveO = false; //Учитывать О
     int idNumber = 66;
     int idStep = 66;
     int rCount = 0;
@@ -122,22 +122,30 @@ public class RTranslatorClass {
             return "empty";
         }
         String srElement = srBlockGen(srFig);
-//        String s = rName + " = " + vName + "(" + type + ",NULL, NV5 + NV4, O3) ";
         if (isActiveO && !(oFig[0].equals("NULL"))){ //если нужно выводить О
             rCodeString = rName+"_O" + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
-            rCodeString += "\n"+rName+ "<-O("+rName+"_O,"+oFig[0]+")";
+            String oNum =  exCode.split("\\(")[2].split("\\)")[0];
+            rCodeString += "\n"+rName+ "<-O("+rName+"_O,"+oNum+")";
         }
         else{
             rCodeString = rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
         }
-        rCount+=1;
-        if (rCount == 1){
-            rCodeString+="\nX<-XES("+rName+")";
-        }else{
-            rCodeString+="\nX"+rCount+"<-XES("+rName+")"
-                    + "\nX<-rbind(X,X"+rCount+")";
+        if (isPlotActive){ //график для R
+            rCodeString += "\nplot(1:N, "+rName+"$R, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15))" +
+            "\nplot(1:N, "+rName+"$Prj_File, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15))";
+            if (isXESActive){ // график для X
+                rCount+=1;
+                String xName = "X";
+                if (rCount == 1){
+                    rCodeString+="\n"+xName+"<-XES("+rName+")";
+                }else{
+                    xName += rCount;
+                    rCodeString+="\n"+xName+"<-XES("+rName+")"
+                            + "\nX<-rbind(X,"+xName+")";
+                }
+                rCodeString+= "\nvioplot("+xName+"$W, col = \"lightgray\",  panel.first=grid())";
+            }
         }
-        
         return preRCode + rCodeString;
     }
 

@@ -31,6 +31,7 @@ jMDIForm\PropertiesDialog$30.class
 EPM\mdi$24.class
 jMDIForm\jMDIFrame$1.class
 jMDIForm\jMDIFrame$20.class
+point\pointCross.class
 jMDIForm\PropertiesDialog$8.class
 jMDIForm\PropertiesDialog$24.class
 EPM\mdi$37.class
@@ -71,7 +72,6 @@ EPM\mdi$34.class
 jMDIForm\jMDIFrame$3.class
 jMDIForm\jMDIFrame$23.class
 EPM\mdi$33.class
-jMDIForm\PropertiesDialog$33$1.class
 jMDIForm\PropertiesDialog$21.class
 EPM\mdi$10.class
 jMDIForm\PropertiesDialog$16.class
@@ -90,6 +90,7 @@ EPM\mdi$27.class
 EPM\mdi$47.class
 EPM\mdi$35.class
 JGraphFrame\Panelka.class
+jMDIForm\PropertiesDialog$34.class
 jMDIForm\PropertiesDialog$26.class
 EPM\mdi$15.class
 jMDIForm\jMDIFrame$16.class
@@ -123,6 +124,7 @@ EPM\mdi$19.class
 jMDIForm\jMDIFrame$9.class
 jMDIForm\PropertiesDialog$12.class
 jMDIForm\PropertiesDialog$32.class
+point\detectConfrontation.class
 EPM\S.class
 jMDIForm\PropertiesDialog$5.class
 EPM\mdi$20.class
@@ -134,6 +136,7 @@ EPM\mdi$43.class
 line\Line.class
 jMDIForm\PropertiesDialog$2.class
 EPM\mdi$23.class
+jMDIForm\PropertiesDialog$34$1.class
 figure\d.class
 EPM\mdi$6.class
 jMDIForm\PropertiesDialog$33.class

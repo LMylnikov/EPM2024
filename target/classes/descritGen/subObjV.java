@@ -3,9 +3,10 @@ package descritGen;
 import java.util.ArrayList;
 
 public class subObjV {
-    private ArrayList<String> arrayLinkedNvR = new ArrayList<String>();
-    private ArrayList<String> arrayLinkedO = new ArrayList<String>();
-    private ArrayList<String> arrayLinkedS = new ArrayList<String>();
+    private String linkedNv = "";
+    private String linkedO = "";
+    private ArrayList<String> arrayLinkedSR = new ArrayList<String>();
+    private String oValue;
     private String nameV;
     private String type;
     
@@ -14,51 +15,42 @@ public class subObjV {
         setNumberType(type);
     }
     //генератор для клонирования объекта
-    public subObjV(String name,String type,  ArrayList<String> oldS,  ArrayList<String> oldNvR,  ArrayList<String> oldO){ //стандартный генератор с прикреплением имени
+    public subObjV(String name,String type,  ArrayList<String> oldSR,  String oldNv, String oldO){ //стандартный генератор с прикреплением имени
         nameV = name;
         this.type = type;
-        for (String el: oldO){
-            arrayLinkedO.add(el);
+        linkedO = oldO;
+        for (String el: oldSR){
+            arrayLinkedSR.add(el);
         }
-        for (String el: oldS){
-            arrayLinkedS.add(el);
-        }
-        for (String el: oldNvR){
-            arrayLinkedNvR.add(el);
-        }
+        linkedNv = oldNv;
     }
-    public void AddToNvRList(String vName){
-        arrayLinkedNvR.add(vName);
-    }
-    public void AddToOList(String vName){
-        arrayLinkedO.add(vName);
-    }
-    public void AddToSList(String vName){
-        arrayLinkedS.add(vName);
+
+    public void AddToSRList(String vName){
+        arrayLinkedSR.add(vName);
     }
     public boolean isEmpty(){
-        if (arrayLinkedNvR.size() == 0 & arrayLinkedO.size() == 0 & arrayLinkedS.size() == 0){
+        if (linkedNv == "" & linkedO == "" & arrayLinkedSR.size() == 0){
             return true;
         }
         return false;
     }
-    public ArrayList<String> getArrayLinkedNvR(){
-        return arrayLinkedNvR;
+    public String getLinkedNv(){
+        return linkedNv;
     }
-    public void setArrayLinkedNvR(ArrayList<String> array){
-        arrayLinkedNvR = array;
+    public void setLinkedNv(String link){
+        linkedNv = link;
     }
-    public ArrayList<String> getArrayLinkedO(){
-        return arrayLinkedO;
+    public String getLinkedO(){
+        return linkedO;
     }
-    public void setArrayLinkedO(ArrayList<String> array){
-        arrayLinkedO = array;
+    public void setLinkedO(String link){
+        linkedO = link;
     }
-    public ArrayList<String> getArrayLinkedS(){
-        return arrayLinkedS;
+    public ArrayList<String> getArrayLinkedSR(){
+        return arrayLinkedSR;
     }
-    public void setArrayLinkedS(ArrayList<String> array){
-        arrayLinkedS = array;
+    public void setArrayLinkedSR(ArrayList<String> array){
+        arrayLinkedSR = array;
     }
     public String getType(){
         return type;
@@ -71,6 +63,12 @@ public class subObjV {
     }
     public void setName(String name){
         nameV = name;
+    }
+    public void setOValue(String number){
+        oValue=number;
+    }
+    public String getOValue(){
+        return oValue;
     }
     private void setNumberType(String textType){
         switch (textType.charAt(2)){

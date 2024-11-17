@@ -235,28 +235,69 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="codeTextField" pref="415" max="32767" attributes="0"/>
-                      <EmptySpace pref="81" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lastStringCodeField" min="-2" max="-2" attributes="0"/>
+                                  <Component id="endString" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="488" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="firstStringCodeField" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane1" min="-2" pref="481" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                      <Component id="firstStringCodeField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="codeTextField" pref="220" max="32767" attributes="0"/>
-                      <EmptySpace pref="35" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="190" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lastStringCodeField" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="endString" min="-2" pref="16" max="-2" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="java.awt.TextField" name="codeTextField">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="codeTextFieldActionPerformed"/>
-              </Events>
+            <Component class="javax.swing.JLabel" name="firstStringCodeField">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="V1_def (&#x418;&#x43c;&#x44f; &#x444;&#x443;&#x43d;&#x43a;&#x446;&#x438;&#x438;) &lt;- function(S, V){"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lastStringCodeField">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" (&#x418;&#x43c;&#x44f; &#x444;&#x443;&#x43d;&#x43a;&#x446;&#x438;&#x438;)&lt;-Df "/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextPane" name="codeTextField">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=" # &#x440;&#x430;&#x441;&#x447;&#x435;&#x442; &#x434;&#x43b;&#x44f; &#x43b;&#x43e;&#x433;&#x430;&#x440;&#x438;&#x444;&#x43c;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x43e;&#x439; &#x441;&#x43b;&#x43e;&#x436;&#x43d;&#x43e;&#x441;&#x442;&#x438;&#xa; N&lt;-length(S$S)&#xa; Df&lt;-data.frame(I=1:N,  &#xa;                J=vector(mode = &quot;numeric&quot;, length = length(N)),  &#xa;                Prj_Flow=S$S,  &#xa;                Prj_File=vector(mode = &quot;numeric&quot;, length = length(N)),  &#xa;                V_W=vector(mode = &quot;numeric&quot;, length = length(N)),  &#xa;                V=V,  &#xa;                R=vector(mode = &quot;numeric&quot;, length = length(N)),  &#xa;                ID_File=vector(mode = &quot;numeric&quot;, length = length(N)),  &#xa;                ID_Out=vector(mode = &quot;numeric&quot;, length = length(N)))&#xa; j&lt;-1&#xa; L&lt;-0&#xa;&#xa; for (i in 1:N){&#xa;   Df$Prj_File[i]&lt;-sum(Df$Prj_Flow[i:j])&#xa;   Df$ID_File[i]&lt;-list(unique(list_c(S$ID[i:j])))&#xa;   Df$J[i]&lt;-j&#xa;   if (Df$V_W[i]==0) {&#xa;     nk&lt;-Df$Prj_File[i]&#xa;     L&lt;-1 // &#x421;&#x44e;&#x434;&#x430; &#x432;&#x43d;&#x43e;&#x441;&#x438;&#x442;&#x44c; &#x43f;&#x440;&#x430;&#x432;&#x43a;&#x438;&#xa;     k&lt;-min(i+L-1,N)&#xa;     if (k&gt;=i){&#xa;       Df$V_W[i:k]&lt;-L&#xa;       Df$R[k] &lt;- nk&#xa;       Df$ID_Out[k]&lt;-Df$ID_File[i]&#xa;     }&#xa;     j&lt;-i+1&#xa;   }&#xa; }&#xa;&#xa; P1&lt;-Df$R&#xa; P2&lt;-Df$ID_Out&#xa; Df$R[1]&lt;-0&#xa; Df$R[2:N]&lt;-P1[1:(N-1)]&#xa; Df$ID_Out[1]&lt;-0&#xa; Df$ID_Out[2:N]&lt;-P2[1:(N-1)]"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="endString">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=" }"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -280,6 +321,7 @@
                               <Component id="stepButton" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="xButton" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="expButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="individCodeButton" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -306,7 +348,9 @@
                   <Component id="logButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="xlogButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="84" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="individCodeButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="57" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -364,6 +408,17 @@
             <Property name="text" type="java.lang.String" value="xlog(x)"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JRadioButton" name="individCodeButton">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="properties"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&#x418;&#x43d;&#x434;&#x438;&#x432;&#x438;&#x434;&#x443;&#x430;&#x43b;&#x44c;&#x43d;&#x430;&#x44f; &#x444;&#x443;&#x43d;&#x43a;&#x446;&#x438;&#x44f; &#x441;&#x43b;&#x43e;&#x436;&#x43d;&#x43e;&#x441;&#x442;&#x438;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="individCodeButtonPropertyChange"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="OpropertiesPanel">
@@ -409,6 +464,7 @@
               <Format format="#0.#" subtype="-1" type="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="text" type="java.lang.String" value="0"/>
             <Property name="toolTipText" type="java.lang.String" value="0,1-10"/>
             <Property name="actionCommand" type="java.lang.String" value="&lt;Not Set&gt;"/>
             <Property name="doubleBuffered" type="boolean" value="true"/>
@@ -423,6 +479,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OcoefActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="OcoefKeyTyped"/>
           </Events>
         </Component>

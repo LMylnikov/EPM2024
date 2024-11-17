@@ -43,6 +43,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.Collections;
+import point.detectConfrontation;
+import point.pointCross;
 import rtranslator.RTranslatorClass;
 
 public class jMDIFrame extends JInternalFrame {
@@ -648,10 +650,20 @@ public class jMDIFrame extends JInternalFrame {
         points.clear();
         for (figures ff : all) {//заполнение массива точками для каждой фигуры с соответствием их идексам
             if (ff.getRec() != null) {
+                //added
+                if (detectConfrontation.isCrossAdding(ff, lines)){
+                    pointCross pn = new pointCross(ff.getRec());
+                    pn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
+                    pn.setVisible(true);
+                    points.add(all.indexOf(ff), pn);//по итогу полностью заполнится всеми точками на текущий момент
+                    continue;
+                }
+                //added
                 pointStraight pn = new pointStraight(ff.getRec());
                 pn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
                 pn.setVisible(true);
                 points.add(all.indexOf(ff), pn);//по итогу полностью заполнится всеми точками на текущий момент
+                
             }
         }
         //drawObjects();
