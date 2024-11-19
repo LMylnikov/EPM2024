@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import static rtranslator.BasicFunctionCode.returnBasicFunktionCode;
 
 public class SaveCodeInFileR {
-    static public void saveToFile(ArrayList<String> rows, String fileName){
-        String global = returnBasicFunktionCode() + "\n";
+    static public void saveToFile(String preCode, ArrayList<String> rows, String fileName){
+        String global = returnBasicFunktionCode() + "\n" + preCode+"\n# --- ==== [ Основная программа ] ==== ---\n"; 
         for (String row: rows){
             global+= row + "\n";
         }

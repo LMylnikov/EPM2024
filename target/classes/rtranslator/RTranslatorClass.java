@@ -20,9 +20,11 @@ public class RTranslatorClass {
     int idNumber = 66;
     int idStep = 66;
     int rCount = 0;
+    int numSpace = 0; //Отступы для if
     private static Preferences localPrefsMdis = prefsMdi; 
-    
-    public RTranslatorClass() {
+    private String preCode;
+    public RTranslatorClass(String preCode) {
+        this.preCode = preCode;
         boolean help = true; String hep = "f";
         startN = localPrefsMdis.get("NValue", hep);
         isPlotActive = (localPrefsMdis.getBoolean("graphState",help));
@@ -42,20 +44,25 @@ public class RTranslatorClass {
     public void addString(String text) {
         rows.add("N <- "+startN);
         for (String strg : text.split("\n")) { //перепор каждой строки
+            if (strg.length() == 0){
+                continue;
+            }
+            strg = strg.replace("    ", "");
             char shape = strg.charAt(0); //выбираем первый символ строки для определения типа фигуры
             String forAdding = "";
             switch (shape) { //переделываем псевдокод в код R
                 case ('i'): //первая i = 100 например
-                    forAdding = strg.replace("=","<-");
-                    break;
-                case ('O'): //O
-                    forAdding = strg;
+                    forAdding = space() + strg.replace("=","<-");
                     break;
                 case ('N'): //NV
                     forAdding = generateNVCodeR(strg);
                     break;
                 case ('d'): //if
-                    forAdding = strg;
+                    forAdding = generateIfStartCodeR(strg);
+                    break;
+                case ('e'): // end if
+                    numSpace-=1;
+                    forAdding = generateIfEndCodeR(strg);
                     break;
                 case ('R'): //R
                     forAdding = generateRCodeR(strg);
@@ -79,21 +86,33 @@ public class RTranslatorClass {
         if (isXESActive && rCount>0){
             rows.add("write.csv(X, file=\""+xesFileName+".csv\")"); //Если выгружаем хес добавляем соотв строку
         }
-        saveToFile(rows,rFilePath+"/"+rFileName+".R"); //Сохраняем в файл
+        saveToFile(preCode,rows,rFilePath+"/"+rFileName+".R"); //Сохраняем в файл
     }
-
+    public String generateIfStartCodeR(String exCode) { //Констиурктор кода языка R для if start
+        String rCodeString  = "";
+        String condition = exCode.split("\\(")[1].split("\\)")[0];
+        rCodeString = space() + "while (" + condition + "){";
+        numSpace+=1;
+        return rCodeString;
+    }
+    public String generateIfEndCodeR(String exCode) { //Констиурктор кода языка R для if end
+        String rCodeString = "";
+        String afterElse = exCode.split("else ")[1].replace("=","<-");
+        rCodeString = space() + "}" + "\n"+ space() + afterElse;
+        return rCodeString;
+    }
     public String generateSCodeR(String exCode) { //Констиурктор кода языка R для фиугры S
         String rCodeString = "";
         String name = exCode.split(" = ")[0];//до =
         String type = exCode.split(" = ")[1].split("\\(")[0]; // после = до (
         String typeVar = exCode.split(" = ")[1].split("\\(")[1].replace(")", "");// в ()
         typeVar = typeVar.replace(',','.'); //Замена запятой на точку, так как конфликт в R. ИСПРАВИТЬ В ОСНОВНОЙ ПРОГЕ ИЛИ УЧЕСТЬ ВЕЗДЕ
-        rCodeString = name + "<-S_" + type + "(N, " + typeVar + ", " + idNumber + ")";
+        rCodeString = space() + name + "<-S_" + type + "(N, " + typeVar + ", " + idNumber + ")";
         idNumber += idStep;
 //        'S<-S_prob(N, 0.9, 1000)';
         if (isPlotActive) { //если нужно строить графики
             rCodeString += "\n"
-                    + "plot(1:N, " + name + "$S, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,6))";
+                    + space() + "plot(1:N, " + name + "$S, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,6), main = \"Элемент "+name+"\")";
         }
         return rCodeString;
     }
@@ -102,7 +121,7 @@ public class RTranslatorClass {
         String rCodeString = "";
         String nvName = exCode.split(" = ")[0]; //имя NV
         String rName = exCode.split(" = ")[1]; //имя R
-        rCodeString = nvName + "<-subset( " + rName + ", select=c(R, ID_Out)) colnames( " + nvName + " ) <- c('S', 'ID')";
+        rCodeString = space() + nvName + "<-subset( " + rName + ", select=c(R, ID_Out)) colnames( " + nvName + " ) <- c('S', 'ID')";
         return rCodeString;
     }
 
@@ -122,28 +141,29 @@ public class RTranslatorClass {
             return "empty";
         }
         String srElement = srBlockGen(srFig);
-        if (isActiveO && !(oFig[0].equals("NULL"))){ //если нужно выводить О
-            rCodeString = rName+"_O" + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
+        if (isActiveO && !(oFig[0].equals(" NULL"))){ //если нужно выводить О
+            rCodeString = space() + rName+"_O" + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
             String oNum =  exCode.split("\\(")[2].split("\\)")[0];
-            rCodeString += "\n"+rName+ "<-O("+rName+"_O,"+oNum+")";
+            rCodeString += "\n"+ space() + rName+ "<-O("+rName+"_O,"+oNum+")";
         }
         else{
-            rCodeString = rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
+            rCodeString = space() + rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
         }
         if (isPlotActive){ //график для R
-            rCodeString += "\nplot(1:N, "+rName+"$R, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15))" +
-            "\nplot(1:N, "+rName+"$Prj_File, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15))";
+            rCodeString +=  "\n"+ space() +"plot(1:N, "+rName+"$R, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15), main = \"Элемент "+rName+"\")" +
+            "\n" + space() + "plot(1:N, "+rName+"$Prj_File, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15), main = \"Элемент "+rName+"\")";
             if (isXESActive){ // график для X
                 rCount+=1;
                 String xName = "X";
                 if (rCount == 1){
-                    rCodeString+="\n"+xName+"<-XES("+rName+")";
+                    rCodeString+="\n" + space() +xName+"<-XES("+rName+")";
                 }else{
                     xName += rCount;
-                    rCodeString+="\n"+xName+"<-XES("+rName+")"
-                            + "\nX<-rbind(X,"+xName+")";
+                    rCodeString+="\n"+ space() +xName+"<-XES("+rName+")"
+                            +"\n" + space() + "X<-rbind(X,"+xName+")";
+                    rCodeString+="\n" + space() + "vioplot("+xName+"$W, col = \"lightgray\",  panel.first=grid(), main = \"Элемент "+rName+"\")";
                 }
-                rCodeString+= "\nvioplot("+xName+"$W, col = \"lightgray\",  panel.first=grid())";
+                rCodeString+= "\n" + space() + "vioplot(X$W, col = \"lightgray\",  panel.first=grid(), main = \"Все элементы до "+rName+"\")";
             }
         }
         return preRCode + rCodeString;
@@ -190,5 +210,8 @@ public class RTranslatorClass {
         String nvSelfCode = nvName + " = " + rName; //самописный техничесакий код nv с указаниепм своего имени nv
         preRCode += generateNVCodeR(nvSelfCode) + "\n"; //добавляем в код до текущего блока v = r
         return nvName;
+    }
+    private String space(){
+        return "    ".repeat(numSpace);
     }
 }

@@ -43,9 +43,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.Collections;
-import point.detectConfrontation;
-import point.pointCross;
 import rtranslator.RTranslatorClass;
+import rtranslator.newPrecodeGenerator;
 
 public class jMDIFrame extends JInternalFrame {
 
@@ -650,20 +649,10 @@ public class jMDIFrame extends JInternalFrame {
         points.clear();
         for (figures ff : all) {//заполнение массива точками для каждой фигуры с соответствием их идексам
             if (ff.getRec() != null) {
-                //added
-                if (detectConfrontation.isCrossAdding(ff, lines)){
-                    pointCross pn = new pointCross(ff.getRec());
-                    pn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
-                    pn.setVisible(true);
-                    points.add(all.indexOf(ff), pn);//по итогу полностью заполнится всеми точками на текущий момент
-                    continue;
-                }
-                //added
                 pointStraight pn = new pointStraight(ff.getRec());
                 pn.setSize(jPanel1.getWidth(), jPanel1.getHeight());
                 pn.setVisible(true);
                 points.add(all.indexOf(ff), pn);//по итогу полностью заполнится всеми точками на текущий момент
-                
             }
         }
         //drawObjects();
@@ -873,7 +862,8 @@ public class jMDIFrame extends JInternalFrame {
         figures b = all.get(0);
         ss = b.getShape();
 
-        if (pointed == true && checkLine == false) {//убирать точки теекущего объекта при перетаскивании
+        if (pointed == true && checkLine == false) {
+            // Убираем точки текущего объекта при перетаскивании
             jPanel1.remove(points.get(0));
             jPanel1.add(new GridPanel((int) (GridPanel.GetBaseCellSize() * zoom / 100))); // Добавляем сетку перед добавлением фигур
             jPanel1.revalidate();
@@ -882,14 +872,14 @@ public class jMDIFrame extends JInternalFrame {
         }
 
         if (touch == true && checkLine == false) {
-
+            // Логика перетаскивания фигуры
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             dx = -oldX + b.getXX();
             dy = -oldY + b.getYY();
             newX = evt.getX() + dx;
             newY = evt.getY() + dy;
             this.OutOfBounds();
-
+            // Логика перетаскивания линии, если связана
             if (lined) {
                 for (Line ln : lines) {
                     // for (figures f : all) {
@@ -927,7 +917,6 @@ public class jMDIFrame extends JInternalFrame {
                         ln.arrow.x1 = p1.x;
                         ln.arrow.y1 = p1.y;
                         ln.arrow.repaint();
-
                         //ln.setCC();
                     }
                     if (b.getNameF().equals(ln.getID2())) {
@@ -959,16 +948,17 @@ public class jMDIFrame extends JInternalFrame {
             oldY = evt.getY();
             ButtonActivated();
         }
-
+        //Проверка, если ведем стрелку
         //Перерисовка стрелки
         if (checkLine == true) {
             Line l = lines.get(0);
 
             // 1. Проверяем попадание в площадку для соединения целевой фигуры и если попадаем то меняем курсор на крестик
-            boolean targetPoint = false;
+            boolean targetPoint = false; //Флаг для проверки попадания на точки фигуры
             for (points ps : points) {
                 ArrayList<Shape> pointShape1 = new ArrayList();
                 pointShape1 = points.get(points.indexOf(ps)).getShape();
+                
                 for (Shape l1 : pointShape1) {
                     if (l1.contains(evt.getPoint())) {
                         this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -1148,8 +1138,6 @@ public class jMDIFrame extends JInternalFrame {
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
-        // TODO add your handling code here:
-
         if (change_idx) {
             Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
             int dialogResult = JOptionPane.showConfirmDialog(this, "Project wasn't saved. Would you like to save your project?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon(image));
@@ -1212,14 +1200,14 @@ public class jMDIFrame extends JInternalFrame {
                         //jPanel1.removeAll();
                         lines.get(0).setC2((Point2D) ps.getPoint().get(pointShape.indexOf(l)));
                         lines.get(0).setID2(all.get(points.indexOf(ps)).getNameF());
-
-                        Class first = null, second = null;
+                        figures first = null, second = null;
+//                        Class first = null, second = null;
                         for (figures currentFigure : all) {
                             if (currentFigure.getNameF().equals(lines.get(0).getID1())) {
-                                first = currentFigure.getClass();
+                                first = currentFigure; //.getClass();
                             }
                             if (currentFigure.getNameF().equals(lines.get(0).getID2())) {
-                                second = currentFigure.getClass();
+                                second = currentFigure; //.getClass();
                             }
                         }
                         int cc = 0;// количество линий между объектами
@@ -1230,21 +1218,21 @@ public class jMDIFrame extends JInternalFrame {
                         }
 
                         //Если выполняется одно из условий то добавляем соединительную линию
-                        if (((first.equals(NV.class) && second.equals(V.class))
+                        if (((first.getClass().equals(NV.class) && second.getClass().equals(V.class) && findLinkedFigToFig("NV",second.getNameF(),""))
                                 || //первая фигура - NV, вторая фигура - V ИЛИ
-                                (first.equals(S1.class) && second.equals(V.class))
+                                (first.getClass().equals(S1.class) && second.getClass().equals(V.class) && findLinkedFigToFig("S1",second.getNameF(),""))
                                 || //первая фигура - S, вторая фигура - V ИЛИ
-                                (first.equals(V.class) && second.equals(R.class))
+                                (first.getClass().equals(V.class) && second.getClass().equals(R.class) && findLinkedFigToFig("V",second.getNameF(),""))
                                 || //первая фигура - V, вторая фигура - R ИЛИ
-                                (first.equals(R.class) && second.equals(NV.class))
+                                (first.getClass().equals(R.class) && second.getClass().equals(NV.class) && findLinkedFigToFig("R",second.getNameF(),""))
                                 || //первая фигура - R, вторая фигура - NV ИЛИ
-                                (first.equals(R.class) && second.equals(V.class))
+                                (first.getClass().equals(R.class) && second.getClass().equals(V.class) && findLinkedFigToFig("R",second.getNameF(),""))
                                 || //первая фигура - R, вторая фигура - V ИЛИ
-                                (first.equals(R.class) && second.equals(d.class))
+                                (first.getClass().equals(R.class) && second.getClass().equals(d.class))
                                 || //первая фигура - R, вторая фигура - IF ИЛИ
-                                (first.equals(O.class) && second.equals(V.class))
+                                (first.getClass().equals(O.class) && second.getClass().equals(V.class) && findLinkedFigToFig("O",second.getNameF(),""))
                                 ||//первая фигура - O, вторая фигура - V ИЛИ
-                                (first.equals(d.class))) //первая фигура - IF
+                                (first.getClass().equals(d.class))) //первая фигура - IF
                                 && (cc == 1)//новая линия единственная между объектами
                                 ) {
                             if (!lined) {
@@ -1267,9 +1255,10 @@ public class jMDIFrame extends JInternalFrame {
                     break; //Если сделали соединение то заканчиваем поиск точек для соединения          
                 }
             }
-
-            if (lines.get(0).getID1().equals(lines.get(0).getID2())) {
-                lines.remove(0); //Если не попали в конечный элемент то линию не создаем, а бахаем заготовку
+            if (lines.size()!=0){
+                if (lines.get(0).getID1().equals(lines.get(0).getID2())) {
+                    lines.remove(0); //Если не попали в конечный элемент то линию не создаем, а бахаем заготовку
+                }
             }
             //Перерисовываем
             jPanel1.removeAll();
@@ -1289,7 +1278,31 @@ public class jMDIFrame extends JInternalFrame {
         }
 
     }//GEN-LAST:event_jPanel1MouseReleased
-
+    private boolean findLinkedFigToFig(String startShape, String endName, String filter){
+        //поиск присоединенных классов к нужной фигуре
+        boolean isFirst = true;
+        for (Line ln : lines){
+            if (ln.getID2().equals(endName)){
+                for (figures fig : all){
+                    if (ln.getID1().equals(fig.getNameF())){
+                        System.out.println("1");
+                        System.out.println(fig.getClass().toString());
+                        if (fig.getClass().toString().replace("class figure.","").equals(startShape)){ //Если такой класс есть, то отмена
+                            System.out.println(fig.getNameF());
+                            if (isFirst){
+                                isFirst = false;
+                            }else{
+                                System.out.println("4");
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("3");
+        return true; //Если нету, то продолжаем
+    }
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         // TODO add your handling code here:
         // очищаем все
@@ -1677,7 +1690,8 @@ public class jMDIFrame extends JInternalFrame {
 
     private void rCodeActivatorButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rCodeActivatorButActionPerformed
         //Создание R кода по нашему псевдокоду
-        RTranslatorClass newRTC = new RTranslatorClass(); //Создаем объект для перевода 
+        newPrecodeGenerator preCode = new newPrecodeGenerator(all);
+        RTranslatorClass newRTC = new RTranslatorClass(preCode.getPrecodeString()); //Создаем объект для перевода 
         newRTC.addString(textDescription.getText()); //Передаем текст с псевдокодом
     }//GEN-LAST:event_rCodeActivatorButActionPerformed
 

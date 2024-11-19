@@ -31,7 +31,6 @@ jMDIForm\PropertiesDialog$30.class
 EPM\mdi$24.class
 jMDIForm\jMDIFrame$1.class
 jMDIForm\jMDIFrame$20.class
-point\pointCross.class
 jMDIForm\PropertiesDialog$8.class
 jMDIForm\PropertiesDialog$24.class
 EPM\mdi$37.class
@@ -57,6 +56,7 @@ jMDIForm\jMDIFrame$15.class
 EPM\mdi$40.class
 point\pointStraight.class
 jMDIForm\GridPanel.class
+rtranslator\newPrecodeGenerator.class
 figure\LineStraight.class
 jMDIForm\PropertiesDialog$18.class
 jMDIForm\PropertiesDialog.class
@@ -124,7 +124,6 @@ EPM\mdi$19.class
 jMDIForm\jMDIFrame$9.class
 jMDIForm\PropertiesDialog$12.class
 jMDIForm\PropertiesDialog$32.class
-point\detectConfrontation.class
 EPM\S.class
 jMDIForm\PropertiesDialog$5.class
 EPM\mdi$20.class

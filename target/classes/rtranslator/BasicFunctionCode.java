@@ -187,8 +187,7 @@ public class BasicFunctionCode {
 "    A3$S[i]<-length(A3$ID[[i]])-1\n" +
 "  }\n" +
 "  Select<-A3\n" +
-"}\n"+ 
-"# --- ==== [ Основная программа ] ==== ---";
+"}\n";
         return code;
     }
 }

@@ -89,7 +89,15 @@ public class PropertiesDialog extends javax.swing.JDialog {
                 mainBodyTabbedPanel.addTab("Свойства V",VpropertiesPanel); // добавление нужных окон делаем через этот метод
                 if (fig.getVSelected().equals("Индивидуальная функция сложности")){
                     addCodeWindowInProp();
-                    codeTextField.setText(fig.getCodeF()); // Установка текста кода фигуры
+                    String transform = fig.getCodeF();
+                    String[] rows = transform.split("\n");
+                    transform = "";
+                    for (int i = 1; i<rows.length-2;i++){
+                        transform += rows[i]+'\n';
+                    }
+                    firstStringCodeField.setText(rows[0]);
+                    lastStringCodeField.setText(rows[rows.length-2]);
+                    codeTextField.setText(transform); // Установка текста кода фигуры
                 }
                 break;
             case "O":
@@ -877,7 +885,6 @@ public class PropertiesDialog extends javax.swing.JDialog {
         figOnWork.setNameF(curShape+figuresNimberField.getText());
 
         figOnWork.setDescriptionF(descriptionTextField.getText());
-        figOnWork.setCodeF(codeTextField.getText());
         switch (curShape){
             case "S":
                 figOnWork.setLikelihood(Slikelihood.getText());
@@ -891,6 +898,7 @@ public class PropertiesDialog extends javax.swing.JDialog {
                         figOnWork.setVSelected(button.getText());
                     }
                 }
+                figOnWork.setCodeF(firstStringCodeField.getText()+"\n"+codeTextField.getText()+"\n"+lastStringCodeField.getText()+"\n}");
                 break;
             case "O":
                 figOnWork.setCoef(Ocoef.getText());

@@ -16,7 +16,6 @@ C:\code\pr\EPM2024\src\main\java\jMDIForm\CustomVerticalScrollbar.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\FileUtils.java
 C:\code\pr\EPM2024\src\main\java\figure\Line_s.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\GridPanel.java
-C:\code\pr\EPM2024\src\main\java\point\pointCross.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\PropertiesDialog.java
 C:\code\pr\EPM2024\src\main\java\figure\Arrow.java
 C:\code\pr\EPM2024\src\main\java\figure\NV.java
@@ -27,7 +26,6 @@ C:\code\pr\EPM2024\src\main\java\converter\Figure_s.java
 C:\code\pr\EPM2024\src\main\java\converter\Line_s.java
 C:\code\pr\EPM2024\src\main\java\figure\b.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\readSaveData.java
-C:\code\pr\EPM2024\src\main\java\point\detectConfrontation.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\g2d.java
 C:\code\pr\EPM2024\src\main\java\EPM\S.java
 C:\code\pr\EPM2024\src\main\java\point\Arrow.java
@@ -42,6 +40,7 @@ C:\code\pr\EPM2024\src\main\java\figure\R.java
 C:\code\pr\EPM2024\src\main\java\descritGen\subObjR.java
 C:\code\pr\EPM2024\src\main\java\figure\pointStraight.java
 C:\code\pr\EPM2024\src\main\java\line\LineStraight.java
+C:\code\pr\EPM2024\src\main\java\rtranslator\newPrecodeGenerator.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\JSONoperations.java
 C:\code\pr\EPM2024\src\main\java\point\points.java
 C:\code\pr\EPM2024\src\main\java\descritGen\subObjNV.java

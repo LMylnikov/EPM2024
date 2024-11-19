@@ -76,7 +76,7 @@ public class generatorObj {
         }
         String beforeName = ""; //Имя фигуры,первой выходящей из if
         String figVtoR = ""; //Имя V входяхую в пред IF фигуру R
-        String subString = "do " + objIF.getName() + "(i) then\n"+"    ".repeat(curSpace)+"i = i + 1"+ "\n";
+        String subString = "do " + objIF.getName() + "("+ objIF.getCompareElementName()+objIF.getComapreSign()+objIF.getCompareNumber()  +") then\n"+"    ".repeat(curSpace)+"i = i + 1"+ "\n";
         String iskluchenia = objIF.getName(); //имя фигуры входящей в V
         if (withNvType){ //через NV
            beforeName = objIF.getLinkedOutFalseNV();
@@ -242,40 +242,68 @@ public class generatorObj {
             Figure_s endOfLink = findFigByName(link.GetID2());
             Figure_s startOfLink = findFigByName(link.GetID1());
             if (endOfLink.getShape().equals("d") & startOfLink.getShape().equals("R")){ // если R -> IF
-                if (findIFObjByName(endOfLink.getName()) == null){ //если не найден элемент{
-                    subObjIF newEl = new subObjIF(endOfLink.getName());
-                    newEl.setLinkedInR(startOfLink.getName());
+                if (findIFObjByName(endOfLink.getName()) == null){ //Если не найден элемент{
+                    subObjIF newEl = new subObjIF(endOfLink.getName()); //Создание нового объекта
+                    newEl.setComapreSign(endOfLink.getSignIfSelected()); //Указание знака
+                    if (endOfLink.getIfSelected() == 0){ //Указание на то с чем сравниваем
+                        newEl.setCompareElementName("i");
+                    }else{
+                        newEl.setCompareElementName(endOfLink.getIfNvElement());
+                    }
+                    newEl.setCompareNumber(endOfLink.getCompareNumber()); //Указываем число сравнения
+                    newEl.setLinkedInR(startOfLink.getName()); //Добавление нужного элемента
                     arrayIFs.add(newEl);
                     continue;
                 }
-                findIFObjByName(endOfLink.getName()).setLinkedInR(startOfLink.getName());
+                findIFObjByName(endOfLink.getName()).setLinkedInR(startOfLink.getName());  //Добавление нужного элемента
             }
             if (endOfLink.getShape().equals("R") & startOfLink.getShape().equals("d")){ // если IF -> R
                 if (findIFObjByName(startOfLink.getName()) == null){ //если не найден элемент{
                     subObjIF newEl = new subObjIF(startOfLink.getName());
-                    newEl.setLinkedOutTrueR(endOfLink.getName());
+                    newEl.setComapreSign(startOfLink.getSignIfSelected());
+                    if (startOfLink.getIfSelected() == 0){
+                        newEl.setCompareElementName("i");
+                    }else{
+                        newEl.setCompareElementName(startOfLink.getIfNvElement());
+                    }
+                    newEl.setCompareNumber(startOfLink.getCompareNumber());
+                    newEl.setLinkedOutTrueR(endOfLink.getName()); //Добавление нужного элемента
                     arrayIFs.add(newEl);
                     continue;
                 }
-                findIFObjByName(startOfLink.getName()).setLinkedOutTrueR(endOfLink.getName());
+                findIFObjByName(startOfLink.getName()).setLinkedOutTrueR(endOfLink.getName()); //Добавление нужного элемента
             }
             if (endOfLink.getShape().equals("V") & startOfLink.getShape().equals("d")){ // если IF -> V
                 if (findIFObjByName(startOfLink.getName()) == null){ //если не найден элемент{
                     subObjIF newEl = new subObjIF(startOfLink.getName());
-                    newEl.setLinkedOutFalseV(endOfLink.getName());
+                    newEl.setComapreSign(startOfLink.getSignIfSelected());
+                    if (startOfLink.getIfSelected() == 0){
+                        newEl.setCompareElementName("i");
+                    }else{
+                        newEl.setCompareElementName(startOfLink.getIfNvElement());
+                    }
+                    newEl.setCompareNumber(startOfLink.getCompareNumber());
+                    newEl.setLinkedOutFalseV(endOfLink.getName()); //Добавление нужного элемента
                     arrayIFs.add(newEl);
                     continue;
                 }
-                findIFObjByName(startOfLink.getName()).setLinkedOutFalseV(endOfLink.getName());
+                findIFObjByName(startOfLink.getName()).setLinkedOutFalseV(endOfLink.getName()); //Добавление нужного элемента
             }
             if (endOfLink.getShape().equals("NV") & startOfLink.getShape().equals("d")){ // если IF -> NV 
                 if (findIFObjByName(startOfLink.getName()) == null){ //если не найден элемент{
                     subObjIF newEl = new subObjIF(startOfLink.getName());
-                    newEl.setLinkedOutFalseNV(endOfLink.getName());
+                    newEl.setComapreSign(startOfLink.getSignIfSelected());
+                    if (startOfLink.getIfSelected() == 0){
+                        newEl.setCompareElementName("i");
+                    }else{
+                        newEl.setCompareElementName(startOfLink.getIfNvElement());
+                    }
+                    newEl.setCompareNumber(startOfLink.getCompareNumber());
+                    newEl.setLinkedOutFalseNV(endOfLink.getName()); //Добавление нужного элемента
                     arrayIFs.add(newEl);
                     continue;
                 }
-                findIFObjByName(startOfLink.getName()).setLinkedOutFalseNV(endOfLink.getName());
+                findIFObjByName(startOfLink.getName()).setLinkedOutFalseNV(endOfLink.getName()); //Добавление нужного элемента
             }
             if (endOfLink.getShape().equals("R") & startOfLink.getShape().equals("V")){ //если связь V->R
                 if (findRObjByName(endOfLink.getName()) == null){ //если не найден элемент

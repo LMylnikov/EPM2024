@@ -7,6 +7,9 @@ public class subObjIF {
     private String linkedOutTrueR;
     private String linkedOutFalseNV;
     private String linkedOutFalseV;
+    private String compareElementName ;
+    private String compareNumber;
+    private String compareSign;
    
     private String nameIF;
     
@@ -43,11 +46,44 @@ public class subObjIF {
     public String getLinkedInR(){
         return linkedInR;
     }
-    
     public String getName(){
         return nameIF;
     }
     public void setName(String name){
         nameIF = name;
+        
+    }public String getComapreSign(){
+        return compareSign;
+    }
+    public void setComapreSign( int sign){
+        switch(sign){
+            case(0):
+                compareSign = "<";
+                break;
+            case(1):
+                compareSign = "<=";
+                break;
+            case(2):
+                compareSign = "=";
+                break;
+            case(3):
+                compareSign = ">=";
+                break;
+            case(4):
+                compareSign = ">";
+                break;
+        }
+        
+    }public String getCompareNumber(){
+        return compareNumber;
+    }
+    public void setCompareNumber(int num){
+        compareNumber = Integer.toString(num);
+    }
+    public String getCompareElementName(){
+        return compareElementName;
+    }
+    public void setCompareElementName(String cName){
+        compareElementName = cName;
     }
 }
