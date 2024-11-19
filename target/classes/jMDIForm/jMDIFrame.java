@@ -1218,19 +1218,19 @@ public class jMDIFrame extends JInternalFrame {
                         }
 
                         //Если выполняется одно из условий то добавляем соединительную линию
-                        if (((first.getClass().equals(NV.class) && second.getClass().equals(V.class) && findLinkedFigToFig("NV",second.getNameF(),""))
+                        if (((first.getClass().equals(NV.class) && second.getClass().equals(V.class) && findLinkedFigToFig("NV",second.getNameF()))
                                 || //первая фигура - NV, вторая фигура - V ИЛИ
-                                (first.getClass().equals(S1.class) && second.getClass().equals(V.class) && findLinkedFigToFig("S1",second.getNameF(),""))
+                                (first.getClass().equals(S1.class) && second.getClass().equals(V.class) && findLinkedFigToFig("S1",second.getNameF()))
                                 || //первая фигура - S, вторая фигура - V ИЛИ
-                                (first.getClass().equals(V.class) && second.getClass().equals(R.class) && findLinkedFigToFig("V",second.getNameF(),""))
+                                (first.getClass().equals(V.class) && second.getClass().equals(R.class) && findLinkedFigToFig("V",second.getNameF()))
                                 || //первая фигура - V, вторая фигура - R ИЛИ
-                                (first.getClass().equals(R.class) && second.getClass().equals(NV.class) && findLinkedFigToFig("R",second.getNameF(),""))
+                                (first.getClass().equals(R.class) && second.getClass().equals(NV.class) && findLinkedFigToFig("R",second.getNameF()))
                                 || //первая фигура - R, вторая фигура - NV ИЛИ
-                                (first.getClass().equals(R.class) && second.getClass().equals(V.class) && findLinkedFigToFig("R",second.getNameF(),""))
+                                (first.getClass().equals(R.class) && second.getClass().equals(V.class) && findLinkedFigToFig("R",second.getNameF()))
                                 || //первая фигура - R, вторая фигура - V ИЛИ
                                 (first.getClass().equals(R.class) && second.getClass().equals(d.class))
                                 || //первая фигура - R, вторая фигура - IF ИЛИ
-                                (first.getClass().equals(O.class) && second.getClass().equals(V.class) && findLinkedFigToFig("O",second.getNameF(),""))
+                                (first.getClass().equals(O.class) && second.getClass().equals(V.class) && findLinkedFigToFig("O",second.getNameF()))
                                 ||//первая фигура - O, вторая фигура - V ИЛИ
                                 (first.getClass().equals(d.class))) //первая фигура - IF
                                 && (cc == 1)//новая линия единственная между объектами
@@ -1278,21 +1278,17 @@ public class jMDIFrame extends JInternalFrame {
         }
 
     }//GEN-LAST:event_jPanel1MouseReleased
-    private boolean findLinkedFigToFig(String startShape, String endName, String filter){
+    private boolean findLinkedFigToFig(String startShape, String endName){
         //поиск присоединенных классов к нужной фигуре
         boolean isFirst = true;
         for (Line ln : lines){
             if (ln.getID2().equals(endName)){
                 for (figures fig : all){
                     if (ln.getID1().equals(fig.getNameF())){
-                        System.out.println("1");
-                        System.out.println(fig.getClass().toString());
                         if (fig.getClass().toString().replace("class figure.","").equals(startShape)){ //Если такой класс есть, то отмена
-                            System.out.println(fig.getNameF());
                             if (isFirst){
                                 isFirst = false;
                             }else{
-                                System.out.println("4");
                                 return false;
                             }
                         }
