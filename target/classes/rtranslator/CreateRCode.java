@@ -3,12 +3,16 @@ import java.io.*;
 import java.util.ArrayList;
 import static rtranslator.BasicFunctionCode.returnBasicFunktionCode;
 
-public class SaveCodeInFileR {
-    static public void saveToFile(String preCode, ArrayList<String> rows, String fileName){
+public class CreateRCode {
+    public static String generateCodeRFromString(String preCode, ArrayList<String> rows){
         String global = returnBasicFunktionCode() + "\n" + preCode+"\n# --- ==== [ Основная программа ] ==== ---\n"; 
         for (String row: rows){
             global+= row + "\n";
         }
+        return global;
+    }
+    
+    public static void saveInFile(String global ,String fileName){
         try(FileWriter writer = new FileWriter(fileName, false))
         {
             writer.write(global);           

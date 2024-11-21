@@ -816,8 +816,10 @@ public class mdi extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Путь сохранения файла .R по умолчанию");
+        jLabel4.setEnabled(false);
 
         jLabel6.setText("Имя файла .R по умолчания");
+        jLabel6.setEnabled(false);
 
         jLabel7.setText("Имя файла XES по умолчанию");
 
@@ -825,11 +827,14 @@ public class mdi extends javax.swing.JFrame {
         rFileSaveWay.setToolTipText("");
 
         rFileSelectWay.setText("Выбрать");
+        rFileSelectWay.setEnabled(false);
         rFileSelectWay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rFileSelectWayActionPerformed(evt);
             }
         });
+
+        rNameFile.setEnabled(false);
 
         boxLookAtO.setText("Учитывать О");
         boxLookAtO.addActionListener(new java.awt.event.ActionListener() {
@@ -1615,10 +1620,6 @@ public class mdi extends javax.swing.JFrame {
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
         }
         // 1. Конец
-        // 1. Конец
-        // 1. Конец
-        // 1. Конец
-        
         // 2. Устанавливаем флаг изменений
         Field field2 = null;
         try {
@@ -1638,10 +1639,6 @@ public class mdi extends javax.swing.JFrame {
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
         } 
         // 2. 
-        // 2. 
-        // 2. 
-        // 2.
-        
         // 3. Вызываем метод сохранения из активного окна
         if (fn != "") {
             try {
@@ -1984,13 +1981,21 @@ public class mdi extends javax.swing.JFrame {
 //            xesNameFile.setText("Exit_XES");
 //            rNameFile.setText("Exit_R_File");
 //            rFileSaveWay.setText("");
-//        }        
-        SetConstantDialog.setVisible(true);
+//        }   
+
         SetConstantDialog.setModal(true);
-        SetConstantDialog.setSize(275, 360);
+        SetConstantDialog.setSize(275, 450);
         SetConstantDialog.setTitle("Set constant value");
-        SetConstantDialog.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
+        SetConstantDialog.setLocation(jDesktopPane.getWidth()/2-SetConstantDialog.getWidth()/2, jDesktopPane.getHeight()/2-SetConstantDialog.getHeight()/2);
+        SetConstantDialog.setVisible(true);        
         enabledChanger();
+
+//        SetConstantDialog.setVisible(true);
+//        SetConstantDialog.setModal(true);
+//        SetConstantDialog.setSize(275, 360);
+//        SetConstantDialog.setTitle("Set constant value");
+//        SetConstantDialog.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
+//        enabledChanger();
     }//GEN-LAST:event_jMenuItemSetIActionPerformed
 
     private void jMenuItemGenerateDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGenerateDescActionPerformed

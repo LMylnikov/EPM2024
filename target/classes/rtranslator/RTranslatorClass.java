@@ -4,7 +4,7 @@ import EPM.mdi;
 import static EPM.mdi.prefsMdi;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
-import static rtranslator.SaveCodeInFileR.saveToFile;
+import rtranslator.CreateRCode;
 
 public class RTranslatorClass {
 
@@ -40,7 +40,9 @@ public class RTranslatorClass {
             isXESActive = false;
         }
     }
-
+    public String getStringRCode(){
+        return CreateRCode.generateCodeRFromString(preCode,rows); //Сохраняем в файл
+    }
     public void addString(String text) {
         rows.add("N <- "+startN);
         for (String strg : text.split("\n")) { //перепор каждой строки
@@ -86,7 +88,8 @@ public class RTranslatorClass {
         if (isXESActive && rCount>0){
             rows.add("write.csv(X, file=\""+xesFileName+".csv\")"); //Если выгружаем хес добавляем соотв строку
         }
-        saveToFile(preCode,rows,rFilePath+"/"+rFileName+".R"); //Сохраняем в файл
+//        return CreateRCode.generateCodeRFromString(preCode,rows); //Сохраняем в файл
+//        (rFilePath+"/"+rFileName+".R") Указание сохранения файла R
     }
     public String generateIfStartCodeR(String exCode) { //Констиурктор кода языка R для if start
         String rCodeString  = "";

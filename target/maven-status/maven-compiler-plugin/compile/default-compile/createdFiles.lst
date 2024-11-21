@@ -53,6 +53,7 @@ EPM\mdi$29.class
 jMDIForm\jMDIFrame$22.class
 jMDIForm\PropertiesDialog$22.class
 jMDIForm\jMDIFrame$15.class
+rtranslator\CreateRCode.class
 EPM\mdi$40.class
 point\pointStraight.class
 jMDIForm\GridPanel.class
@@ -60,6 +61,7 @@ rtranslator\newPrecodeGenerator.class
 figure\LineStraight.class
 jMDIForm\PropertiesDialog$18.class
 jMDIForm\PropertiesDialog.class
+jMDIForm\jMDIFrame$24.class
 EPM\mdi$11.class
 jMDIForm\jMDIFrame$4.class
 figure\pointStraight.class
@@ -158,4 +160,3 @@ point\Arrow.class
 jMDIForm\PropertiesDialog$4.class
 EPM\mdi$5.class
 jMDIForm\jMDIFrame$11.class
-rtranslator\SaveCodeInFileR.class

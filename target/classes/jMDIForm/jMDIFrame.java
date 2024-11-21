@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.Collections;
+import rtranslator.CreateRCode;
 import rtranslator.RTranslatorClass;
 import rtranslator.newPrecodeGenerator;
 
@@ -104,12 +105,17 @@ public class jMDIFrame extends JInternalFrame {
         jMenuItemClear = new javax.swing.JMenuItem();
         jMenuItemGenDesc = new javax.swing.JMenuItem();
         canvas1 = new java.awt.Canvas();
+        SaveChooser = new javax.swing.JFileChooser();
         descrShowDialog = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
         scrollPane = new javax.swing.JScrollPane();
         textDescription = new javax.swing.JTextArea();
         closeDescrBut = new javax.swing.JButton();
         copyDescrBut = new javax.swing.JButton();
         rCodeActivatorBut = new javax.swing.JButton();
+        copyDescrButRCode = new javax.swing.JButton();
+        scrollPaneR = new javax.swing.JScrollPane();
+        textDescriptionRCode = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         zminus = new javax.swing.JButton();
@@ -167,40 +173,76 @@ public class jMDIFrame extends JInternalFrame {
             }
         });
 
-        rCodeActivatorBut.setText("Выполнить в R");
+        rCodeActivatorBut.setText("Сохранить код R");
         rCodeActivatorBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rCodeActivatorButActionPerformed(evt);
             }
         });
 
+        copyDescrButRCode.setText("Скопировать в буфер обмена");
+        copyDescrButRCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyDescrButRCodeActionPerformed(evt);
+            }
+        });
+
+        textDescriptionRCode.setEditable(false);
+        textDescriptionRCode.setColumns(20);
+        textDescriptionRCode.setRows(5);
+        scrollPaneR.setViewportView(textDescriptionRCode);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(closeDescrBut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(copyDescrBut)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(copyDescrButRCode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rCodeActivatorBut))
+                    .addComponent(scrollPaneR, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scrollPaneR, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(closeDescrBut)
+                    .addComponent(copyDescrBut)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rCodeActivatorBut)
+                        .addComponent(copyDescrButRCode)))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout descrShowDialogLayout = new javax.swing.GroupLayout(descrShowDialog.getContentPane());
         descrShowDialog.getContentPane().setLayout(descrShowDialogLayout);
         descrShowDialogLayout.setHorizontalGroup(
             descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(descrShowDialogLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
-                    .addGroup(descrShowDialogLayout.createSequentialGroup()
-                        .addComponent(closeDescrBut)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(copyDescrBut)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rCodeActivatorBut)))
-                .addContainerGap())
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         descrShowDialogLayout.setVerticalGroup(
             descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(descrShowDialogLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(descrShowDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(closeDescrBut)
-                    .addComponent(copyDescrBut)
-                    .addComponent(rCodeActivatorBut))
-                .addContainerGap())
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         setMaximizable(true);
@@ -1685,15 +1727,22 @@ public class jMDIFrame extends JInternalFrame {
     }//GEN-LAST:event_copyDescrButActionPerformed
 
     private void rCodeActivatorButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rCodeActivatorButActionPerformed
-        //Создание R кода по нашему псевдокоду
-        newPrecodeGenerator preCode = new newPrecodeGenerator(all);
-        RTranslatorClass newRTC = new RTranslatorClass(preCode.getPrecodeString()); //Создаем объект для перевода 
-        newRTC.addString(textDescription.getText()); //Передаем текст с псевдокодом
+        SaveInRFile();    
     }//GEN-LAST:event_rCodeActivatorButActionPerformed
+
+    private void copyDescrButRCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyDescrButRCodeActionPerformed
+        copyToClipboard(textDescriptionRCode.getText());
+    }//GEN-LAST:event_copyDescrButRCodeActionPerformed
 
     private void GenerateDescription() {
         generatorObj genOb = new generatorObj(CreatorConvertObject());
-        textDescription.setText(genOb.generateString());
+        String selfMaidCode = genOb.generateString();
+        textDescription.setText(selfMaidCode);
+        
+        newPrecodeGenerator preCode = new newPrecodeGenerator(all);
+        RTranslatorClass newRTC = new RTranslatorClass(preCode.getPrecodeString()); //Создаем объект для перевода 
+        newRTC.addString(selfMaidCode); //Передаем текст с псевдокодом
+        textDescriptionRCode.setText(newRTC.getStringRCode());
         descrShowDialog.setDefaultCloseOperation(descrShowDialog.DISPOSE_ON_CLOSE);
         descrShowDialog.pack();
         descrShowDialog.setModal(true);
@@ -1701,7 +1750,26 @@ public class jMDIFrame extends JInternalFrame {
         descrShowDialog.setVisible(true);
 
     }
-
+    public void SaveInRFile() {     
+        SaveChooser.setDialogTitle("Saving R File");// ("+fn+")");
+        SaveChooser.setCurrentDirectory(new File("."));
+        SaveChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        SaveChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "R"));
+        SaveChooser.approveSelection();
+        int option = SaveChooser.showSaveDialog(this);
+        if(option != JFileChooser.CANCEL_OPTION) {
+            File file1 = SaveChooser.getSelectedFile();
+            String file = null;
+            try {
+                file = file1.getCanonicalPath()+".R";
+            } catch (IOException ex) {
+                Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(file);
+            CreateRCode.saveInFile(textDescriptionRCode.getText(),file);
+            
+        }
+    }
     private void OutOfBounds() {
         // Рассчитываем правую и нижнюю границы видимой области панели
         int visibleWidth = jScrollPane1.getViewport().getViewRect().width;
@@ -1785,9 +1853,11 @@ public class jMDIFrame extends JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser SaveChooser;
     private java.awt.Canvas canvas1;
     private javax.swing.JButton closeDescrBut;
     private javax.swing.JButton copyDescrBut;
+    private javax.swing.JButton copyDescrButRCode;
     private javax.swing.JDialog descrShowDialog;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenuItem jMenuItemClear;
@@ -1795,6 +1865,7 @@ public class jMDIFrame extends JInternalFrame {
     private javax.swing.JMenuItem jMenuItemGenDesc;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jSize;
@@ -1802,7 +1873,9 @@ public class jMDIFrame extends JInternalFrame {
     private javax.swing.JButton rCodeActivatorBut;
     private javax.swing.JPopupMenu rcMenu;
     private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JScrollPane scrollPaneR;
     private javax.swing.JTextArea textDescription;
+    private javax.swing.JTextArea textDescriptionRCode;
     private javax.swing.JButton zminus;
     private javax.swing.JButton zminus1;
     private javax.swing.JButton zplus;
