@@ -87,6 +87,9 @@ public class subObjV {
             case('o'): //xlog
                 type = "5";
                 break;
+            case('д'): //Индивид функция
+                type = "6";
+                break;
         }
     }
 }

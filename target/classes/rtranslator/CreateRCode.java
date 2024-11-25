@@ -1,5 +1,6 @@
 package rtranslator;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import static rtranslator.BasicFunctionCode.returnBasicFunktionCode;
 
@@ -13,7 +14,7 @@ public class CreateRCode {
     }
     
     public static void saveInFile(String global ,String fileName){
-        try(FileWriter writer = new FileWriter(fileName, false))
+        try(FileWriter writer = new FileWriter(fileName,Charset.forName("utf-8") ,false))
         {
             writer.write(global);           
             writer.flush();

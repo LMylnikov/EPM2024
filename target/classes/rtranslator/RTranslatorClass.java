@@ -98,10 +98,15 @@ public class RTranslatorClass {
         numSpace+=1;
         return rCodeString;
     }
-    public String generateIfEndCodeR(String exCode) { //Констиурктор кода языка R для if end
+     public String generateIfEndCodeR(String exCode) { //Констиурктор кода языка R для if end
         String rCodeString = "";
-        String afterElse = exCode.split("else ")[1].replace("=","<-");
-        rCodeString = space() + "}" + "\n"+ space() + afterElse;
+        String afterElse = exCode.split("else ")[1].split("\\(")[0].replace(" ", "");
+        String rLeft = afterElse.split("=")[0];
+        String rRight = afterElse.split("=")[1];
+        rCodeString = "\n" + space() +rLeft + "<-subset(" + rRight + ", select=c(R, ID_Out)) #разъединить"+
+        "\n"+ space() + "colnames("+rLeft+") <- c('S', 'ID')"+
+        "\n"+ space() + rLeft + "<- Select("+ rLeft +", 1, 1000)";      
+        rCodeString = space() + "}" + rCodeString;
         return rCodeString;
     }
     public String generateSCodeR(String exCode) { //Констиурктор кода языка R для фиугры S
@@ -202,6 +207,9 @@ public class RTranslatorClass {
         }
         //теперь добавляем последнюю фигуру в список
         String curFig = inFigures.remove(0);
+        if (curFig.charAt(0) == ('R')) { //если фигура r переделываем в NV
+               curFig = addRInVInR(curFig);
+           }
         readyElement += curFig + ")".repeat(allObject.length - 1);
 
         return readyElement;

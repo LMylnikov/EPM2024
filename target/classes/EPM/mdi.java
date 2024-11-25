@@ -737,7 +737,6 @@ public class mdi extends javax.swing.JFrame {
 
         SetConstantDialog.setMinimumSize(new java.awt.Dimension(300, 380));
         SetConstantDialog.setModal(true);
-        SetConstantDialog.setPreferredSize(new java.awt.Dimension(300, 380));
         SetConstantDialog.setResizable(false);
 
         OkIBut.setText("Ok");
@@ -825,6 +824,7 @@ public class mdi extends javax.swing.JFrame {
 
         rFileSaveWay.setEditable(false);
         rFileSaveWay.setToolTipText("");
+        rFileSaveWay.setEnabled(false);
 
         rFileSelectWay.setText("Выбрать");
         rFileSelectWay.setEnabled(false);
@@ -1365,7 +1365,7 @@ public class mdi extends javax.swing.JFrame {
         OpenChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         //OpenChooser.setCurrentDirectory(OpenChooser.getCurrentDirectory());
         OpenChooser.setCurrentDirectory(new File("."));
-        OpenChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "epm"));
+        OpenChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "json"));
         int option = OpenChooser.showOpenDialog(this);
         //.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );
         if(option == JFileChooser.APPROVE_OPTION) {
@@ -1428,7 +1428,7 @@ public class mdi extends javax.swing.JFrame {
         SaveChooser.setDialogTitle("Specify a file to save");// ("+fn+")");
         SaveChooser.setCurrentDirectory(new File("."));
         SaveChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        SaveChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "epm"));
+        SaveChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "json"));
         SaveChooser.approveSelection();
         int option = SaveChooser.showSaveDialog(iFrame);
 
@@ -1442,7 +1442,7 @@ public class mdi extends javax.swing.JFrame {
             String file = null;
             
             try {
-                file = file1.getCanonicalPath();
+                file = file1.getCanonicalPath()+".json";
             } catch (IOException ex) {
                 Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             }
