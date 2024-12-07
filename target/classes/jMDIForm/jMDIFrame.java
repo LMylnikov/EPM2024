@@ -116,6 +116,7 @@ public class jMDIFrame extends JInternalFrame {
         copyDescrButRCode = new javax.swing.JButton();
         scrollPaneR = new javax.swing.JScrollPane();
         textDescriptionRCode = new javax.swing.JTextArea();
+        toRCodeBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         zminus = new javax.swing.JButton();
@@ -192,6 +193,13 @@ public class jMDIFrame extends JInternalFrame {
         textDescriptionRCode.setRows(5);
         scrollPaneR.setViewportView(textDescriptionRCode);
 
+        toRCodeBut.setText("Перевести в код R");
+        toRCodeBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toRCodeButActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -204,22 +212,25 @@ public class jMDIFrame extends JInternalFrame {
                         .addComponent(closeDescrBut)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(copyDescrBut)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(toRCodeBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(copyDescrButRCode)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(rCodeActivatorBut))
-                    .addComponent(scrollPaneR, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollPaneR, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scrollPaneR, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollPaneR, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toRCodeBut, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(closeDescrBut)
@@ -1734,21 +1745,32 @@ public class jMDIFrame extends JInternalFrame {
         copyToClipboard(textDescriptionRCode.getText());
     }//GEN-LAST:event_copyDescrButRCodeActionPerformed
 
-    private void GenerateDescription() {
-        generatorObj genOb = new generatorObj(CreatorConvertObject());
-        String selfMaidCode = genOb.generateString();
-        textDescription.setText(selfMaidCode);
-        
+    private void toRCodeButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toRCodeButActionPerformed
+        //генерация R кода
         newPrecodeGenerator preCode = new newPrecodeGenerator(all);
         RTranslatorClass newRTC = new RTranslatorClass(preCode.getPrecodeString()); //Создаем объект для перевода 
-        newRTC.addString(selfMaidCode); //Передаем текст с псевдокодом
-        textDescriptionRCode.setText(newRTC.getStringRCode());
+        newRTC.addString(textDescription.getText()); //Передаем текст с псевдокодом
+        textDescriptionRCode.setText(newRTC.getStringRCode()); //Записываем R код
+        
+        
+        rCodeActivatorBut.setEnabled(true); //активируем кнопки сохранения
+        copyDescrButRCode.setEnabled(true);
+    }//GEN-LAST:event_toRCodeButActionPerformed
+
+    private void GenerateDescription() {
+        //Генерация псевдокогда
+        generatorObj genOb = new generatorObj(CreatorConvertObject());
+        String selfMaidCode = genOb.generateString();
+        textDescription.setText(selfMaidCode); //записываем псевдокод
+        textDescriptionRCode.setText(""); //обнуляем код R
+        rCodeActivatorBut.setEnabled(false); //диактивируем кнопки сохранения
+        copyDescrButRCode.setEnabled(false);
+        
         descrShowDialog.setDefaultCloseOperation(descrShowDialog.DISPOSE_ON_CLOSE);
         descrShowDialog.pack();
         descrShowDialog.setModal(true);
         descrShowDialog.setLocationRelativeTo(this);
-        descrShowDialog.setVisible(true);
-
+        descrShowDialog.setVisible(true);       
     }
     public void SaveInRFile() {     
         SaveChooser.setDialogTitle("Saving R File");// ("+fn+")");
@@ -1767,7 +1789,6 @@ public class jMDIFrame extends JInternalFrame {
             }
             System.out.println(file);
             CreateRCode.saveInFile(textDescriptionRCode.getText(),file);
-            
         }
     }
     private void OutOfBounds() {
@@ -1876,6 +1897,7 @@ public class jMDIFrame extends JInternalFrame {
     private javax.swing.JScrollPane scrollPaneR;
     private javax.swing.JTextArea textDescription;
     private javax.swing.JTextArea textDescriptionRCode;
+    private javax.swing.JButton toRCodeBut;
     private javax.swing.JButton zminus;
     private javax.swing.JButton zminus1;
     private javax.swing.JButton zplus;

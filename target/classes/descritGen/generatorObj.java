@@ -113,13 +113,14 @@ public class generatorObj {
         }
         globalResult+=subString+ "\n";
         return globalResult;
-    }
-     
+    }      
+    
     public String generateString(){
         linkHandler();
-        String base = "";
+        String base = "1";
         String globalResult = "i = " + (mdi.prefsMdi.get("IValue", base))+"\n";
-        for (Figure_s curFig :curFigures){
+        globalResult += "FP = " + (mdi.prefsMdi.get("FPValue", base))+"\n";
+        for (Figure_s curFig :curFigures){  
             if (curFig.getShape().equals("S1")){
                 globalResult+=sStringGenerator(curFig)+"\n";
             }

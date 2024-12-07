@@ -1,6 +1,5 @@
 package EPM;
 
-//import com.tomtessier.scrollabledesktop.JScrollableDesktopPane;
 import com.sun.jdi.Method;
 import figure.figures;
 import figure.NV;
@@ -8,7 +7,6 @@ import figure.R;
 import figure.V;
 import figure.S1;
 import figure.O;
-//import figure.b;
 import figure.d;
 import jMDIForm.GridPanel;
 import jMDIForm.jMDIFrame;
@@ -17,8 +15,6 @@ import javax.swing.JColorChooser;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.PopupMenu;
-////import com.mycompany.mdi.groupJDBC.artifactJDBC.*;
-//import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
@@ -32,35 +28,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import javax.accessibility.AccessibleValue;
-//import java.awt.event.MouseEvent;
-//import java.awt.event.MouseMotionListener;
-//import java.beans.PropertyVetoException;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
-//import javax.swing.Action;
-//import javax.swing.ActionMap;
-//import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
-//import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.prefs.Preferences; //для хранения n и i
-
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.SQLException;
-
-//import java.sql.ResultSet;
-//import java.sql.Statement;
-//import javax.swing.UIManager;
-
-//import sqlCon.DatabaseHandler; //обращение к нашему классу
-
-//import javax.swing.Scrollable;
-//import javax.swing.TransferHandler;
-
 
 public class mdi extends javax.swing.JFrame {     
     private static final int FRAME_OFFSET = 20;
@@ -144,14 +117,11 @@ public class mdi extends javax.swing.JFrame {
         startIdNum = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         stepId = new javax.swing.JFormattedTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        rFileSaveWay = new javax.swing.JTextField();
-        rFileSelectWay = new javax.swing.JButton();
-        rNameFile = new javax.swing.JTextField();
         xesNameFile = new javax.swing.JTextField();
         boxLookAtO = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
+        valueFP = new javax.swing.JFormattedTextField();
         rFileSaveChooser = new javax.swing.JFileChooser();
         jDesktopPane = new javax.swing.JDesktopPane();
         jToolBar1 = new javax.swing.JToolBar();
@@ -814,32 +784,22 @@ public class mdi extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Путь сохранения файла .R по умолчанию");
-        jLabel4.setEnabled(false);
-
-        jLabel6.setText("Имя файла .R по умолчания");
-        jLabel6.setEnabled(false);
-
         jLabel7.setText("Имя файла XES по умолчанию");
-
-        rFileSaveWay.setEditable(false);
-        rFileSaveWay.setToolTipText("");
-        rFileSaveWay.setEnabled(false);
-
-        rFileSelectWay.setText("Выбрать");
-        rFileSelectWay.setEnabled(false);
-        rFileSelectWay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rFileSelectWayActionPerformed(evt);
-            }
-        });
-
-        rNameFile.setEnabled(false);
 
         boxLookAtO.setText("Учитывать О");
         boxLookAtO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxLookAtOActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("FP = ");
+
+        valueFP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        valueFP.setText("1");
+        valueFP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valueFPActionPerformed(evt);
             }
         });
 
@@ -850,53 +810,46 @@ public class mdi extends javax.swing.JFrame {
             .addGroup(SetConstantDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(17, 17, 17))
-                    .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
                     .addGroup(SetConstantDialogLayout.createSequentialGroup()
                         .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(SetConstantDialogLayout.createSequentialGroup()
-                                .addComponent(rFileSaveWay, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(rFileSelectWay, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(boxIsPlot)
                             .addComponent(boxIsXES)
-                            .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SetConstantDialogLayout.createSequentialGroup()
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(IValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(1, 1, 1)
-                                    .addComponent(NValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SetConstantDialogLayout.createSequentialGroup()
-                                    .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(idNumLabel)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(startIdNum, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                        .addComponent(stepId)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
-                        .addComponent(OkIBut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CancelIBut)
-                        .addContainerGap())
+                            .addComponent(boxLookAtO)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(SetConstantDialogLayout.createSequentialGroup()
                         .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(xesNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(boxLookAtO))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SetConstantDialogLayout.createSequentialGroup()
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(IValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(1, 1, 1)
+                                            .addComponent(NValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SetConstantDialogLayout.createSequentialGroup()
+                                            .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(idNumLabel)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(valueFP)
+                                                .addComponent(startIdNum, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                                .addComponent(stepId)))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SetConstantDialogLayout.createSequentialGroup()
+                                .addComponent(OkIBut, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CancelIBut))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(SetConstantDialogLayout.createSequentialGroup()
+                                .addComponent(xesNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)))
+                        .addContainerGap())))
         );
         SetConstantDialogLayout.setVerticalGroup(
             SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -918,26 +871,20 @@ public class mdi extends javax.swing.JFrame {
                     .addComponent(stepId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(valueFP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boxIsPlot, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boxIsXES, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boxLookAtO, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rFileSaveWay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rFileSelectWay))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(xesNameFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(SetConstantDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CancelIBut)
                     .addComponent(OkIBut))
@@ -1356,12 +1303,9 @@ public class mdi extends javax.swing.JFrame {
          Tile.setEnabled(true);
          
         c++;
-        
-
     }//GEN-LAST:event_NewActionPerformed
-// /*
+
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
-        
         OpenChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         //OpenChooser.setCurrentDirectory(OpenChooser.getCurrentDirectory());
         OpenChooser.setCurrentDirectory(new File("."));
@@ -1397,9 +1341,7 @@ public class mdi extends javax.swing.JFrame {
             c++;
             
             iFrame.LoadFromJSON(file);
-            
         }
-        
     }//GEN-LAST:event_OpenActionPerformed
 
     private void SaveasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveasActionPerformed
@@ -1492,12 +1434,7 @@ public class mdi extends javax.swing.JFrame {
                 Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
                 Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            // 2. 
-            // 2. 
-            // 2. 
-            // 2.
-               
+            }                
             // 4. Вызываем метод обновления состояния кнопок
             try {
               java.lang.reflect.Method method = iFrame.getClass().getDeclaredMethod("ButtonActivated");
@@ -1506,10 +1443,6 @@ public class mdi extends javax.swing.JFrame {
             } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             }
-            // 4.
-            // 4.
-            // 4.
-            // 4.
         } else {
             
                         // 2. Устанавливаем флаг изменений
@@ -1529,11 +1462,7 @@ public class mdi extends javax.swing.JFrame {
             } catch (IllegalAccessException ex) {
                 Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             } 
-            // 2. 
-            // 2. 
-            // 2. 
-            // 2.
-               
+
             // 4. Вызываем метод обновления состояния кнопок
             try {
               java.lang.reflect.Method method = iFrame.getClass().getDeclaredMethod("ButtonActivated");
@@ -1542,17 +1471,11 @@ public class mdi extends javax.swing.JFrame {
             } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
                 Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
             }
-            // 4.
-            // 4.
-            // 4.
-            // 4.
-            
         }
     }//GEN-LAST:event_SaveasActionPerformed
 
     private void TileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TileActionPerformed
         JInternalFrame allFrames[] = jDesktopPane.getAllFrames();
-        //manager.setNormalSize();
         int frameHeight = getBounds().height / allFrames.length;
         int y = 0;
         for (JInternalFrame allFrame : allFrames) {
@@ -1566,8 +1489,6 @@ public class mdi extends javax.swing.JFrame {
         int x = 0;
         int y = 0;
         JInternalFrame allFrames[] = jDesktopPane.getAllFrames();
-
-        //manager.setNormalSize(); вывод на весь экран
         int frameHeight = (getBounds().height - 5) - allFrames.length * FRAME_OFFSET;
         int frameWidth = (getBounds().width - 5) - allFrames.length * FRAME_OFFSET;
         for (int i = allFrames.length - 1; i >= 0; i--) {
@@ -1590,8 +1511,6 @@ public class mdi extends javax.swing.JFrame {
     }//GEN-LAST:event_quitActionPerformed
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        // TODO add your handling code here:
-        
         Dimension frameSize = getSize();
         jDesktopPane.setSize(frameSize);
         
@@ -1668,11 +1587,6 @@ public class mdi extends javax.swing.JFrame {
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
             Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // 4.
-        // 4.
-        // 4.
-        // 4.
-
     }//GEN-LAST:event_SaveActionPerformed
 
     //Вставляем объект S
@@ -1687,7 +1601,6 @@ public class mdi extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSActionPerformed
 
-    
     //Вставляем объект R
     private void jButtonRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRActionPerformed
         JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
@@ -1713,7 +1626,6 @@ public class mdi extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonIFActionPerformed
 
     private void jButtonVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVActionPerformed
-        // TODO add your handling code here:
         JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
         try {
             java.lang.reflect.Method method = iFrame.getClass().getDeclaredMethod("VActionPerformed", java.awt.event.ActionEvent.class);
@@ -1725,7 +1637,6 @@ public class mdi extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVActionPerformed
 
     private void jMenuItemClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClearActionPerformed
-        // TODO add your handling code here:
          JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
         try {
             java.lang.reflect.Method method = iFrame.getClass().getDeclaredMethod("clearActionPerformed", java.awt.event.ActionEvent.class);
@@ -1738,8 +1649,7 @@ public class mdi extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemClearActionPerformed
 
     private void jButtonNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNVActionPerformed
-        // TODO add your handling code here:
-          JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
+        JInternalFrame iFrame = jDesktopPane.getSelectedFrame();        
         try {
             java.lang.reflect.Method method = iFrame.getClass().getDeclaredMethod("NVActionPerformed", java.awt.event.ActionEvent.class);
             method.setAccessible(true);
@@ -1753,7 +1663,6 @@ public class mdi extends javax.swing.JFrame {
 //Начало работы Иванова А.А. настройка цвета
     //меню настроек
     private void jMenuItemColorSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemColorSettingsActionPerformed
-        //jDesktopPane.repaint();
         jDialogSettings.setSize(290, 360);
         jDialogSettings.setTitle("Settings");
         jDialogSettings.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
@@ -1772,56 +1681,34 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         d.BackgroundColor = selectedColor;
         jIFColor.setBackground(selectedColor);
-        //jIFColor.setBackground(d.BackgroundColor);
-        //figures.prefs.putInt("IFBackgroundColor", selectedColor.getRGB());
-        //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorIFActionPerformed
 
     private void jChangeColorRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorRActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         R.BackgroundColor = selectedColor;
         jRColor.setBackground(selectedColor);
-        //jRColor.setBackground(R.BackgroundColor);
-        //figures.prefs.putInt("RBackgroundColor", selectedColor.getRGB());
-        //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorRActionPerformed
 
     private void jChangeColorNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorNVActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         NV.BackgroundColor = selectedColor;
         jNVColor.setBackground(selectedColor);
-        //jNVColor.setBackground(NV.BackgroundColor);
-        //NV.prefs.putInt("BackgroundColor", selectedColor.getRGB());
-        //figures.prefs.putInt("NVBackgroundColor", selectedColor.getRGB());
-        //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorNVActionPerformed
 
     private void jChangeColorVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorVActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         V.BackgroundColor = selectedColor;
         jVColor.setBackground(selectedColor);
-        //jVColor.setBackground(V.BackgroundColor);
-        //figures.prefs.putInt("VBackgroundColor", selectedColor.getRGB());
-        //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorVActionPerformed
-
-   // private void jChangeColorSActionPerformed(java.awt.event.ActionEvent evt) {                                              
-   //     Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
-   //     S.BackgroundColor = selectedColor;
-   //     jSColor.setBackground(selectedColor);
-        //jDesktopPane.repaint();
-   // }                                             
+                              
     private void jChangeColorGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorGridActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Pick color", Color.BLACK);
         GridPanel.color = selectedColor;
         jGridColor.setBackground(selectedColor);
-        //GridPanel.prefs.putInt("color", selectedColor.getRGB());
-        //jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeColorGridActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         jDialogSettings.setVisible(false);        
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -1967,8 +1854,7 @@ public class mdi extends javax.swing.JFrame {
                 boxIsXES.setSelected((mdi.prefsMdi.getBoolean("xesState", bs)));
                 boxLookAtO.setSelected((mdi.prefsMdi.getBoolean("oActiveState", bs)));
                 xesNameFile.setText((mdi.prefsMdi.get("xesName", base)));
-                rNameFile.setText((mdi.prefsMdi.get("rName", base)));
-                rFileSaveWay.setText((mdi.prefsMdi.get("rPath", base)));
+                valueFP.setText((mdi.prefsMdi.get("FPValue", base)));
 //            }
 //        } catch (BackingStoreException ex) { //при ошибке вставляем базовую 1
 //            Logger.getLogger(mdi.class.getName()).log(Level.SEVERE, null, ex);
@@ -1989,13 +1875,6 @@ public class mdi extends javax.swing.JFrame {
         SetConstantDialog.setLocation(jDesktopPane.getWidth()/2-SetConstantDialog.getWidth()/2, jDesktopPane.getHeight()/2-SetConstantDialog.getHeight()/2);
         SetConstantDialog.setVisible(true);        
         enabledChanger();
-
-//        SetConstantDialog.setVisible(true);
-//        SetConstantDialog.setModal(true);
-//        SetConstantDialog.setSize(275, 360);
-//        SetConstantDialog.setTitle("Set constant value");
-//        SetConstantDialog.setLocation((jDesktopPane.getWidth()-jDialogSettings.getWidth())/2, (jDesktopPane.getHeight()-jDialogSettings.getHeight())/2);
-//        enabledChanger();
     }//GEN-LAST:event_jMenuItemSetIActionPerformed
 
     private void jMenuItemGenerateDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGenerateDescActionPerformed
@@ -2013,14 +1892,13 @@ public class mdi extends javax.swing.JFrame {
         SetConstantDialog.setVisible(false);
         mdi.prefsMdi.put("IValue",  IValueField.getText());
         mdi.prefsMdi.put("NValue",  NValueField.getText());
+        mdi.prefsMdi.put("FPValue",  valueFP.getText());
         mdi.prefsMdi.putBoolean("graphState",  boxIsPlot.isSelected());
         mdi.prefsMdi.putBoolean("xesState",  boxIsXES.isSelected());
         mdi.prefsMdi.putBoolean("oActiveState", boxLookAtO.isSelected());
         mdi.prefsMdi.put("startId",  startIdNum.getText());
         mdi.prefsMdi.put("stepId",  stepId.getText());
-        mdi.prefsMdi.put("rName", rNameFile.getText());
         mdi.prefsMdi.put("xesName", xesNameFile.getText());
-        mdi.prefsMdi.put("rPath", rFileSaveWay.getText());
         
     }//GEN-LAST:event_OkIButActionPerformed
 
@@ -2051,12 +1929,6 @@ public class mdi extends javax.swing.JFrame {
     private void stepIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_stepIdActionPerformed
-
-    private void rFileSelectWayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rFileSelectWayActionPerformed
-        rFileSaveChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        rFileSaveChooser.showSaveDialog(this);
-        rFileSaveWay.setText(rFileSaveChooser.getSelectedFile().toString());
-    }//GEN-LAST:event_rFileSelectWayActionPerformed
 //Конец работы Иванова А.А.
 
     private void boxIsPlotPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_boxIsPlotPropertyChange
@@ -2066,6 +1938,10 @@ public class mdi extends javax.swing.JFrame {
     private void boxLookAtOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxLookAtOActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_boxLookAtOActionPerformed
+
+    private void valueFPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valueFPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_valueFPActionPerformed
     
     public void enabledChanger(){ //Выключение ХЕС настроек при выключении построения диаграмм
         if (boxIsPlot.isSelected()){
@@ -2138,10 +2014,9 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -2181,11 +2056,9 @@ public class mdi extends javax.swing.JFrame {
     private javax.swing.JPanel jVTextColor;
     private javax.swing.JMenuItem quit;
     private javax.swing.JFileChooser rFileSaveChooser;
-    private javax.swing.JTextField rFileSaveWay;
-    private javax.swing.JButton rFileSelectWay;
-    private javax.swing.JTextField rNameFile;
     private javax.swing.JFormattedTextField startIdNum;
     private javax.swing.JFormattedTextField stepId;
+    private javax.swing.JFormattedTextField valueFP;
     private javax.swing.JTextField xesNameFile;
     // End of variables declaration//GEN-END:variables
     

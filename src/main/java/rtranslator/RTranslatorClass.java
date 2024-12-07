@@ -9,20 +9,22 @@ import rtranslator.CreateRCode;
 public class RTranslatorClass {
 
     ArrayList<String> rows = new ArrayList<>(); //готовые строки
-    String rFileName = "";
     String xesFileName = "";
-    String rFilePath = "";
     String startN = "";
     int unicNvNumber = 1; //уникальный id для технических nv
     boolean isPlotActive = false; //строить графики
     boolean isXESActive = false; //Выгрузка в ХЕС
     boolean isActiveO = false; //Учитывать О
     int idNumber = 66;
+    int preCycleId = 0; //ЕСЛИ НЕ ПОТРЕБ УДАЛИТЬ!
+    int startId = 66;
     int idStep = 66;
     int rCount = 0;
-    int numSpace = 0; //Отступы для if
+    int numSpace = 0; //Отступы для if  и счетчик if соотв
+    boolean ifDetector = false;
     private static Preferences localPrefsMdis = prefsMdi; 
     private String preCode;
+    
     public RTranslatorClass(String preCode) {
         this.preCode = preCode;
         boolean help = true; String hep = "f";
@@ -32,10 +34,9 @@ public class RTranslatorClass {
         idNumber = Integer.valueOf(localPrefsMdis.get("startId",hep));
         idStep = Integer.valueOf(localPrefsMdis.get( "stepId",hep));
         isActiveO = (localPrefsMdis.getBoolean("oActiveState",help));
-        this.rFileName =  localPrefsMdis.get("rName", hep);
         this.xesFileName = localPrefsMdis.get("xesName", hep);
-        this.rFilePath = localPrefsMdis.get("rPath", hep);
-        
+        preCycleId = idNumber; //первое значение предциклового id //ЕСЛИ НЕ ПОТРЕБ УДАЛИТЬ!
+        startId = idNumber; //стартовый id
         if (!isPlotActive){ //если не строим графики, то не выгружаем хес
             isXESActive = false;
         }
@@ -56,15 +57,22 @@ public class RTranslatorClass {
                 case ('i'): //первая i = 100 например
                     forAdding = space() + strg.replace("=","<-");
                     break;
+                case ('F'): //первая FP = 100 например
+                    forAdding = space() + strg.replace("=","<-");
+                    break;    
                 case ('N'): //NV
                     forAdding = generateNVCodeR(strg);
                     break;
                 case ('d'): //if
+                    ifDetector = true; //нашли IF в коде
                     forAdding = generateIfStartCodeR(strg);
                     break;
                 case ('e'): // end if
                     numSpace-=1;
                     forAdding = generateIfEndCodeR(strg);
+                    if (numSpace==0){ //новый предцикловый id для новых циклов от нулевого отступа
+                        preCycleId = idNumber-idStep;
+                    }
                     break;
                 case ('R'): //R
                     forAdding = generateRCodeR(strg);
@@ -86,10 +94,32 @@ public class RTranslatorClass {
             System.out.println(strg);
         }
         if (isXESActive && rCount>0){
-            rows.add("write.csv(X, file=\""+xesFileName+".csv\")"); //Если выгружаем хес добавляем соотв строку
+            rows.add(generateWriteCode()); //Если выгружаем хес добавляем соотв строку
         }
 //        return CreateRCode.generateCodeRFromString(preCode,rows); //Сохраняем в файл
 //        (rFilePath+"/"+rFileName+".R") Указание сохранения файла R
+    }
+    public String generateWriteCode(){
+        String rCodeString = "";
+        String spr_num = Integer.toString(idNumber-idStep); //Значение S_prob  (вычитаем шаг чтобы было корректное значнеие) (всегда последнее id в S)
+        if (rCount >1){
+            rCodeString += "vioplot(";
+            for (int i = 2; i <= rCount;i++){ //перечисляем все X от каждого R, кроме первого (его нет)
+                rCodeString+= "X"+Integer.toString(i)+"$W,";
+            }
+            rCodeString +=" col = \"lightgray\",  panel.first=grid())+\n";
+        }
+        rCodeString += "l<-unique(X$ID)";
+        if (ifDetector){ //цикл был вставляем в код
+            rCodeString +="\nl<-l[l<"+spr_num+"]";
+        }
+        rCodeString +="\ns_last<-NA" +
+        "\nfor (i in 1:length(l)){" +
+        "\n  s_last[i]<-sum(X$W[X$ID==l[i]])" +
+        "\n}" +
+        "\nvioplot(s_last, col = \"lightgray\",  panel.first=grid())";
+        rCodeString += "\nwrite.csv(X, file=\""+xesFileName+".csv\")";
+        return rCodeString;
     }
     public String generateIfStartCodeR(String exCode) { //Констиурктор кода языка R для if start
         String rCodeString  = "";
@@ -103,9 +133,10 @@ public class RTranslatorClass {
         String afterElse = exCode.split("else ")[1].split("\\(")[0].replace(" ", "");
         String rLeft = afterElse.split("=")[0];
         String rRight = afterElse.split("=")[1];
-        rCodeString = "\n" + space() +rLeft + "<-subset(" + rRight + ", select=c(R, ID_Out)) #разъединить"+
+        String newID = Integer.toString(idNumber-idStep);//preCycleId + ((1 + numSpace) * idStep)//чтото на умном, код не нужен, после проверки ДЕМОНТИРОВАТЬ!!
+        rCodeString = "\n" + space() +rLeft + "<-subset(" + rRight + ", select=c(R, ID_Out)"+
         "\n"+ space() + "colnames("+rLeft+") <- c('S', 'ID')"+
-        "\n"+ space() + rLeft + "<- Select("+ rLeft +", 1, 1000)";      
+        "\n"+ space() + rLeft + "<- Select("+ rLeft +", "+startId+", "+newID+")";  //(вычитаем шаг чтобы было корректное значнеие)    
         rCodeString = space() + "}" + rCodeString;
         return rCodeString;
     }
@@ -115,9 +146,14 @@ public class RTranslatorClass {
         String type = exCode.split(" = ")[1].split("\\(")[0]; // после = до (
         String typeVar = exCode.split(" = ")[1].split("\\(")[1].replace(")", "");// в ()
         typeVar = typeVar.replace(',','.'); //Замена запятой на точку, так как конфликт в R. ИСПРАВИТЬ В ОСНОВНОЙ ПРОГЕ ИЛИ УЧЕСТЬ ВЕЗДЕ
-        rCodeString = space() + name + "<-S_" + type + "(N, " + typeVar + ", " + idNumber + ")";
+        if (type == "prob"){ //prob S<-S_prob(N, 0.9, 1000)
+            rCodeString = space() + name + "<-S_" + type + "(N, " + typeVar + ", " + idNumber + ")";
+        }
+        else{ //periodic S<-S_periodic(N, FP, 9, 1000)
+            rCodeString = space() + name + "<-S_" + type + "(N, FP, " + typeVar + ", " + idNumber + ")";
+        }
         idNumber += idStep;
-//        'S<-S_prob(N, 0.9, 1000)';
+        
         if (isPlotActive) { //если нужно строить графики
             rCodeString += "\n"
                     + space() + "plot(1:N, " + name + "$S, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,6), main = \"Элемент "+name+"\")";
@@ -146,18 +182,17 @@ public class RTranslatorClass {
         String[] srFig = allInProp[1].split(" \\+ ");
         String[] nvFig = allInProp[2].split(" \\+ "); //массив всех nv //пока не используем
         String[] oFig = allInProp[3].split(" \\+ "); //массив всех o //пока не используем
+        String oNum = "1"; //Значения входящего О по умолчанибю
+
         if (srFig[0].equals("NULL")){
             return "empty";
         }
         String srElement = srBlockGen(srFig);
         if (isActiveO && !(oFig[0].equals(" NULL"))){ //если нужно выводить О
-            rCodeString = space() + rName+"_O" + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
-            String oNum =  exCode.split("\\(")[2].split("\\)")[0];
-            rCodeString += "\n"+ space() + rName+ "<-O("+rName+"_O,"+oNum+")";
+            oNum =  exCode.split("\\(")[2].split("\\)")[0]; //обновляем значнеие О на значение привяззанного О
         }
-        else{
-            rCodeString = space() + rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\")";
-        }
+        rCodeString = space() + rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\"+"+oNum+")"; //записываем R
+        
         if (isPlotActive){ //график для R
             rCodeString +=  "\n"+ space() +"plot(1:N, "+rName+"$R, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15), main = \"Элемент "+rName+"\")" +
             "\n" + space() + "plot(1:N, "+rName+"$Prj_File, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15), main = \"Элемент "+rName+"\")";
@@ -175,6 +210,7 @@ public class RTranslatorClass {
                 rCodeString+= "\n" + space() + "vioplot(X$W, col = \"lightgray\",  panel.first=grid(), main = \"Все элементы до "+rName+"\")";
             }
         }
+        
         return preRCode + rCodeString;
     }
 

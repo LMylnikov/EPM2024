@@ -28,39 +28,58 @@ public class BasicFunctionCode {
 "  S_prob<-S1\n" +
 "}\n" +
 "\n" +
+"#######  S элемент с периодической работой\n" +
+"# FP - начало  заполнения\n" +
+"# P - периаодичность\n" +
+"# N - число элементов для заполнения\n" +
+"# ID - значение с которого начинается нумерация генерируемых событий\n" +
+"S_periodic<-function(N, FP, P, ID){\n" +
+"  #RES<-vector(mode = \"integer\", length = N)\n" +
+"  if (length(FP) == 0) {\n" +
+"    RES<-vector(mode = \"integer\", length = N)\n" +
+"  } else {\n" +
+"    RES1<-vector(mode = \"integer\", length = FP[1]-1)       \n" +
+"    RES2<-vector(mode = \"integer\", length = N-FP[1]+1)\n" +
+"    MN<-1:(N-FP[1])\n" +
+"    RES2[(MN+P-1)%%P==0]<-1\n" +
+"    RES<-c(RES1,RES2)\n" +
+"  }\n" +
+"  S1<-data.frame(S=RES, ID=vector(mode = \"numeric\", length = N))\n" +
+"  ID_S<-ID\n" +
+"  for (i in 1:N){\n" +
+"    if (RES[i]>0){\n" +
+"      Vect<-as.vector(ID_S+1:RES[i], mode = \"numeric\")\n" +
+"      ID_S<-ID_S+RES[i]\n" +
+"      S1$ID[i]<-list(Value=Vect)\n" +
+"    }\n" +
+"  }\n" +
+"  S_prob<-S1\n" +
+"}\n" +
+"\n" +
 "#V линейная сложность\n" +
-"V_L<-function(N){\n" +
-"  V_L<-N\n" +
+"V_L<-function(N,O){\n" +
+"  V_L<-N*O\n" +
 "}\n" +
-"\n" +
-"V_L01<-function(N){\n" +
-"  V_L<-round(N*0.1)\n" +
-"}\n" +
-"\n" +
-"V_L001<-function(N){\n" +
-"  V_L<-round(N*0.01)\n" +
-"}\n" +
-"\n" +
 "\n" +
 "#V сложность N^2\n" +
-"V_L2<-function(N){\n" +
-"  V_2L<-N*N\n" +
+"V_L2<-function(N, O){\n" +
+"  V_2L<-(N*N)*O\n" +
 "}\n" +
 "\n" +
 "#V логорифмическая сложность\n" +
-"V_Lg<-function(N){\n" +
+"V_Lg<-function(N, O){\n" +
 "  if (N == 0) {V_Lg<-0} else {\n" +
 "    if (N == 1) {\n" +
 "      V_Lg<-1\n" +
 "    } else {  \n" +
-"      V_Lg<-N*log(N)\n" +
+"      V_Lg<-N*log(N)*O\n" +
 "    }  \n" +
 "  }\n" +
 "}\n" +
 "\n" +
 "#V экспоненциальная сложность\n" +
-"V_E<-function(N){\n" +
-"  if (N == 0) {V_E<-0} else {V_E<-exp(N)}\n" +
+"V_E<-function(N, O){\n" +
+"  if (N == 0) {V_E<-0} else {V_E<-exp(N)*O}\n" +
 "}\n" +
 "\n" +
 "################# Блок обработки (V)  #######################\n" +
@@ -79,7 +98,7 @@ public class BasicFunctionCode {
 "# ID_File - идентификаторы событий в очереди \n" +
 "# ID_Out - идентификаторы событий почсле обработки \n" +
 "\n" +
-"V<-function(O, S, V){\n" +
+"V<-function(m, S, V, O){\n" +
 "  # расчет для логарифмической сложности\n" +
 "  N<-length(S$S)\n" +
 "  Df<-data.frame(I=1:N, \n" +
@@ -99,12 +118,12 @@ public class BasicFunctionCode {
 "    Df$J[i]<-j\n" +
 "    if (Df$V_W[i]==0) {\n" +
 "      nk<-Df$Prj_File[i]\n" +
-"      if (O == -1) {L<-ceiling(V_L001(nk))}\n" +
-"      if (O == 0) {L<-ceiling(V_L01(nk))}\n" +
-"      if (O == 1) {L<-ceiling(V_L(nk))}\n" +
-"      if (O == 2) {L<-ceiling(V_L2(nk))}\n" +
-"      if (O == 3) {L<-ceiling(V_Lg(nk))}\n" +
-"      if (O == 4) {L<-ceiling(V_E(nk))}\n" +
+"      #if (m == -1) {L<-ceiling(V_L001(nk))}\n" +
+"      #if (m == 0) {L<-ceiling(V_L01(nk))}\n" +
+"      if (m == 1) {L<-ceiling(V_L(nk, O))}\n" +
+"      if (m == 2) {L<-ceiling(V_L2(nk, O))}\n" +
+"      if (m == 3) {L<-ceiling(V_Lg(nk, O))}\n" +
+"      if (m == 4) {L<-ceiling(V_E(nk, O))}\n" +
 "      k<-min(i+L-1,N)\n" +
 "      if (k>=i){\n" +
 "        Df$V_W[i:k]<-L\n" +
@@ -187,7 +206,9 @@ public class BasicFunctionCode {
 "    A3$S[i]<-length(A3$ID[[i]])-1\n" +
 "  }\n" +
 "  Select<-A3\n" +
-"}\n";
+"}\n" +
+"\n" +
+"# --- ==== [ Основная программа ] ==== ---";
         return code;
     }
 }
