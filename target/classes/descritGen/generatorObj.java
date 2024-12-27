@@ -95,7 +95,7 @@ public class generatorObj {
                 //клонирование V
                 subObjV originV = findVObjByName(figVtoR); //оригинальная V, которую нельзя менять
                 //Клонирование V
-                subObjV objV = new subObjV(figVtoR,originV.getType() , originV.getArrayLinkedSR(), originV.getLinkedNv(), originV.getLinkedO()); //новая фантомная V только для вывода в IF
+                subObjV objV = new subObjV(figVtoR,originV.getType() , originV.getArrayLinkedSR(), originV.getLinkedNv(), originV.getLinkedO(), originV.getOValue()); //новая фантомная V только для вывода в IF
                 if (withNvType){
                     subString +="    ".repeat(curSpace) + beforeName + " = " + objR.getName()+ "\n";
                 }

@@ -15,7 +15,7 @@ public class subObjV {
         setNumberType(type);
     }
     //генератор для клонирования объекта
-    public subObjV(String name,String type,  ArrayList<String> oldSR,  String oldNv, String oldO){ //стандартный генератор с прикреплением имени
+    public subObjV(String name,String type,  ArrayList<String> oldSR,  String oldNv, String oldO, String oldOValue){ //стандартный генератор с прикреплением имени
         nameV = name;
         this.type = type;
         linkedO = oldO;
@@ -23,6 +23,7 @@ public class subObjV {
             arrayLinkedSR.add(el);
         }
         linkedNv = oldNv;
+        oValue = oldOValue;
     }
 
     public void AddToSRList(String vName){

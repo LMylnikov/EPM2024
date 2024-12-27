@@ -104,7 +104,7 @@ public class RTranslatorClass {
         String spr_num = Integer.toString(idNumber-idStep); //Значение S_prob  (вычитаем шаг чтобы было корректное значнеие) (всегда последнее id в S)
         if (rCount >1){
             rCodeString += "vioplot(";
-            for (int i = 2; i <= rCount;i++){ //перечисляем все X от каждого R, кроме первого (его нет)
+            for (int i = 1; i <= rCount;i++){ //перечисляем все X от каждого R, кроме первого (его нет)
                 rCodeString+= "X"+Integer.toString(i)+"$W,";
             }
             rCodeString +=" col = \"lightgray\",  panel.first=grid())+\n";
@@ -146,7 +146,7 @@ public class RTranslatorClass {
         String type = exCode.split(" = ")[1].split("\\(")[0]; // после = до (
         String typeVar = exCode.split(" = ")[1].split("\\(")[1].replace(")", "");// в ()
         typeVar = typeVar.replace(',','.'); //Замена запятой на точку, так как конфликт в R. ИСПРАВИТЬ В ОСНОВНОЙ ПРОГЕ ИЛИ УЧЕСТЬ ВЕЗДЕ
-        if (type == "prob"){ //prob S<-S_prob(N, 0.9, 1000)
+        if (type.equals("prob")){ //prob S<-S_prob(N, 0.9, 1000)
             rCodeString = space() + name + "<-S_" + type + "(N, " + typeVar + ", " + idNumber + ")";
         }
         else{ //periodic S<-S_periodic(N, FP, 9, 1000)
@@ -191,7 +191,7 @@ public class RTranslatorClass {
         if (isActiveO && !(oFig[0].equals(" NULL"))){ //если нужно выводить О
             oNum =  exCode.split("\\(")[2].split("\\)")[0]; //обновляем значнеие О на значение привяззанного О
         }
-        rCodeString = space() + rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\"+"+oNum+")"; //записываем R
+        rCodeString = space() + rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\","+oNum+")"; //записываем R
         
         if (isPlotActive){ //график для R
             rCodeString +=  "\n"+ space() +"plot(1:N, "+rName+"$R, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15), main = \"Элемент "+rName+"\")" +
@@ -200,7 +200,9 @@ public class RTranslatorClass {
                 rCount+=1;
                 String xName = "X";
                 if (rCount == 1){
+                    rCodeString+="\n" + space() +"X1<-XES("+rName+")";  
                     rCodeString+="\n" + space() +xName+"<-XES("+rName+")";
+                    rCodeString+="\n" + space() + "vioplot(X1$W, col = \"lightgray\",  panel.first=grid(), main = \"Элемент "+rName+"\")";
                 }else{
                     xName += rCount;
                     rCodeString+="\n"+ space() +xName+"<-XES("+rName+")"
