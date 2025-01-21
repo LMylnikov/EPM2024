@@ -14,9 +14,22 @@ public class Figure_s {
     private String id;  
     private String name; // Имя фигуры
     private String description; // Подробное описание объекта
-    private ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
-    private ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
+    private ArrayList<String> nameNvElement = new ArrayList(); // Лист со входными переменными
+    private ArrayList<String> varNvElement = new ArrayList(); // Лист с выходными переменными
     private String code; // Код фигуры
+    
+    private String likelihood;//вероятность для S
+    private String period;//период для S
+    private String coef;//коэффициент эффективности для О
+    private String SWorkIndex;//отметка выбора вида работы для S
+    private String vSelected;//отметка выбора сложности для V
+    
+    private int ifSelected; //0-i, 1-nv
+    private String ifNvElement; //выбранная переменная из NV для сравнения
+    private int signIfSelected; //0-< 1-<= 2-= 3->= 4-> 
+    private int compareNumber; // Число с которым сравниваем в IF
+
+//    отметка выбора сложности для V
 
     public void setX_pos(String x_pos) {
         this.x_pos = x_pos;
@@ -79,17 +92,80 @@ public class Figure_s {
         return code;
     }
 
-    public void setInVariable(ArrayList<String> inVar) {
-        this.inVariable = inVar;
+    public void setNameNvElement(ArrayList<String> inVar) {
+        this.nameNvElement = inVar;
     }
-    public ArrayList<String> getInVariable() {
-        return inVariable;
+    public ArrayList<String> getNameNvElement() {
+        return nameNvElement;
     }
 
-    public void setOutVariable(ArrayList<String> outVar) {
-        this.outVariable = outVar;
+    public void setVarNvElement(ArrayList<String> outVar) {
+        this.varNvElement = outVar;
     }
-    public ArrayList<String> getOutVariable() {
-        return outVariable;
+    public ArrayList<String> getVarNvElement() {
+        return varNvElement;
+    }
+    
+    public void setCoef(String coef) {
+        this.coef = coef;
+    }
+
+    public String getCoef() {
+        return coef;
+    }
+    
+    public void setLikelihood(String likelihood) {
+        this.likelihood = likelihood;
+    }
+
+    public String getLikelihood() {
+        return likelihood;
+    }
+    
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+    
+    public void setSwork(String SWorkIndex) {
+        this.SWorkIndex = SWorkIndex;
+    }
+
+    public String getSwork() {
+        return SWorkIndex;
+    }
+    public void setVSelected(String vSelected) {
+        this.vSelected = vSelected;
+    }
+
+    public String getVSelected() {
+        return vSelected;
+    }
+        public void setSignIfSelected(int var){
+        signIfSelected = var;
+    }
+    public void setIfNvElement(String var){
+        ifNvElement = var;
+    }
+    public void setIfSelected(int var){
+        ifSelected = var;
+    }  
+    public int getSignIfSelected(){
+        return signIfSelected;
+    }
+    public String getIfNvElement(){
+        return ifNvElement;
+    }
+    public int getIfSelected(){
+        return ifSelected;
+    }
+    public int getCompareNumber(){
+        return compareNumber;
+    }
+    public void setCompareNumber(int var){
+        compareNumber = var;
     }
 }

@@ -3,6 +3,7 @@ package figure;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -42,7 +43,8 @@ public class  d extends figures{//document
         this.absoluteX = this.x;
         this.absoluteY = this.y;
         this.s=s;
-        this.nameF = "D(IF)" + this.id;
+//        this.nameF = "D(IF)" + this.id;
+        this.nameF = "IF" + this.id;
     }
     Font font = new Font("Arial", Font.BOLD, 20);
     @Override
@@ -67,7 +69,12 @@ public class  d extends figures{//document
         g2.setColor(TextColor);
         g2.setStroke(new BasicStroke(2));
         g2.draw(gp);
-        g2.drawString("IF", x-34*s/100, y+7*s/100); //Иванов А.А. надпись центруется с учетом масштаба
+        
+        FontMetrics fm = g.getFontMetrics();
+        int width = fm.stringWidth(nameF);
+        g2.drawString(nameF, x - width/2-s/4, y+7*s/100);
+        
+//        g2.drawString(nameF, x-34*s/100, y+7*s/100); //Иванов А.А. надпись центруется с учетом масштаба
         shape =gp;
         rec=shape.getBounds2D();
         }
