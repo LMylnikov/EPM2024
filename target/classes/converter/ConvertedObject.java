@@ -1,19 +1,22 @@
 package converter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jMDIForm.SettingsConfiguration;
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 //Совмещает в себе все классы, которые нужно сохранить в json
 public class ConvertedObject {
+    private SettingsConfiguration settingConfig;
     private ArrayList<Line_s> currentLine;
     private ArrayList<Figure_s> currentFigures;
 
     public ConvertedObject() {}
     
-    public ConvertedObject(ArrayList<Line_s> linesList, ArrayList<Figure_s> figuresList) {
-        currentFigures = figuresList;
-        currentLine = linesList;
+    public ConvertedObject(ArrayList<Line_s> linesList, ArrayList<Figure_s> figuresList, SettingsConfiguration settingConfig) {
+        this.currentFigures = figuresList;
+        this.currentLine = linesList;
+        this.settingConfig = settingConfig;
     }
     
     public void setCurrentLine(ArrayList<Line_s> linesList){
@@ -28,4 +31,12 @@ public class ConvertedObject {
     public ArrayList<Figure_s> getCurrentFigures(){
         return currentFigures;
     }
+    public void setSettingConfig(SettingsConfiguration settingConfig) {
+        this.settingConfig = settingConfig;
+    }
+
+    public SettingsConfiguration getSettingConfig() {
+        return settingConfig;
+    }
+    
 }

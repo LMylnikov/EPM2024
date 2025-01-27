@@ -7,6 +7,7 @@ jMDIForm\PropertiesDialog$3.class
 descritGen\subObjIF.class
 jMDIForm\FigurePropertiesDialog.class
 figure\Arrow.class
+jMDIForm\SettingsConfiguration.class
 EPM\mdi$32.class
 EPM\mdi$12.class
 figure\S1.class
@@ -46,7 +47,6 @@ jMDIForm\jMDIFrame$6.class
 jMDIForm\PropertiesDialog$15.class
 EPM\mdi$26.class
 EPM\mdi$36.class
-jMDIForm\Gson.class
 EPM\mdi$49.class
 figure\figures.class
 EPM\mdi$29.class
@@ -83,7 +83,6 @@ EPM\mdi$28.class
 jMDIForm\PropertiesDialog$6.class
 EPM\mdi$4.class
 EPM\mdi$RunnableImpl.class
-jMDIForm\FileUtils.class
 rtranslator\RTranslatorClass.class
 jMDIForm\PropertiesDialog$14.class
 jMDIForm\Figure_s.class

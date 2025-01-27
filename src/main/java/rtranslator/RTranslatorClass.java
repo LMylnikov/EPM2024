@@ -107,7 +107,7 @@ public class RTranslatorClass {
             for (int i = 1; i <= rCount;i++){ //перечисляем все X от каждого R, кроме первого (его нет)
                 rCodeString+= "X"+Integer.toString(i)+"$W,";
             }
-            rCodeString +=" col = \"lightgray\",  panel.first=grid())+\n";
+            rCodeString +=" col = \"lightgray\", panel.first=grid())\n";
         }
         rCodeString += "l<-unique(X$ID)";
         if (ifDetector){ //цикл был вставляем в код
@@ -117,7 +117,7 @@ public class RTranslatorClass {
         "\nfor (i in 1:length(l)){" +
         "\n  s_last[i]<-sum(X$W[X$ID==l[i]])" +
         "\n}" +
-        "\nvioplot(s_last, col = \"lightgray\",  panel.first=grid())";
+        "\nvioplot(s_last, col = \"lightgray\", panel.first=grid())";
         rCodeString += "\nwrite.csv(X, file=\""+xesFileName+".csv\")";
         return rCodeString;
     }

@@ -2,6 +2,7 @@ C:\code\pr\EPM2024\src\main\java\JGraphFrame\Panelka.java
 C:\code\pr\EPM2024\src\main\java\descritGen\subObjIF.java
 C:\code\pr\EPM2024\src\main\java\figure\S1.java
 C:\code\pr\EPM2024\src\main\java\point\pointDotted.java
+C:\code\pr\EPM2024\src\main\java\jMDIForm\SettingsConfiguration.java
 C:\code\pr\EPM2024\src\main\java\EPM\mdi.java
 C:\code\pr\EPM2024\src\main\java\JGraphFrame\JGraphFrame.java
 C:\code\pr\EPM2024\src\main\java\figure\pointDotted.java
@@ -12,7 +13,6 @@ C:\code\pr\EPM2024\src\main\java\figure\figures.java
 C:\code\pr\EPM2024\src\main\java\converter\ConvertedObject.java
 C:\code\pr\EPM2024\src\main\java\figure\Line.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\CustomVerticalScrollbar.java
-C:\code\pr\EPM2024\src\main\java\jMDIForm\FileUtils.java
 C:\code\pr\EPM2024\src\main\java\figure\Line_s.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\GridPanel.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\PropertiesDialog.java
@@ -34,14 +34,12 @@ C:\code\pr\EPM2024\src\main\java\point\pointStraight.java
 C:\code\pr\EPM2024\src\main\java\jMDIForm\Figure_s.java
 C:\code\pr\EPM2024\src\main\java\rtranslator\BasicFunctionCode.java
 C:\code\pr\EPM2024\src\main\java\figure\S.java
-C:\code\pr\EPM2024\src\main\java\jMDIForm\Gson.java
 C:\code\pr\EPM2024\src\main\java\figure\d.java
 C:\code\pr\EPM2024\src\main\java\figure\R.java
 C:\code\pr\EPM2024\src\main\java\descritGen\subObjR.java
 C:\code\pr\EPM2024\src\main\java\figure\pointStraight.java
 C:\code\pr\EPM2024\src\main\java\line\LineStraight.java
 C:\code\pr\EPM2024\src\main\java\rtranslator\newPrecodeGenerator.java
-C:\code\pr\EPM2024\src\main\java\jMDIForm\JSONoperations.java
 C:\code\pr\EPM2024\src\main\java\point\points.java
 C:\code\pr\EPM2024\src\main\java\descritGen\subObjNV.java
 C:\code\pr\EPM2024\src\main\java\figure\workspace.java
