@@ -24,7 +24,15 @@ public class SettingsConfiguration {
     private boolean oEnable;
     
     public SettingsConfiguration(){
-        
+        this.iValue = "1";
+        this.nValue = "1";
+        this.firstIdValue = "1";
+        this.stepIdValue = "1";
+        this.fpValue = "1";
+        this.xesNameValue = "results";
+        this.diagrammEnable = true;
+        this.xesEnable = true;
+        this.oEnable = true;
     }
 
     public SettingsConfiguration(String iValue, String nValue, String firstIdValue, String stepIdValue, String fpValue, String xesNameValue, boolean diagrammEnable, boolean xesEnable, boolean oEnable) {

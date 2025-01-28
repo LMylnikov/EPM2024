@@ -34,13 +34,11 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.util.prefs.Preferences; //для хранения n и i
 
 public class mdi extends javax.swing.JFrame {     
     private static final int FRAME_OFFSET = 20;
     private int c=0; // номер нового создаваемого mdi для вычисления смещения
     private PopupMenu jMDIFrame;
-    public static Preferences prefsMdi = Preferences.userNodeForPackage(mdi.class);
 
     public mdi() {
          try { 

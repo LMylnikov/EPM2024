@@ -1782,7 +1782,7 @@ public class jMDIFrame extends JInternalFrame {
     private void toRCodeButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toRCodeButActionPerformed
         //генерация R кода
         newPrecodeGenerator preCode = new newPrecodeGenerator(all);
-        RTranslatorClass newRTC = new RTranslatorClass(preCode.getPrecodeString()); //Создаем объект для перевода 
+        RTranslatorClass newRTC = new RTranslatorClass(preCode.getPrecodeString(), currentSettingConfig); //Создаем объект для перевода 
         newRTC.addString(textDescription.getText()); //Передаем текст с псевдокодом
         textDescriptionRCode.setText(newRTC.getStringRCode()); //Записываем R код
         

@@ -5,11 +5,13 @@ import converter.ConvertedObject;
 import converter.Figure_s;
 import converter.Line_s;
 import figure.figures;
+import jMDIForm.SettingsConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 
 public class generatorObj {
     private ConvertedObject curObj; //Объект с массивами
+    private SettingsConfiguration curSetCon = new SettingsConfiguration(); //Настройки параметров констант
     private ArrayList<Figure_s> curFigures = new ArrayList<Figure_s>(); // Массив фигур
     private ArrayList<Line_s> curLines = new ArrayList<Line_s>(); // Массив линий
     ArrayList<subObjR> arrayRs = new ArrayList<subObjR>(); // Связи V->R 
@@ -18,9 +20,10 @@ public class generatorObj {
     ArrayList<subObjIF> arrayIFs = new ArrayList<subObjIF>();// Связи R -> IF ->R,V
     
     public generatorObj(ConvertedObject co){ //стандартный генератор из объекта сохранения*
-        curObj = co;
-        curFigures = curObj.getCurrentFigures();
-        curLines = curObj.getCurrentLine();
+        this.curObj = co;
+        this.curFigures = curObj.getCurrentFigures();
+        this.curLines = curObj.getCurrentLine();
+        this.curSetCon = curObj.getSettingConfig();
     }
     
     //Функции для генерации строк каждого элемента
@@ -117,9 +120,8 @@ public class generatorObj {
     
     public String generateString(){
         linkHandler();
-        String base = "1";
-        String globalResult = "i = " + (mdi.prefsMdi.get("IValue", base))+"\n";
-        globalResult += "FP = " + (mdi.prefsMdi.get("FPValue", base))+"\n";
+        String globalResult = "i = " + curSetCon.getIValue()+"\n";
+        globalResult += "FP = " + curSetCon.getFpValue()+"\n";
         for (Figure_s curFig :curFigures){  
             if (curFig.getShape().equals("S1")){
                 globalResult+=sStringGenerator(curFig)+"\n";

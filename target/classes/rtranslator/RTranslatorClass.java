@@ -1,9 +1,8 @@
 package rtranslator;
 
 import EPM.mdi;
-import static EPM.mdi.prefsMdi;
+import jMDIForm.SettingsConfiguration;
 import java.util.ArrayList;
-import java.util.prefs.Preferences;
 import rtranslator.CreateRCode;
 
 public class RTranslatorClass {
@@ -15,27 +14,23 @@ public class RTranslatorClass {
     boolean isPlotActive = false; //строить графики
     boolean isXESActive = false; //Выгрузка в ХЕС
     boolean isActiveO = false; //Учитывать О
-    int idNumber = 66;
-    int preCycleId = 0; //ЕСЛИ НЕ ПОТРЕБ УДАЛИТЬ!
-    int startId = 66;
-    int idStep = 66;
+    int idNumber = 0;
+    int startId = 0;
+    int idStep = 0;
     int rCount = 0;
     int numSpace = 0; //Отступы для if  и счетчик if соотв
     boolean ifDetector = false;
-    private static Preferences localPrefsMdis = prefsMdi; 
     private String preCode;
     
-    public RTranslatorClass(String preCode) {
+    public RTranslatorClass(String preCode, SettingsConfiguration setCon) {
         this.preCode = preCode;
-        boolean help = true; String hep = "f";
-        startN = localPrefsMdis.get("NValue", hep);
-        isPlotActive = (localPrefsMdis.getBoolean("graphState",help));
-        isXESActive = (localPrefsMdis.getBoolean("xesState",help));
-        idNumber = Integer.valueOf(localPrefsMdis.get("startId",hep));
-        idStep = Integer.valueOf(localPrefsMdis.get( "stepId",hep));
-        isActiveO = (localPrefsMdis.getBoolean("oActiveState",help));
-        this.xesFileName = localPrefsMdis.get("xesName", hep);
-        preCycleId = idNumber; //первое значение предциклового id //ЕСЛИ НЕ ПОТРЕБ УДАЛИТЬ!
+        this.startN = setCon.getNValue(); 
+        this.isPlotActive = setCon.isDiagrammEnable();
+        this.isXESActive = setCon.isXesEnable();
+        this.idNumber = Integer.valueOf(setCon.getFirstIdValue());
+        this.idStep = Integer.valueOf(setCon.getStepIdValue());
+        this.isActiveO = setCon.isOEnable();
+        this.xesFileName = setCon.getXesNameValue();
         startId = idNumber; //стартовый id
         if (!isPlotActive){ //если не строим графики, то не выгружаем хес
             isXESActive = false;
@@ -70,9 +65,9 @@ public class RTranslatorClass {
                 case ('e'): // end if
                     numSpace-=1;
                     forAdding = generateIfEndCodeR(strg);
-                    if (numSpace==0){ //новый предцикловый id для новых циклов от нулевого отступа
-                        preCycleId = idNumber-idStep;
-                    }
+//                    if (numSpace==0){ //новый предцикловый id для новых циклов от нулевого отступа
+//                        preCycleId = idNumber-idStep;
+//                    }  если что удачить!!!!!!!!!!!!
                     break;
                 case ('R'): //R
                     forAdding = generateRCodeR(strg);
@@ -133,7 +128,7 @@ public class RTranslatorClass {
         String afterElse = exCode.split("else ")[1].split("\\(")[0].replace(" ", "");
         String rLeft = afterElse.split("=")[0];
         String rRight = afterElse.split("=")[1];
-        String newID = Integer.toString(idNumber-idStep);//preCycleId + ((1 + numSpace) * idStep)//чтото на умном, код не нужен, после проверки ДЕМОНТИРОВАТЬ!!
+        String newID = Integer.toString(idNumber-idStep);
         rCodeString = "\n" + space() +rLeft + "<-subset(" + rRight + ", select=c(R, ID_Out)"+
         "\n"+ space() + "colnames("+rLeft+") <- c('S', 'ID')"+
         "\n"+ space() + rLeft + "<- Select("+ rLeft +", "+startId+", "+newID+")";  //(вычитаем шаг чтобы было корректное значнеие)    
