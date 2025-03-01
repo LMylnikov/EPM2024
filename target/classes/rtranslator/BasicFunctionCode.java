@@ -6,7 +6,7 @@ public class BasicFunctionCode {
         String code = "library(vioplot) #Для рисования скрипичной диаграммы\n" +
 "library(purrr)\n" +
 "\n" +
-"# --- ==== [ Объявление функций ] ==== ---\n" +
+"# --- ==== [ Declaring functions ] ==== ---\n" +
 "\n" +
 "####### S элемент с вероятностной работой\n" +
 "# P - вероятность \n" +
@@ -206,9 +206,7 @@ public class BasicFunctionCode {
 "    A3$S[i]<-length(A3$ID[[i]])-1\n" +
 "  }\n" +
 "  Select<-A3\n" +
-"}\n" +
-"\n" +
-"# --- ==== [ Основная программа ] ==== ---";
+"}\n";
         return code;
     }
 }

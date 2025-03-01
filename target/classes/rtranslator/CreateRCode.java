@@ -7,7 +7,7 @@ import static rtranslator.BasicFunctionCode.returnBasicFunktionCode;
 
 public class CreateRCode {
     public static String generateCodeRFromString(String preCode, ArrayList<String> rows){
-        String global = returnBasicFunktionCode() + "\n" + preCode+"\n# --- ==== [ Основная программа ] ==== ---\n"; 
+        String global = returnBasicFunktionCode() + "\n" + preCode+"\n# --- ==== [ Start of basic code ] ==== ---\n"; 
         for (String row: rows){
             global+= row + "\n";
         }
@@ -21,7 +21,7 @@ public class CreateRCode {
             writer.flush();
         }
         catch(IOException ex){
-            System.out.println("Ошибка с сохранением в R code: "+ex.getMessage());
+            System.out.println("Error with saving R code: "+ex.getMessage());
         }
     }
 }

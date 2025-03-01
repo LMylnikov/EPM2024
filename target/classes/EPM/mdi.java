@@ -1327,7 +1327,7 @@ public class mdi extends javax.swing.JFrame {
         OpenChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         //OpenChooser.setCurrentDirectory(OpenChooser.getCurrentDirectory());
         OpenChooser.setCurrentDirectory(new File("."));
-        OpenChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "json"));
+        OpenChooser.setFileFilter(new FileNameExtensionFilter("Event-driven Process Methodology", "epm"));
         int option = OpenChooser.showOpenDialog(this);
         //.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );
         if(option == JFileChooser.APPROVE_OPTION) {

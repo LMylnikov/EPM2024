@@ -1,13 +1,12 @@
 package descritGen;
 
-import EPM.mdi;
 import converter.ConvertedObject;
 import converter.Figure_s;
 import converter.Line_s;
-import figure.figures;
 import jMDIForm.SettingsConfiguration;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class generatorObj {
     private ConvertedObject curObj; //Объект с массивами
@@ -27,15 +26,15 @@ public class generatorObj {
     }
     
     //Функции для генерации строк каждого элемента
-    public String allSgenerator(){
-        String sString = ""; 
-        for (Figure_s fig: curFigures){
-            if (fig.getShape().equals("S1")){
-                sString += fig.getName() +" = Prob()\n";
-            }
-        }
-        return sString;
-    }
+//    public String all3Sgeasdasdnerator(){
+//        String sString = ""; 
+//        for (Figure_s fig: curFigures){
+//            if (fig.getShape().equals("S1")){
+//                sString += fig.getName() +" = Prob()\n";
+//            }
+//        }
+//        return sString;
+//    }
     public String sStringGenerator(Figure_s fig){
         String subString = "";
         subString += fig.getName() + " = ";
@@ -70,7 +69,7 @@ public class generatorObj {
         }
         return subString;
     }
-    public String ifStringgenerator(subObjIF objIF){
+    public String ifStringGenerator(subObjIF objIF){
         String globalResult = "";
         boolean withNvType = false;
         curSpace += 1;
@@ -144,7 +143,7 @@ public class generatorObj {
             if (objIF.isCorrect() == false){ //Проверяем на наличие всех элементов в объекте if
                 continue;
             } 
-            globalResult+=ifStringgenerator(objIF);
+            globalResult+=ifStringGenerator(objIF);
         }
         return globalResult;
     }
@@ -174,7 +173,7 @@ public class generatorObj {
                     }
                     break;
                 case("d"):
-                    exFiguresString+="    ".repeat(curSpace) + ifStringgenerator(findIFObjByName(figName))+ "\n";
+                    exFiguresString+="    ".repeat(curSpace) + ifStringGenerator(findIFObjByName(figName))+ "\n";
                     return;
             }
             ArrayList<String> startOfLine = findStartOfLine(figName,"");

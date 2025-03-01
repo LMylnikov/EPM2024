@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import rtranslator.CreateRCode;
 
 public class RTranslatorClass {
-
     ArrayList<String> rows = new ArrayList<>(); //готовые строки
     String xesFileName = "";
     String startN = "";
@@ -65,9 +64,6 @@ public class RTranslatorClass {
                 case ('e'): // end if
                     numSpace-=1;
                     forAdding = generateIfEndCodeR(strg);
-//                    if (numSpace==0){ //новый предцикловый id для новых циклов от нулевого отступа
-//                        preCycleId = idNumber-idStep;
-//                    }  если что удачить!!!!!!!!!!!!
                     break;
                 case ('R'): //R
                     forAdding = generateRCodeR(strg);
@@ -91,8 +87,6 @@ public class RTranslatorClass {
         if (isXESActive && rCount>0){
             rows.add(generateWriteCode()); //Если выгружаем хес добавляем соотв строку
         }
-//        return CreateRCode.generateCodeRFromString(preCode,rows); //Сохраняем в файл
-//        (rFilePath+"/"+rFileName+".R") Указание сохранения файла R
     }
     public String generateWriteCode(){
         String rCodeString = "";
@@ -129,7 +123,7 @@ public class RTranslatorClass {
         String rLeft = afterElse.split("=")[0];
         String rRight = afterElse.split("=")[1];
         String newID = Integer.toString(idNumber-idStep);
-        rCodeString = "\n" + space() +rLeft + "<-subset(" + rRight + ", select=c(R, ID_Out)"+
+        rCodeString = "\n" + space() +rLeft + "<-subset(" + rRight + ", select=c(R, ID_Out))"+
         "\n"+ space() + "colnames("+rLeft+") <- c('S', 'ID')"+
         "\n"+ space() + rLeft + "<- Select("+ rLeft +", "+startId+", "+newID+")";  //(вычитаем шаг чтобы было корректное значнеие)    
         rCodeString = space() + "}" + rCodeString;
@@ -144,18 +138,16 @@ public class RTranslatorClass {
         if (type.equals("prob")){ //prob S<-S_prob(N, 0.9, 1000)
             rCodeString = space() + name + "<-S_" + type + "(N, " + typeVar + ", " + idNumber + ")";
         }
-        else{ //periodic S<-S_periodic(N, FP, 9, 1000)
+        else{ //periodic S<-S_period/vic(N, FP, 9, 1000)
             rCodeString = space() + name + "<-S_" + type + "(N, FP, " + typeVar + ", " + idNumber + ")";
         }
         idNumber += idStep;
-        
         if (isPlotActive) { //если нужно строить графики
             rCodeString += "\n"
-                    + space() + "plot(1:N, " + name + "$S, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,6), main = \"Элемент "+name+"\")";
+                    + space() + "plot(1:N, " + name + "$S, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', main = \"Элемент "+name+"\")";
         }
         return rCodeString;
     }
-
     public String generateNVCodeR(String exCode) { //Констиурктор кода языка R для фиугры NV
         String rCodeString = "";
         String nvName = exCode.split(" = ")[0]; //имя NV
@@ -165,7 +157,7 @@ public class RTranslatorClass {
         return rCodeString;
     }
 
-    String preRCode = ""; //код до блока r = v лдя тогоЮ чтобы записыывать nv = r в случае вхождения r в v
+    String preRCode = ""; //код до блока r = v лдя того чтобы записыывать nv = r в случае вхождения r в v
 
     public String generateRCodeR(String exCode) { //Констиурктор кода языка R для фиугры R
         preRCode = "";
@@ -189,22 +181,22 @@ public class RTranslatorClass {
         rCodeString = space() + rName + "<- V(" + type + ", " + srElement + ", \"" + vName + "\","+oNum+")"; //записываем R
         
         if (isPlotActive){ //график для R
-            rCodeString +=  "\n"+ space() +"plot(1:N, "+rName+"$R, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15), main = \"Элемент "+rName+"\")" +
-            "\n" + space() + "plot(1:N, "+rName+"$Prj_File, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', ylim = c(0,15), main = \"Элемент "+rName+"\")";
+            rCodeString +=  "\n"+ space() +"plot(1:N, "+rName+"$R, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', main = \""+rName+"\")" +
+            "\n" + space() + "plot(1:N, "+rName+"$Prj_File, type=\"s\", col=\"black\", panel.first=grid(), ylab='S', xlab='i', main = \""+rName+"\")";
             if (isXESActive){ // график для X
                 rCount+=1;
                 String xName = "X";
                 if (rCount == 1){
                     rCodeString+="\n" + space() +"X1<-XES("+rName+")";  
                     rCodeString+="\n" + space() +xName+"<-XES("+rName+")";
-                    rCodeString+="\n" + space() + "vioplot(X1$W, col = \"lightgray\",  panel.first=grid(), main = \"Элемент "+rName+"\")";
+                    rCodeString+="\n" + space() + "vioplot(X1$W, col = \"lightgray\",  panel.first=grid(), main = \""+rName+"\")";
                 }else{
                     xName += rCount;
                     rCodeString+="\n"+ space() +xName+"<-XES("+rName+")"
                             +"\n" + space() + "X<-rbind(X,"+xName+")";
-                    rCodeString+="\n" + space() + "vioplot("+xName+"$W, col = \"lightgray\",  panel.first=grid(), main = \"Элемент "+rName+"\")";
+                    rCodeString+="\n" + space() + "vioplot("+xName+"$W, col = \"lightgray\",  panel.first=grid(), main = \""+rName+"\")";
                 }
-                rCodeString+= "\n" + space() + "vioplot(X$W, col = \"lightgray\",  panel.first=grid(), main = \"Все элементы до "+rName+"\")";
+                rCodeString+= "\n" + space() + "vioplot(X$W, col = \"lightgray\",  panel.first=grid(), main = \""+rName+" and all blocks before\")";
             }
         }
         

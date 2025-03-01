@@ -793,19 +793,6 @@ public class jMDIFrame extends JInternalFrame {
                     jPanel1.add(c);
                 }
 
-                //if (!pointed) {//если нет, то добавление точек на фигуру
-                //    
-                //    pointed = true;
-                //    jPanel1.removeAll();
-                //    jPanel1.add(points.get(0));
-                //    if (lined) {
-                //        for (Line ln : lines) jPanel1.add(ln);
-                //    }
-                //    for (JComponent c : all) jPanel1.add(c);
-                //    //jPanel1.add(grid);
-                //    //jPanel1.revalidate();
-                //    //jPanel1.repaint();
-                //} else {//если да, то проверка попадания на фигуру или точку
                 oneShapePoints(0);
                 for (Shape l : pointShape) {
                     if (l.contains(p)) {
@@ -827,18 +814,12 @@ public class jMDIFrame extends JInternalFrame {
                         jPanel1.add(ls);
                         lines.add(0, ls);
                         checkLine = true;
-                        //jPanel1.add(grid);
-                        //jPanel1.revalidate();
-                        //jPanel1.repaint();
                     } else {
                         countp++;
                     }
                 }
-
-                //}
                 // Нажате правой кнопки
                 if (evt.isPopupTrigger()) {
-                    // create a popup menu
                     rcMenu.show(this, oldX, oldY);
                 }
 
@@ -881,41 +862,7 @@ public class jMDIFrame extends JInternalFrame {
         countp = 0;
 
         if (countf == all.size()) {//при нажатии не попали в фигуру??
-            //if (pointed) {
-            // pointShape = points.get(0).getShape();//!
             oneShapePoints(0);
-            //for (Shape l : pointShape) {
-            //    if (l.contains(p)) {
-            //        //выделение всех точек и соединение
-            //        id11 = pointShape.indexOf(l);
-            //        jPanel1.removeAll();
-            //        for (points a : points) {
-            //            jPanel1.add(a);
-            //            if (lined) {
-            //                for (Line ln : lines) {
-            //                    jPanel1.add(ln);
-            //                }
-            //            }
-            //            //id1=all.get(0).getId();
-            //            jPanel1.add(all.get(points.indexOf(a)));
-            //        }
-            //       LineStraight ls = new LineStraight((Point2D) points.get(0).getPoint().get(id11),
-            //                (Point2D) evt.getPoint(), ID1, id11, ID1, id11);
-            //        ls.setSize(jPanel1.getWidth(), jPanel1.getHeight());
-            //        ls.setVisible(true);
-            //        jPanel1.add(ls);
-            //        lines.add(0, ls);
-            //        checkLine = true;
-            //
-            //        jPanel1.add(grid);
-            //        jPanel1.revalidate();
-            //        jPanel1.repaint();
-            //        break;
-            //    } else {
-            //        countp++;
-            //    }
-            //}
-            //if (countp == 4) {
             jPanel1.removeAll();
             if (lined) {
                 for (Line ln : lines) {
@@ -968,43 +915,16 @@ public class jMDIFrame extends JInternalFrame {
             // Логика перетаскивания линии, если связана
             if (lined) {
                 for (Line ln : lines) {
-                    // for (figures f : all) {
                     double dxx;
                     double dyy;
-//                        if (b.getNameF().equals(ln.getID1())) {
-//                            dxx = ln.getC1().getX() - oldX;
-//                            dyy = ln.getC1().getY() - oldY;
-//                            Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
-//                            ln.setC1(p1);
-//                        }
-//                        if (b.getNameF().equals(ln.getID2())) {
-//                            dxx = ln.getC2().getX() - oldX;
-//                            dyy = ln.getC2().getY() - oldY;
-//                            Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
-//                            ln.setC1(p2);
-//                        }
                     if (b.getNameF().equals(ln.getID1())) {
-//                            dxx = ln.getC1().getX() - oldX;
-//                            dyy = ln.getC1().getY() - oldY;
-//                            Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
-//                            ln.setC1(p1);
-//                            dxx = ln.getC2().getX() - oldX;
-//                            dyy = ln.getC2().getY() - oldY;
-//                            Point2D.Double p2 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
-//                            ln.setC1(p2);
-//                        oneShapePoints(0);
-//                        //Point2D.Double p2 = new Point2D.Double(pointShape.get(ln.getID11()));
-//                        ln.setC1((Point2D) pointShape.get(ln.getID11()));
-//                        ln.setC2((Point2D) pointShape.get(ln.getID22()));
                         dxx = ln.getC1().getX() - oldX;
                         dyy = ln.getC1().getY() - oldY;
                         Point2D.Double p1 = new Point2D.Double(dxx + evt.getX(), dyy + evt.getY());
                         ln.setC1(p1);
                         ln.arrow.x1 = p1.x;
                         ln.arrow.y1 = p1.y;
-                        ln.arrow.repaint();
-                        //ln.setCC();
-                    }
+                        ln.arrow.repaint();                    }
                     if (b.getNameF().equals(ln.getID2())) {
                         dxx = ln.getC2().getX() - oldX;
                         dyy = ln.getC2().getY() - oldY;
@@ -1014,14 +934,8 @@ public class jMDIFrame extends JInternalFrame {
                         ln.arrow.y2 = p2.y;
                         ln.arrow.repaint();
                     }
-                    // }
                 }
-//                jPanel1.add(grid);
-//                jPanel1.revalidate();
-//                //jPanel1.repaint();
-//                jPanel1.repaint();
             }
-
             // Устанавливаем новые координаты для фигуры
             b.setXX(newX);
             b.setYY(newY);
@@ -1038,7 +952,6 @@ public class jMDIFrame extends JInternalFrame {
         //Перерисовка стрелки
         if (checkLine == true) {
             Line l = lines.get(0);
-
             // 1. Проверяем попадание в площадку для соединения целевой фигуры и если попадаем то меняем курсор на крестик
             boolean targetPoint = false; //Флаг для проверки попадания на точки фигуры
             for (points ps : points) {
@@ -1061,8 +974,6 @@ public class jMDIFrame extends JInternalFrame {
                 }
             }
             // 1. Конец
-
-            //this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             l.setC2((Point2D) evt.getPoint());//обновление второй точки
             l.arrow.x2 = l.getC2().getX();
             l.arrow.y2 = l.getC2().getY();
@@ -1078,12 +989,10 @@ public class jMDIFrame extends JInternalFrame {
     public ConvertedObject CreatorConvertObject() {
         // Создаем список для хранения объектов Figure_s
         ArrayList<Figure_s> figuresList = new ArrayList<>();
-
         //Сохранение файла
         for (figures f : all) {
             Figure_s fig = new Figure_s();
             String gType = f.getClass().toString();
-            //System.out.println(f.getShape().toString());
             gType = gType.replace("class figure.", "");
             fig.setX_pos(Integer.toString(f.getXX()));
             fig.setY_pos(Integer.toString(f.getYY()));
@@ -1133,7 +1042,7 @@ public class jMDIFrame extends JInternalFrame {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
             mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-            mapper.writeValue(Paths.get(fn).toFile(), co);
+            mapper.writeValue(Paths.get(fn.replace(".json",".epm")).toFile(), co);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(jMDIFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -1181,8 +1090,10 @@ public class jMDIFrame extends JInternalFrame {
                 jPanel1.add(ls);
                 lines.add(0, ls);
             }
-            //if (lines.isEmpty() == false)
             currentSettingConfig = cv.getSettingConfig();
+            if (currentSettingConfig == null){
+                currentSettingConfig = new SettingsConfiguration();                
+            }
             lined = !lines.isEmpty();
             jPanel1.add(new GridPanel(GridPanel.GetBaseCellSize()));
             jPanel1.revalidate();
@@ -1387,45 +1298,15 @@ public class jMDIFrame extends JInternalFrame {
         return true; //Если нету, то продолжаем
     }
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        // TODO add your handling code here:
-        // очищаем все
-        //mdi.jMenuIt
-        //emClear.clearActionPerformed(evt);
-        //jPanel1.clear
-
-        //нужно сделать вызов из jPanel чтобы не переписывать несколько раз
-        //jPanel1.removeAll();
-        //jPanel1.repaint();
-        //all.clear();
         //Удаление всего, отрисовка сетки
         jPanel1.removeAll();
         jPanel1.add(grid);
         jPanel1.repaint();
         all.clear();
         lines.clear();
-
         zoom = 100;
-        //ButtonActivated();
-//        
-        // jPanel1.removeAll();
-        // all.clear();
-        // lines.clear();
-        // points.clear();
-        // pointShape.clear();
 
         cleaned = true;
-
-        // grid.SetCellSize((int) ((GridPanel.GetBaseCellSize() * zoom) / 100));
-        // int HorizontalScrollBarScale = (int) (jScrollPane1.getHorizontalScrollBar().getMaximum() * zoom / 100);
-        // int VerticalScrollBarScale = (int) (jScrollPane1.getVerticalScrollBar().getMaximum() * zoom / 100);
-        // jScrollPane1.getHorizontalScrollBar().setMaximum(HorizontalScrollBarScale);
-        // jScrollPane1.getVerticalScrollBar().setMaximum(VerticalScrollBarScale);
-        // jSize.setText(String.format("%d", zoom) + '%');
-        // jPanel1.add(grid);
-        // jPanel1.revalidate();
-        // jPanel1.repaint();
-        // 
-
     }//GEN-LAST:event_clearActionPerformed
 
     private void CleanNumbers(boolean c) {
@@ -1443,8 +1324,6 @@ public class jMDIFrame extends JInternalFrame {
     }//GEN-LAST:event_jScrollPane1MouseWheelMoved
 
     private void jScrollPane1CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jScrollPane1CaretPositionChanged
-        // TODO add your handling code here:
-
     }//GEN-LAST:event_jScrollPane1CaretPositionChanged
 
     //При изменении масштаба учитывать, что должны меняться и координаты линии
@@ -1459,17 +1338,10 @@ public class jMDIFrame extends JInternalFrame {
         // конец работы Иванова А.А.
         s = (int) Math.round(k * zoom / 100);
 
-        // Определяем центр видимой области
-        //double centerX = jPanel1.getVisibleRect().getWidth() / 2.0;
-        //double centerY = jPanel1.getVisibleRect().getHeight() / 2.0;
+        // Определяем центр видимой области   
         for (figures b : all) {
             b.setS(s);
 
-            // абсолютное смещение от центра видимой области
-            //double dx = b.getAbsoluteX() - centerX;
-            //double dy = b.getAbsoluteY() - centerY;
-            //double newX = (centerX + dx) * zoom/100;
-            //double newY = (centerY + dy) * zoom/100;
             b.setXX((int) (b.getAbsoluteX() * zoom / 100));
             b.setYY((int) (b.getAbsoluteY() * zoom / 100));
 
@@ -1544,35 +1416,18 @@ public class jMDIFrame extends JInternalFrame {
 
 
     private void zplusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zplusActionPerformed
-        //начало работы Иванова А.А. максимальное значение масштаба и шаг
 
-        // начало работы Иванова А.А. максимальное значение масштаба и шаг
         if (zoom < 180) {
             zoom = zoom + 20;
         } else {
             return;
         }
         jPanel1.remove(points.get(0));
-        // конец работы Иванова А.А.
         s = (int) Math.round((k * zoom) / 100);
-
-        // Определяем центр видимой области
-        //int centerX = (int) Math.round(jPanel1.getVisibleRect().getWidth() / 2);
-        //int centerY = (int) Math.round(jPanel1.getVisibleRect().getHeight() / 2);
+        
         for (figures b : all) {
             b.setS(s);
 
-            // абсолютное смещение от центра видимой области
-            //double dx = b.getAbsoluteX() - centerX;
-            //double dy = b.getAbsoluteY() - centerY;
-            //double dx = b.getAbsoluteX() - centerX;
-            //double dy = b.getAbsoluteY() - centerY;
-            //double newX = (centerX + dx) * zoom;
-            //double newY = (centerY + dy) * zoom;
-            //double newX = (centerX + dx ) * zoom + 20;
-            //double newY = (centerY + dy) * zoom + 20;
-            //double newX = (b.getAbsoluteX()) * zoom ;
-            //double newY = (b.getAbsoluteY())* zoom;
             int newX = b.getAbsoluteX();
             int newY = b.getAbsoluteY();
 
@@ -1630,8 +1485,7 @@ public class jMDIFrame extends JInternalFrame {
         jScrollPane1.getVerticalScrollBar().setMaximum(VerticalScrollBarScale);
 
         jSize.setText(String.format("%d", zoom) + '%');
-        // Конец работы Иванова А.А.
-
+   
         // Перерисовываем панель
         jPanel1.revalidate();
         jPanel1.repaint();
@@ -1648,7 +1502,6 @@ public class jMDIFrame extends JInternalFrame {
     }//GEN-LAST:event_jSizeMouseEntered
 
     private void jSizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSizeMouseExited
-        //setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_jSizeMouseExited
 
     private void DeletteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletteActionPerformed
@@ -1839,7 +1692,6 @@ public class jMDIFrame extends JInternalFrame {
         // Проверяем, выходит ли фигура за границы видимой области
         boolean outOfBoundsX = newX > rightBorder;
         boolean outOfBoundsY = newY > bottomBorder;
-
         if (outOfBoundsX || outOfBoundsY) {
             // Рассчитываем на сколько фигура выходит за границы
             int distanceX = outOfBoundsX ? Math.max(0, newX - rightBorder) + 100 : 0;
@@ -1847,7 +1699,6 @@ public class jMDIFrame extends JInternalFrame {
 
             // Проверяем, выходит ли фигура за границы размера панели           
             boolean outOfPanelBounds = newX > panelWidth || newY > panelHeight;
-
             if (outOfPanelBounds) {
                 // Увеличиваем размеры панели на это расстояние
                 jPanel1.setPreferredSize(new Dimension(
