@@ -19,10 +19,15 @@ public class S1 extends figures {
 <<<<<<< HEAD
 =======
     String str = "S";
+<<<<<<< HEAD
 >>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     public static Color BackgroundColor;
     public static Color TextColor;
 
+=======
+    public static Color BackgroundColor;
+    public static Color TextColor;
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
     //Применение прошлых настроек
     static {
         // Проверяем, существует ли узел
@@ -46,7 +51,10 @@ public class S1 extends figures {
             TextColor = Color.BLACK;
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
     public S1(int x, int y, int s) {
         this.x = x;
         this.y = y;

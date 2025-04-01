@@ -6,7 +6,10 @@ import java.util.prefs.*;
 
 public class GridPanel extends JPanel {
     public static Color color = Color.GRAY;
+<<<<<<< HEAD
     public static Boolean isVisible;
+=======
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
     public static Preferences prefs = Preferences.userNodeForPackage(GridPanel.class);
     static {
         // Проверяем, существует ли узел
@@ -14,6 +17,7 @@ public class GridPanel extends JPanel {
             if (!prefs.nodeExists("")) {
                 // Узел не существует - устанавливаем значения по умолчанию и сохраняем их
                 color = Color.GRAY;
+<<<<<<< HEAD
                 isVisible = true;
 
                 prefs.putInt("color", color.getRGB());
@@ -23,6 +27,13 @@ public class GridPanel extends JPanel {
                 isVisible = prefs.getBoolean("isVisible", true);
                 if (isVisible == true)
                     color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
+=======
+
+                prefs.putInt("color", color.getRGB());
+            } else {
+                // Узел существует - загружаем значения
+                color = new Color(prefs.getInt("color", Color.GRAY.getRGB()));
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
             }
         } catch (BackingStoreException e) {
             e.printStackTrace();
@@ -31,6 +42,7 @@ public class GridPanel extends JPanel {
         }
     }
     
+<<<<<<< HEAD
     private int cellSize;   
     private int xOffset = 20; // Смещение по X
     private int yOffset = 20; // Смещение по Y
@@ -43,6 +55,12 @@ public class GridPanel extends JPanel {
     public void SetCellSize(int value){
         this.cellSize = value;
     }
+=======
+    private int cellSize;
+    private int xOffset = 20; // Смещение по X
+    private int yOffset = 20; // Смещение по Y
+    private int thickLineSpacing = 5; // Каждая пятая линия будет толстой
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
 
     public GridPanel(int cellSize) {
         this.cellSize = cellSize;

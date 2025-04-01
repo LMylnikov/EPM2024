@@ -8,8 +8,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JComponent;
 import java.util.prefs.Preferences;
 
+<<<<<<< HEAD
 public class figures extends JComponent {
 
+=======
+public class figures extends JComponent{
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
     public static Preferences prefs = Preferences.userNodeForPackage(figures.class);
     int x, y;//x,y - координаты центра фигуры 
     int absoluteX, absoluteY; // - координаты при масштабе 100%

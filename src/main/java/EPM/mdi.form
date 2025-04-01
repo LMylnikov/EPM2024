@@ -418,10 +418,15 @@
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel3">
               <Properties>
+<<<<<<< HEAD
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                     <TitledBorder title="Shape filling"/>
                   </Border>
+=======
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="V.BackgroundColor" type="code"/>
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
                 </Property>
               </Properties>
 
@@ -736,10 +741,15 @@
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel4">
               <Properties>
+<<<<<<< HEAD
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                     <TitledBorder title="Grid"/>
                   </Border>
+=======
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="NV.BackgroundColor" type="code"/>
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
                 </Property>
               </Properties>
 
@@ -771,6 +781,7 @@
                   </Group>
                 </DimensionLayout>
               </Layout>
+<<<<<<< HEAD
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="jGridColor">
                   <Properties>
@@ -786,6 +797,15 @@
                       <Dimension value="[25, 25]"/>
                     </Property>
                   </Properties>
+=======
+            </Container>
+            <Container class="javax.swing.JPanel" name="jRColor">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="R.BackgroundColor" type="code"/>
+                </Property>
+              </Properties>
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
 
                   <Layout>
                     <DimensionLayout dim="0">
@@ -820,7 +840,13 @@
             </Container>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
+<<<<<<< HEAD
                 <Property name="text" type="java.lang.String" value="Ok"/>
+=======
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="d.BackgroundColor" type="code"/>
+                </Property>
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>

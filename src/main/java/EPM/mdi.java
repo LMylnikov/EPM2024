@@ -585,7 +585,126 @@ public class mdi extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+<<<<<<< HEAD
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Grid"));
+=======
+        jVColor.setBackground(V.BackgroundColor);
+
+        javax.swing.GroupLayout jVColorLayout = new javax.swing.GroupLayout(jVColor);
+        jVColor.setLayout(jVColorLayout);
+        jVColorLayout.setHorizontalGroup(
+            jVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jVColorLayout.setVerticalGroup(
+            jVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jNVColor.setBackground(NV.BackgroundColor);
+
+        javax.swing.GroupLayout jNVColorLayout = new javax.swing.GroupLayout(jNVColor);
+        jNVColor.setLayout(jNVColorLayout);
+        jNVColorLayout.setHorizontalGroup(
+            jNVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jNVColorLayout.setVerticalGroup(
+            jNVColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jRColor.setBackground(R.BackgroundColor);
+
+        javax.swing.GroupLayout jRColorLayout = new javax.swing.GroupLayout(jRColor);
+        jRColor.setLayout(jRColorLayout);
+        jRColorLayout.setHorizontalGroup(
+            jRColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jRColorLayout.setVerticalGroup(
+            jRColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jIFColor.setBackground(d.BackgroundColor);
+
+        javax.swing.GroupLayout jIFColorLayout = new javax.swing.GroupLayout(jIFColor);
+        jIFColor.setLayout(jIFColorLayout);
+        jIFColorLayout.setHorizontalGroup(
+            jIFColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jIFColorLayout.setVerticalGroup(
+            jIFColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jNVTextColor.setBackground(NV.TextColor);
+
+        javax.swing.GroupLayout jNVTextColorLayout = new javax.swing.GroupLayout(jNVTextColor);
+        jNVTextColor.setLayout(jNVTextColorLayout);
+        jNVTextColorLayout.setHorizontalGroup(
+            jNVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jNVTextColorLayout.setVerticalGroup(
+            jNVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jRTextColor.setBackground(R.TextColor);
+
+        javax.swing.GroupLayout jRTextColorLayout = new javax.swing.GroupLayout(jRTextColor);
+        jRTextColor.setLayout(jRTextColorLayout);
+        jRTextColorLayout.setHorizontalGroup(
+            jRTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jRTextColorLayout.setVerticalGroup(
+            jRTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jIFTextColor.setBackground(d.TextColor);
+
+        javax.swing.GroupLayout jIFTextColorLayout = new javax.swing.GroupLayout(jIFTextColor);
+        jIFTextColor.setLayout(jIFTextColorLayout);
+        jIFTextColorLayout.setHorizontalGroup(
+            jIFTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jIFTextColorLayout.setVerticalGroup(
+            jIFTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jVTextColor.setBackground(V.TextColor);
+
+        javax.swing.GroupLayout jVTextColorLayout = new javax.swing.GroupLayout(jVTextColor);
+        jVTextColor.setLayout(jVTextColorLayout);
+        jVTextColorLayout.setHorizontalGroup(
+            jVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jVTextColorLayout.setVerticalGroup(
+            jVTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jSTextColor.setBackground(S1.TextColor);
+
+        javax.swing.GroupLayout jSTextColorLayout = new javax.swing.GroupLayout(jSTextColor);
+        jSTextColor.setLayout(jSTextColorLayout);
+        jSTextColorLayout.setHorizontalGroup(
+            jSTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jSTextColorLayout.setVerticalGroup(
+            jSTextColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
 
         jGridColor.setBackground(GridPanel.color);
         jGridColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1934,25 +2053,107 @@ public class mdi extends javax.swing.JFrame {
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         S1.BackgroundColor = selectedColor;
         jSColor.setBackground(selectedColor);
+<<<<<<< HEAD
         //figures.prefs.putInt("S1BackgroundColor", selectedColor.getRGB());
 
         // TODO add your handling code here:
+=======
+        figures.prefs.putInt("S1BackgroundColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
     }//GEN-LAST:event_jChangeColorSActionPerformed
 
     private void jChangeTextColorOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorOActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+<<<<<<< HEAD
         O.TextColor = selectedColor;
         jOTextColor.setBackground(selectedColor);
         //figures.prefs.putInt("IFTextColor", selectedColor.getRGB());
         // jDesktopPane.repaint();
     }//GEN-LAST:event_jChangeTextColorOActionPerformed
+=======
+        V.BackgroundColor = selectedColor;
+        jVColor.setBackground(selectedColor);
+        figures.prefs.putInt("VBackgroundColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeColorVActionPerformed
+
+    private void jChangeColorNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorNVActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        NV.BackgroundColor = selectedColor;
+        jNVColor.setBackground(selectedColor);
+        figures.prefs.putInt("NVBackgroundColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeColorNVActionPerformed
+
+    private void jChangeColorRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorRActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        R.BackgroundColor = selectedColor;
+        jRColor.setBackground(selectedColor);
+        figures.prefs.putInt("RBackgroundColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeColorRActionPerformed
+
+    private void jChangeColorIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorIFActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        d.BackgroundColor = selectedColor;
+        jIFColor.setBackground(selectedColor);
+        figures.prefs.putInt("IFBackgroundColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeColorIFActionPerformed
+
+    private void jChangeColorGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorGridActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        GridPanel.color = selectedColor;
+        jGridColor.setBackground(selectedColor);
+        GridPanel.prefs.putInt("color", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeColorGridActionPerformed
+
+    private void jChangeTextColorSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorSActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        S1.TextColor = selectedColor;
+        jSTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("S1TextColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeTextColorSActionPerformed
+
+    private void jChangeTextColorVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorVActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        V.TextColor = selectedColor;
+        jVTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("VTextColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeTextColorVActionPerformed
+
+    private void jChangeTextColorNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorNVActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        NV.TextColor = selectedColor;
+        jNVTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("NVTextColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeTextColorNVActionPerformed
+
+    private void jChangeTextColorRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorRActionPerformed
+        Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
+        R.TextColor = selectedColor;
+        jRTextColor.setBackground(selectedColor);
+        figures.prefs.putInt("RTextColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+    }//GEN-LAST:event_jChangeTextColorRActionPerformed
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
 
     private void jChangeTextColorIFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorIFActionPerformed
         Color selectedColor = jColorChooser1.showDialog(this, "Выберите цвет", Color.BLACK);
         d.TextColor = selectedColor;
         jIFTextColor.setBackground(selectedColor);
+<<<<<<< HEAD
         //figures.prefs.putInt("IFTextColor", selectedColor.getRGB());
         // jDesktopPane.repaint();
+=======
+        figures.prefs.putInt("IFTextColor", selectedColor.getRGB());
+        jDesktopPane.repaint();
+>>>>>>> a9326729e3aa658f3e81c359925268693065204d
     }//GEN-LAST:event_jChangeTextColorIFActionPerformed
 
     private void jChangeTextColorRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeTextColorRActionPerformed
