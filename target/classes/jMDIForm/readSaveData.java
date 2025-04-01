@@ -5,10 +5,17 @@ import java.util.ArrayList;
 
 public class readSaveData {
     //Код для очищения основного файла. Определяем тип, который необходимо создать и создаем его.
+<<<<<<< HEAD
     public figures getElement(converter.Figure_s curFigF/*String shape, String Sx, String Sy, String Ss, String name, String code, String description, ArrayList<String> inVariable,ArrayList<String> outVariable/*, String SWork/*, String coef, String likelihood, String period*/){
         int x = Integer.parseInt(curFigF.getX_pos());
         int y = Integer.parseInt(curFigF.getY_pos());
         int s = Integer.parseInt(curFigF.getSize());
+=======
+    public ArrayList <figures> getElement(ArrayList <figures> list, String shape, String Sx, String Sy, String Ss, String name, String code, String description, ArrayList<String> inVariable,ArrayList<String> outVariable){
+        int x = Integer.parseInt(Sx);
+        int y = Integer.parseInt(Sy);
+        int s = Integer.parseInt(Ss);
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
         double zoom = 1; 
 
         figures currentFigure = new figures();   
@@ -103,12 +110,15 @@ public class readSaveData {
             dn.setInVariable(inVariable);
             dn.setOutVariable(outVariable);
             dn.setCodeF(code);
+<<<<<<< HEAD
 //            dn.setSwork(SWorkIndex);
 //            if (SWorkIndex == 0) {
 //                dn.setLikelihood(likelihood);
 //            } else if (SWorkIndex == 1) {
 //                dn.setPeriod(period);
 //            }
+=======
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
             list.add(0,dn);
         }
         if ("O".equals(shape)){
@@ -124,6 +134,10 @@ public class readSaveData {
         }
         */
 //        return list;
+    }
+    public ArrayList <Line> getLines(ArrayList <Line> list){
+        //выгрузка элементов линий
+        return list;
     }
     public ArrayList <Line> getLines(ArrayList <Line> list){
         //выгрузка элементов линий

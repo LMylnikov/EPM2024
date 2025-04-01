@@ -13,7 +13,11 @@
             <Property name="text" type="java.lang.String" value="Delete"/>
           </Properties>
           <Events>
+<<<<<<< HEAD
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemDeletteActionPerformed"/>
+=======
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeletteActionPerformed"/>
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
           </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="jMenuItemClear">

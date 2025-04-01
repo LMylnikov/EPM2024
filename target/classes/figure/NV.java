@@ -64,12 +64,16 @@ public class NV extends figures{
         g2.setColor(TextColor);
         g2.setStroke(new BasicStroke(2));
         g2.draw(shape);
+<<<<<<< HEAD
         
         FontMetrics fm = g.getFontMetrics();
         int width = fm.stringWidth(nameF);
         g2.drawString(nameF, x - width/2, y+9*s/100);
         
 //        g2.drawString(nameF, x-15*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
+=======
+        g2.drawString("NV", x-15*s/100, y+9*s/100);//Иванов А.А. надпись центруется с учетом масштаба
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
         rec=shape.getBounds2D();
     } 
 }

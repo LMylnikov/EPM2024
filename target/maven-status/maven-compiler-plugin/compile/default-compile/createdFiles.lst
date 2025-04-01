@@ -1,4 +1,5 @@
 figure/Line.class
+<<<<<<< HEAD
 jMDIForm/jMDIFrame$7.class
 figure/pointStraight.class
 jMDIForm/jMDIFrame$19.class
@@ -161,3 +162,29 @@ EPM/mdi$43.class
 jMDIForm/FigurePropertiesDialog$1.class
 figure/points.class
 jMDIForm/jMDIFrame$4.class
+=======
+jMDIForm/PropertiesDialog$8.class
+Converter/Line_s.class
+Converter/ConvertedObject.class
+jMDIForm/PropertiesDialog$12.class
+jMDIForm/PropertiesDialog$13$1.class
+jMDIForm/PropertiesDialog$11.class
+jMDIForm/PropertiesDialog$6.class
+Converter/Figure_s.class
+figure/Line_s.class
+figure/Arrow.class
+jMDIForm/PropertiesDialog$5.class
+jMDIForm/PropertiesDialog$10.class
+jMDIForm/PropertiesDialog$4.class
+jMDIForm/PropertiesDialog$1.class
+jMDIForm/PropertiesDialog$13.class
+jMDIForm/PropertiesDialog$7.class
+jMDIForm/PropertiesDialog$3.class
+figure/LineStraight.class
+EPM/mdi$37.class
+jMDIForm/jMDIFrame$11.class
+jMDIForm/PropertiesDialog.class
+jMDIForm/PropertiesDialog$9.class
+jMDIForm/PropertiesDialog$2.class
+EPM/mdi$38.class
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a

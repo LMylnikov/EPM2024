@@ -6,7 +6,11 @@ import figure.NV;
 import figure.R;
 import figure.V;
 import figure.S1;
+<<<<<<< HEAD
 import figure.O;
+=======
+//import figure.b;
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
 import figure.d;
 import jMDIForm.GridPanel;
 import jMDIForm.jMDIFrame;
@@ -1831,9 +1835,15 @@ public class mdi extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         jDialogSettings.setVisible(false);
         jDesktopPane.repaint();
+<<<<<<< HEAD
 
         if (GridPanel.isVisible == true)
         GridPanel.prefs.putInt("color", GridPanel.color.getRGB());
+=======
+        
+        if (GridPanel.isVisible == true)
+            GridPanel.prefs.putInt("color", GridPanel.color.getRGB());
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
         GridPanel.prefs.putBoolean("isVisible", GridPanel.isVisible);
 
         figures.prefs.putInt("IFBackgroundColor", d.BackgroundColor.getRGB());
@@ -1853,6 +1863,7 @@ public class mdi extends javax.swing.JFrame {
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
 
+<<<<<<< HEAD
         if (jCheckBox1.isSelected()) {
             GridPanel.isVisible = true;
             //GridPanel.prefs.putBoolean("isVisible", true);
@@ -1865,6 +1876,20 @@ public class mdi extends javax.swing.JFrame {
             GridPanel.color = jDesktopPane.getSelectedFrame().getBackground();
             jChangeColorGrid.setEnabled(false);
         }
+=======
+            if (jCheckBox1.isSelected()) {
+                GridPanel.isVisible = true;
+                //GridPanel.prefs.putBoolean("isVisible", true);
+                GridPanel.color = new Color(GridPanel.prefs.getInt("color", Color.GRAY.getRGB()));
+                jChangeColorGrid.setEnabled(true);                
+            } else {
+                GridPanel.isVisible = false;      
+                //GridPanel.prefs.putBoolean("isVisible", false);
+                gridColor = GridPanel.color;
+                GridPanel.color = jDesktopPane.getSelectedFrame().getBackground();
+                jChangeColorGrid.setEnabled(false);
+            }
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jChangeColorGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChangeColorGridActionPerformed

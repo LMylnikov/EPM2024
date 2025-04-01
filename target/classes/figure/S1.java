@@ -16,6 +16,10 @@ import java.util.prefs.BackingStoreException;
 
 public class S1 extends figures {
 
+<<<<<<< HEAD
+=======
+    String str = "S";
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     public static Color BackgroundColor;
     public static Color TextColor;
 
@@ -70,12 +74,16 @@ public class S1 extends figures {
         g2.setStroke(new BasicStroke(2));
         g2.draw(shape);
         g2.setFont(font);
+<<<<<<< HEAD
         
         FontMetrics fm = g.getFontMetrics();
         int width = fm.stringWidth(nameF);
         g2.drawString(nameF, x - width/2+s/4, y+34*s/100);
         
 //        g2.drawString(nameF, (x) + 17 * s / 100, (y) + 34 * s / 100);// в дальнейшем кнопка //Иванов А.А. надпись центруется с учетом масштаба
+=======
+        g2.drawString(str, (x) + 17 * s / 100, (y) + 34 * s / 100);// в дальнейшем кнопка //Иванов А.А. надпись центруется с учетом масштаба
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
         rec = shape.getBounds2D();
     }
 }

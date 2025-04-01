@@ -12,8 +12,12 @@
         <exec.mainClass>MDI</exec.mainClass>
     </properties>
     
+<<<<<<< HEAD
     <name>EdPM</name>
 
+=======
+    <name>EPM main</name>
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     
     <repositories>
         <repository>

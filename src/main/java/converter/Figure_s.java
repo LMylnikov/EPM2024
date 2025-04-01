@@ -1,11 +1,15 @@
 package converter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonProperty;
+=======
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Figure_s {
+<<<<<<< HEAD
 
     @JsonProperty("x_pos")
     private String x_pos;
@@ -50,6 +54,18 @@ public class Figure_s {
 
 //    @JsonProperty("likelihood")
 //    отметка выбора сложности для V
+=======
+    private String x_pos;
+    private String y_pos;
+    private String shape;
+    private String size;
+    private String id;  
+    private String name; // Имя фигуры
+    private String description; // Подробное описание объекта
+    private ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
+    private ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
+    private String code; // Код фигуры
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
 
     public void setX_pos(String x_pos) {
         this.x_pos = x_pos;
@@ -94,7 +110,10 @@ public class Figure_s {
     public void setName(String name) {
         this.name = name;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     public String getName() {
         return name;
     }
@@ -102,7 +121,10 @@ public class Figure_s {
     public void setDescription(String description) {
         this.description = description;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     public String getDescription() {
         return description;
     }
@@ -110,11 +132,15 @@ public class Figure_s {
     public void setCode(String code) {
         this.code = code;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     public String getCode() {
         return code;
     }
 
+<<<<<<< HEAD
     public void setNameNvElement(ArrayList<String> inVar) {
         this.nameNvElement = inVar;
     }
@@ -192,5 +218,19 @@ public class Figure_s {
     }
     public void setCompareNumber(int var){
         compareNumber = var;
+=======
+    public void setInVariable(ArrayList<String> inVar) {
+        this.inVariable = inVar;
+    }
+    public ArrayList<String> getInVariable() {
+        return inVariable;
+    }
+
+    public void setOutVariable(ArrayList<String> outVar) {
+        this.outVariable = outVar;
+    }
+    public ArrayList<String> getOutVariable() {
+        return outVariable;
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     }
 }

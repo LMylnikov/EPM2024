@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /Users/leonid/Documents/Projects/EPM2024_01_01_2025/src/main/java/EPM/S.java
 /Users/leonid/Documents/Projects/EPM2024_01_01_2025/src/main/java/EPM/mdi.java
 /Users/leonid/Documents/Projects/EPM2024_01_01_2025/src/main/java/JGraphFrame/JGraphFrame.java
@@ -49,3 +50,39 @@
 /Users/leonid/Documents/Projects/EPM2024_01_01_2025/src/main/java/rtranslator/CreateRCode.java
 /Users/leonid/Documents/Projects/EPM2024_01_01_2025/src/main/java/rtranslator/RTranslatorClass.java
 /Users/leonid/Documents/Projects/EPM2024_01_01_2025/src/main/java/rtranslator/newPrecodeGenerator.java
+=======
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/FigurePropertiesDialog.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/jMDIFrame.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/Figure_s.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/S.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/NV.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/readSaveData.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/workspace.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/pointStraight.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/Arrow.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/JGraphFrame/Panelka.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/converter/Line_s.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/b.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/Gson.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/GridPanel.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/V.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/R.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/CustomVerticalScrollbar.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/Line_s.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/LineStraight.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/Line.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/converter/ConvertedObject.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/figures.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/JGraphFrame/JGraphFrame.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/g2d.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/EPM/S.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/FileUtils.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/S1.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/pointDotted.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/points.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/JSONoperations.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/converter/Figure_s.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/EPM/mdi.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/jMDIForm/PropertiesDialog.java
+/Users/sofiiamylnikova/Downloads/EPM2024-main/src/main/java/figure/d.java
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a

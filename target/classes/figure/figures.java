@@ -22,6 +22,7 @@ public class figures extends JComponent {
     ArrayList<String> nameNvElement = new ArrayList(); // Лист со входными переменными
     ArrayList<String> varNvElement = new ArrayList(); // Лист с выходными переменными
     String codeF; // Код фигуры
+<<<<<<< HEAD
     
     String likelihood = "0,5";//вероятность для S
     String period = "5";//период для S
@@ -40,6 +41,11 @@ public class figures extends JComponent {
     static int id;
     
     
+=======
+
+    static AtomicInteger nextId = new AtomicInteger();
+    static int id;
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
 
     //static public boolean doubleCl = false;    
     public figures() {
@@ -123,20 +129,34 @@ public class figures extends JComponent {
         return descriptionF;
     }
 
+<<<<<<< HEAD
     public void setNameNvElement(ArrayList<String> nameNvElement) {
         this.nameNvElement = nameNvElement;
+=======
+    public void setInVariable(ArrayList<String> inVariable) {
+        this.inVariable = inVariable;
+    }
+
+    public ArrayList<String> getInVariable() {
+        return inVariable;
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     }
 
     public ArrayList<String> getNameNvElement() {
         return nameNvElement;
     }
 
+<<<<<<< HEAD
     public void setVarNvElement(ArrayList<String> varNvElement) {
         this.varNvElement = varNvElement;
     }
 
     public ArrayList<String> getVarNvElement() {
         return varNvElement;
+=======
+    public ArrayList<String> getOutVariable() {
+        return outVariable;
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     }
 
     public void setCodeF(String codeF) {
@@ -154,6 +174,7 @@ public class figures extends JComponent {
     public void setRec(Rectangle2D rec) {
         this.rec = rec;
     }
+<<<<<<< HEAD
     
     public void idChange() {
         id = nextId.getAndAdd(-nextId.get());
@@ -220,4 +241,10 @@ public class figures extends JComponent {
     public void setCompareNumber(int var){
         compareNumber = var;
     }
+=======
+
+    public void idChange() {
+        id = nextId.getAndAdd(-nextId.get());
+    }
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
 }

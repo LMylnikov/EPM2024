@@ -14,6 +14,7 @@ public class Figure_s {
     private String id;  
     private String name; // Имя фигуры
     private String description; // Подробное описание объекта
+<<<<<<< HEAD
     private ArrayList<String> nameNvElement = new ArrayList(); // Лист со входными переменными
     private ArrayList<String> varNvElement = new ArrayList(); // Лист с выходными переменными
     private String code; // Код фигуры
@@ -30,6 +31,11 @@ public class Figure_s {
     private int compareNumber; // Число с которым сравниваем в IF
 
 //    отметка выбора сложности для V
+=======
+    private ArrayList<String> inVariable = new ArrayList(); // Лист со входными переменными
+    private ArrayList<String> outVariable = new ArrayList(); // Лист с выходными переменными
+    private String code; // Код фигуры
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
 
     public void setX_pos(String x_pos) {
         this.x_pos = x_pos;
@@ -92,6 +98,7 @@ public class Figure_s {
         return code;
     }
 
+<<<<<<< HEAD
     public void setNameNvElement(ArrayList<String> inVar) {
         this.nameNvElement = inVar;
     }
@@ -167,5 +174,19 @@ public class Figure_s {
     }
     public void setCompareNumber(int var){
         compareNumber = var;
+=======
+    public void setInVariable(ArrayList<String> inVar) {
+        this.inVariable = inVar;
+    }
+    public ArrayList<String> getInVariable() {
+        return inVariable;
+    }
+
+    public void setOutVariable(ArrayList<String> outVar) {
+        this.outVariable = outVar;
+    }
+    public ArrayList<String> getOutVariable() {
+        return outVariable;
+>>>>>>> 05ba5b829904c4d9be046d8ecf0364753e0c955a
     }
 }
